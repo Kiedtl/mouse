@@ -98,6 +98,7 @@ $files | ForEach-Object {
 }
 
 if (test_internet) {
+    Set-Location ~\.mouse\share\repo\
     git push origin master > ("$psscriptroot\..\share\dump.tmp")
     success "Added items and pushed repository to GitHub."
 }
