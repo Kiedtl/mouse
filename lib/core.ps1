@@ -27,4 +27,12 @@ function download($src, $dest) {
 function is_directory([String] $path) {
     return (Test-Path $path) -and (Get-Item $path) -is [System.IO.DirectoryInfo]
 }
+function friendly_path($path) {
+    $h = (Get-PsProvider 'FileSystem').home
+    if(!$h.endswith('\')) { $h += '\' }
+    if($h -eq '\') { return $path }
+    return "$path" -replace ([regex]::escape($h)), "~\"
+}
+function unfriendly_path($path) { return "$path" -replace "~", "$HOME" }
+
 
