@@ -14,7 +14,7 @@ if (test_internet) {
     git pull origin master -q > "$psscriptroot\..\share\dump.tmp"
     Set-Content -Path "share\version.dat" -Value $newver
     Write-Host " done" -f Green
-    success "Successfully updated Mouse to version $newver!"
+    success "Successfully updated Mouse to version $newver"
 }
 else {
     Write-Host " error" -f Red
