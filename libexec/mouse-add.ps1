@@ -17,7 +17,7 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\config.ps1"
 
 $opt, $files, $err = getopt $args 'm:' 'message'
-
+$TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 if ($err) {
     $err | ForEach-Object {
@@ -84,7 +84,7 @@ $files | ForEach-Object {
         if (!(Test-Path "$psscriptroot\..\share\repo\info")) {
             New-Item -Path . -Name "info" -ItemType "directory"
         }
-        ($psscriptroot\..\lib\touch.ps1) ("$psscriptroot\..\share\repo\info\$name.info")
+        & $TOUCH ("$psscriptroot\..\share\repo\info\$name.info")
         Set-Content -Path ("$psscriptroot\..\share\repo\info\$name.info") -Value $filejson
 
         git add .
