@@ -14,13 +14,17 @@ function debug($msg, $indent = $false) {
     }
 }
 function success($msg) { write-host $msg -f green }
+function fname($path) { split-path $path -leaf }
+function strip_ext($fname) { $fname -replace '\.[^\.]*$', '' }
+function strip_filename($path) { $path -replace [regex]::escape((fname $path)) }
+function strip_fragment($url) { $url -replace (new-object uri $url).fragment }
 function test_internet() {
     $conn = (Test-Connection -ComputerName google.com -Count 2 -Quiet)
     return $conn
 }
 function download($src, $dest) {
     $wc = New-Object Net.Webclient
-    $wc.headers.add('Referer', (strip_filename $src))
+    $wc.Headers.add('Referer', (strip_filename $src))
     $wc.Headers.Add('User-Agent', (Get-UserAgent))
     $wc.downloadFile($url, $dest)
 }
