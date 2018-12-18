@@ -25,14 +25,15 @@
 
 
 $OLD_ERRORACTIONPREFERENCE = $erroractionpreference
-$MOUSE_CORE_URL = 'https://raw.github.com/kiedtl/mouse/master/lib/core.ps1'
-$SCOOP_CORE_URL = 'https://raw.github.com/lukesampson/scoop/lib/core.ps1'
+$MOUSE_CORE_URL = 'https://raw.githubusercontent.com/kiedtl/mouse/master/lib/core.ps1'
+$SCOOP_CORE_URL = 'https://raw.githubusercontent.com/lukesampson/scoop/master/lib/core.ps1'
 $URL = 'https://github.com/kiedtl/mouse.git'
 
 $erroractionpreference = 'stop' # quit if anything goes wrong
 
 Write-Host "Initializing..." -NoNewline
-Invoke-Expression (new-object net.webclient).downloadstring($CORE_URL)
+Invoke-Expression (new-object net.webclient).downloadstring($MOUSE_CORE_URL)
+Invoke-Expression (new-object net.webclient).downloadstring($SCOOP_CORE_URL)
 Write-Host " done" -f Green
 
 if (($PSVersionTable.PSVersion.Major) -lt 3) {
@@ -55,12 +56,7 @@ if ((Get-ExecutionPolicy) -gt 'RemoteSigned' -or (Get-ExecutionPolicy) -eq 'ByPa
     break
 }
 
-if (installed 'scoop') {
-    warn "Scoop appears to be installed. Mouse will be installed with Scoop."
-    warn "It is recommended to install Mouse with Scoop.`n"
-}
-
-Write-Host "Downloading..." - NoNewline
+Write-Host "Downloading..." -NoNewline
 Set-Location $HOME
 git clone -q http://github.com/kiedtl/mouse.git ./.mouse
 Write-Host " done" -f Green
@@ -68,39 +64,25 @@ Write-Host " done" -f Green
 Write-Host 'Adding Mouse to PATH...' -NoNewline
 Set-Location "${HOME}/.mouse/"
 ./lib/shim.ps1 "./bin/mouse.ps1" 
-Write-Host " done`n" -f Green
+Write-Host " done" -f Green
 
 Write-Host "Creating directories..." -NoNewline
 Set-Location "${HOME}/.mouse/"
-New-Item -Path . -Name "share" -ItemType "directory"
 Set-Location "${HOME}/.mouse/share/"
-New-Item -Path . -Name "tmp" -ItemType "directory"
+New-Item -Path . -Name "tmp" -ItemType "directory" > dump.tmp
 Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
 Set-Location "${HOME}/.mouse/share/tmp/"
-git init
-$HUB_OUTPUT = "$psscriptroot/.mouse/lib/hub.exe" create my-mouse-repo -d "My Mouse repository" | Out-String
+$HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository; see kiedtl/mouse" | Out-String
 Set-Location ..
 $repo = ($HUB_OUTPUT.Split("`n"))[1]
-git clone $repo ./repo/
-Write-Host " done`n" -f Green 
-success "Created GitHub repository $repo"
-
-if (!$isWindows) {
-    warn "You are using an unsupported platform." 
-}
-
-if ($isMacOS) {
-    warn "Mouse has not been tested on macOS."
-}
-
-if ($isLinux) {
-    warn "Mouse has not been tested on Linux." 
-}
+git clone $repo repo
+Write-Host " done" -f Green 
+Write-Host "Created GitHub repository $repo" -f White
 
 Set-Location $HOME
-success '`nMouse was successfully installed!'
+Write-Host "`nMouse was successfully installed!"
 success "Type `mouse help` for instructions."
 
 $erroractionpreference = $OLD_ERRORACTIONPREFERENCE
