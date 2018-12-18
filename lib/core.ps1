@@ -28,11 +28,11 @@ function download($src, $dest) {
     $wc.Headers.Add('User-Agent', (Get-UserAgent))
     $wc.downloadFile($url, $dest)
 }
-function dl_string($src, $dest) {
+function dl_string($src) {
     $wc = New-Object Net.Webclient
     $wc.headers.add('Referer', (strip_filename $src))
     $wc.Headers.Add('User-Agent', (Get-UserAgent))
-    return $wc.downloadString($url)
+    return $wc.downloadString($src)
 }
 function is_directory([String] $path) {
     return (Test-Path $path) -and (Get-Item $path) -is [System.IO.DirectoryInfo]
