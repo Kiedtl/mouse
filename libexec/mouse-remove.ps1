@@ -4,7 +4,7 @@
 #        backup to GitHub.
 #
 # To remove file(s) or directories, type:
-#      mouse remove C:\Users\misspiggy\.bashrc C:\Users\misspiggy\.scoop C:\path\to\dir\
+#      mouse remove ~\.bashrc ~\.scoop C:\path\to\dir\
 #
 # Options:
 #   -m, --message               Use a custom Git commit message
@@ -30,6 +30,12 @@ if ($err) {
 if (!$files) {
     abort "mouse: ***** File or directory list not provided. Stop."
 }
+
+
+$files | Foreach-Object {
+    $_ = unfriendly_path $_
+}
+
 
 $files | Foreach-Object {
     if ((Test-Path ("$psscriptroot\..\share\repo\$_"))) {
