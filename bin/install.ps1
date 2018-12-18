@@ -57,7 +57,7 @@ if ((Get-ExecutionPolicy) -gt 'RemoteSigned' -or (Get-ExecutionPolicy) -eq 'ByPa
 
 if (installed 'scoop') {
     warn "Scoop appears to be installed. Mouse will be installed with Scoop."
-    warn "It is recommended to install Mouse with Scoop.`n`"
+    warn "It is recommended to install Mouse with Scoop.`n"
 }
 
 Write-Host "Downloading..." - NoNewline
