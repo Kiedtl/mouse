@@ -39,6 +39,7 @@ $files | Foreach-Object {
 $files | ForEach-Object {
     $name = $_.Name
     $basename = $_.BaseName
+    info "$_"
     $dtime = Get-Date
     $isDirectory = ((Get-Item $_) -is [System.IO.DirectoryInfo])
     $dirdest = "$psscriptroot\..\share\repo\${basename}.zip"
@@ -52,7 +53,7 @@ $files | ForEach-Object {
             Copy-Item $_ ("$psscriptroot\..\share\repo\$name")
             git add $name
 
-            if (!opt.message) {
+            if (!$opt.message) {
                 git commit -q -m "Added and committed $name on $dtime"
             }
             else {
@@ -66,7 +67,7 @@ $files | ForEach-Object {
             }
             [IO.Compression.ZipFile]::CreateFromDirectory($_, $dirdest)
             git add "${basename}.zip"
-            if (!opt.message) {
+            if (!$opt.message) {
                 git commit -q -m "Added and committed $name on $dtime"
             }
             else {
