@@ -57,9 +57,7 @@ if ((Get-ExecutionPolicy) -gt 'RemoteSigned' -or (Get-ExecutionPolicy) -eq 'ByPa
 
 if (installed 'scoop') {
     warn "Scoop appears to be installed. Mouse will be installed with Scoop."
-    scoop bucket add open-scoop http://github.com/kiedtl/open-scoop.git
-    scoop install mouse
-    break
+    warn "It is recommended to install Mouse with Scoop.`n`"
 }
 
 Write-Host "Downloading..." - NoNewline
