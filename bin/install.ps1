@@ -69,18 +69,15 @@ Write-Host " done" -f Green
 Write-Host "Creating directories..." -NoNewline
 Set-Location "${HOME}/.mouse/"
 Set-Location "${HOME}/.mouse/share/"
-New-Item -Path . -Name "tmp" -ItemType "directory" > dump.tmp
+New-Item -Path . -Name "repo" -ItemType "directory" > dump.tmp
 Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
-Set-Location "${HOME}/.mouse/share/tmp/"
+Set-Location "${HOME}/.mouse/share/"
+git init > ../dump.tmp
 $HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository; see kiedtl/mouse" | Out-String
-Set-Location ..
-$repo = ($HUB_OUTPUT.Split("`n"))[1]
-git clone $repo repo
 Write-Host " done" -f Green 
-Write-Host "Created GitHub repository $repo" -f White
-
+Write-Host "Created GitHub repository $repo" 
 Set-Location $HOME
 success "`nMouse was successfully installed!"
 success "Type `mouse help` for instructions."
