@@ -40,5 +40,6 @@ function friendly_path($path) {
     return "$path" -replace ([regex]::escape($h)), "~\"
 }
 function unfriendly_path($path) { return "$path" -replace "~", "$HOME" }
+function is_local($path) { ($path -notmatch '^https?://') -and (test-path $path) }
 
 
