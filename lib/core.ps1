@@ -41,5 +41,5 @@ function friendly_path($path) {
 }
 function unfriendly_path($path) { return "$path" -replace "~", "$HOME" }
 function is_local($path) { ($path -notmatch '^https?://') -and (test-path $path) }
-
+function relpath($path) { "$($myinvocation.psscriptroot)\$path" } 
 
