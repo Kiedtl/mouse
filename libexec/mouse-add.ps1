@@ -32,12 +32,11 @@ if (!$files) {
 
 $files | ForEach-Object {
     $_ = unfriendly_path $_
-    $name = $_.Name
-    $basename = $_.BaseName
+    $name = fname $_
     info "Adding $_"
     $dtime = Get-Date
     $isDirectory = ((Get-Item $_) -is [System.IO.DirectoryInfo])
-    $dirdest = "$psscriptroot\..\share\repo\${basename}.zip"
+    $dirdest = "$psscriptroot\..\share\repo\${name}.zip"
     if ((Test-Path $_)) {
         if (!$isDirectory) {
             if (Test-Path "$psscriptroot\..\share\repo\$name")
@@ -88,7 +87,7 @@ $files | ForEach-Object {
 
     }
     else {
-        abort "The file or directory $basename does not exist or is hidden. Stop."
+        abort "The file or directory $name does not exist or is hidden. Stop."
     }
 }
 
