@@ -1,4 +1,4 @@
-# Usage: smouse help <command>
+# Usage: mouse help <command>
 # Summary: Show help for a command
 param($cmd)
 
