@@ -13,7 +13,7 @@ if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
     Write-Host "Current Mouse Version: " -NoNewLine
     $currver = Get-Content "$psscriptroot\..\share\version.dat"
     Write-Host -f Green ("$currver")
-    if ((Test-Connection -site microsoft.com -count 1 -quiet)) {
+    if (test_internet) {
         $newver = (New-Object Net.WebClient).DownloadString($nvurl)
         Write-Host "Latest Mouse Version: " -NoNewline
         Write-Host ("$newver") -f Blue
