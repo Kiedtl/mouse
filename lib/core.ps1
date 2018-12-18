@@ -24,4 +24,7 @@ function download($src, $dest) {
     $wc.Headers.Add('User-Agent', (Get-UserAgent))
     $wc.downloadFile($url, $dest)
 }
+function is_directory([String] $path) {
+    return (Test-Path $path) -and (Get-Item $path) -is [System.IO.DirectoryInfo]
+}
 
