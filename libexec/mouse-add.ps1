@@ -19,6 +19,9 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 $opt, $files, $err = getopt $args 'm:' 'message'
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
+Push-Location
+Set-Location ~\.mouse
+
 if ($err) {
     $err | ForEach-Object {
         error $err
@@ -45,6 +48,7 @@ $files | ForEach-Object {
                 warn "Overwriting $name"
             }
             Copy-Item $_ ("$psscriptroot\..\share\repo\$name")
+            Set-Location ~\.mouse\share\repo\
             git add $name
 
             if (!$opt.message) {
@@ -60,7 +64,8 @@ $files | ForEach-Object {
                 warn "Overwriting $dirdest"
             }
             [IO.Compression.ZipFile]::CreateFromDirectory($_, $dirdest)
-            git add "${basename}.zip"
+            Set-Location ~\.mouse\share\repo\
+            git add "${name}.zip"
             if (!$opt.message) {
                 git commit -q -m "Added and committed $name on $dtime"
             }
@@ -77,17 +82,18 @@ $files | ForEach-Object {
         $fileinfo | Add-Member -NotePropertyName dates -NotePropertyValue (Get-Date)
         $filejson = $fileinfo | ConvertTo-Json
         if (!(Test-Path "$psscriptroot\..\share\repo\info")) {
+            Set-Location ~\.mouse\share\repo\
             New-Item -Path . -Name "info" -ItemType "directory"
         }
         & $TOUCH ("$psscriptroot\..\share\repo\info\$name.info")
         Set-Content -Path ("$psscriptroot\..\share\repo\info\$name.info") -Value $filejson
-
+        Set-Location ~\.mouse\share\repo\
         git add .
         git commit -q -m "Added $name.info info file"
 
     }
     else {
-        abort "The file or directory $name does not exist or is hidden. Stop."
+        abort "mouse: ***** The file or directory $name does not exist or is hidden. Stop."
     }
 }
 
@@ -100,3 +106,5 @@ else {
     success "Successfully added files."
     warn "Mouse was unable to push to GitHub: there does not appear to be an internet connection."
 }
+
+Pop-Location
