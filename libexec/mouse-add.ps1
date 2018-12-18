@@ -30,16 +30,11 @@ if (!$files) {
     abort "mouse: ***** File or directory list not provided. Stop."
 }
 
-
-$files | Foreach-Object {
-    $_ = unfriendly_path $_
-}
-
-
 $files | ForEach-Object {
+    $_ = unfriendly_path $_
     $name = $_.Name
     $basename = $_.BaseName
-    info "$_"
+    info "Adding $_"
     $dtime = Get-Date
     $isDirectory = ((Get-Item $_) -is [System.IO.DirectoryInfo])
     $dirdest = "$psscriptroot\..\share\repo\${basename}.zip"
