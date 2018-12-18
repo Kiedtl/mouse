@@ -82,7 +82,7 @@ Write-Host " done" -f Green
 Write-Host "Created GitHub repository $repo" -f White
 
 Set-Location $HOME
-Write-Host "`nMouse was successfully installed!"
+success "`nMouse was successfully installed!"
 success "Type `mouse help` for instructions."
 
 $erroractionpreference = $OLD_ERRORACTIONPREFERENCE
