@@ -4,7 +4,7 @@
 #        backup to GitHub.
 #
 # To add file(s) or directories, type:
-#      mouse add C:\Users\misspiggy\.bashrc C:\Users\misspiggy\.scoop C:\path\to\dir\
+#      mouse add ~\.bashrc ~\.scoop C:\path\to\dir\
 #
 # Options:
 #   -m, --message               Use a custom Git commit message
@@ -31,6 +31,11 @@ if (!$files) {
 }
 
 
+$files | Foreach-Object {
+    $_ = unfriendly_path $_
+}
+
+
 $files | ForEach-Object {
     $name = $_.Name
     $basename = $_.BaseName
@@ -42,6 +47,7 @@ $files | ForEach-Object {
             if (Test-Path "$psscriptroot\..\share\repo\$name")
             {
                 Remove-Item "$psscriptroot\..\share\repo\$name"
+                warn "Overwriting $name"
             }
             Copy-Item $_ ("$psscriptroot\..\share\repo\$name")
             git add $name
@@ -56,6 +62,7 @@ $files | ForEach-Object {
         else {
             if (Test-Path $dirdest) {
                 Remove-Item $dirdest
+                warn "Overwriting $dirdest"
             }
             [IO.Compression.ZipFile]::CreateFromDirectory($_, $dirdest)
             git add "${basename}.zip"
