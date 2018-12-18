@@ -20,11 +20,10 @@
 # SOFTWARE.
 
 param($cmd)
-
 set-strictmode -off
 
 . "$psscriptroot\..\lib\core.ps1"
-. (relpath '$psscriptroot\..\lib\commands')
+. (relpath '..\lib\commands')
 
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
 
