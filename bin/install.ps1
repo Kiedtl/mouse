@@ -73,7 +73,7 @@ New-Item -Path . -Name "repo" -ItemType "directory" > dump.tmp
 Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
-Set-Location "${HOME}/.mouse/share/"
+Set-Location "${HOME}/.mouse/share/repo/"
 git init > ../dump.tmp
 $HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository; see kiedtl/mouse" | Out-String
 Write-Host " done" -f Green 
