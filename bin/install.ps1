@@ -101,6 +101,6 @@ if ($isLinux) {
 
 Set-Location $HOME
 success '`nMouse was successfully installed!'
-success "Type 'mouse help' for instructions."
+success "Type `mouse help` for instructions."
 
 $erroractionpreference = $OLD_ERRORACTIONPREFERENCE
