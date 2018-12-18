@@ -1,3 +1,29 @@
+# Copyright (c) 2018 Kied T Llaentenn
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# Usage:
+# `Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/Kiedtl/mouse/master/bin/install.ps1"))`
+# Summary: Installs Mouse on a windows/Linux/macOS computer in ~/.mouse
+
+
+
 $OLD_ERRORACTIONPREFERENCE = $erroractionpreference
 $MOUSE_CORE_URL = 'https://raw.github.com/kiedtl/mouse/master/lib/core.ps1'
 $SCOOP_CORE_URL = 'https://raw.github.com/lukesampson/scoop/lib/core.ps1'
@@ -10,13 +36,13 @@ Invoke-Expression (new-object net.webclient).downloadstring($CORE_URL)
 Write-Host " done" -f Green
 
 if (($PSVersionTable.PSVersion.Major) -lt 3) {
-    error "PowerShell 3 or greater is required to run Scoop."
+    error "PowerShell 3 or greater is required to run Mouse."
     error "Upgrade PowerShell: https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell"
     break
 }
 
 if ([System.Enum]::GetNames([System.Net.SecurityProtocolType]) -notcontains 'Tls12') {
-    error "Scoop requires at least .NET Framework 4.5"
+    error "Mouse requires at least .NET Framework 4.5"
     error "Please download and install it first:"
     error "https://www.microsoft.com/net/download"
     break
@@ -50,15 +76,18 @@ Write-Host "Creating directories..." -NoNewline
 Set-Location $HOME/.mouse/
 New-Item -Path . -Name "share" -ItemType "directory"
 Set-Location $HOME/.mouse/share/
-New-Item -Path . -Name "repo" -ItemType "directory"
+New-Item -Path . -Name "tmp" -ItemType "directory"
 Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
-Set-Location $HOME/.mouse/share/repo/
+Set-Location $HOME/.mouse/share/tmp/
 git init
-$HOME/.mouse/lib/hub.exe create my-mouse-repo -d "My Mouse repository"
+$HUB_OUTPUT = $HOME/.mouse/lib/hub.exe create my-mouse-repo -d "My Mouse repository" | Out-String
+Set-Location ..
+$repo = ($HUB_OUTPUT.Split("`n"))[1]
+git clone $repo ./repo/
 Write-Host " done`n" -f Green 
-success "Created GitHub repository 'my-mouse-repo'"
+success "Created GitHub repository $repo"
 
 if (!$isWindows) {
     warn "You are using an unsupported platform." 
