@@ -1,7 +1,5 @@
 function command_files {
-    (Get-ChildItem (relpath '..\libexec')) `
-        + (Get-ChildItem "$scoopdir\shims") `
-        | Where-Object { $_.name -match 'mouse-.*?\.ps1$' }
+    (Get-ChildItem (relpath '..\libexec')) | Where-Object { $_.name -match 'mouse-.*?\.ps1$' }
 }
 
 function commands {
@@ -9,29 +7,15 @@ function commands {
 }
 
 function command_name($filename) {
-    $filename.name | Select-String 'scoop-(.*?)\.ps1$' | ForEach-Object { $_.matches[0].groups[1].value }
+    $filename.name | Select-String 'mouse-(.*?)\.ps1$' | ForEach-Object { $_.matches[0].groups[1].value }
 }
 
 function command_path($cmd) {
-    $cmd_path = relpath "..\libexec\scoop-$cmd.ps1"
-
-    # built in commands
-    if (!(Test-Path $cmd_path)) {
-        # get path from shim
-        $shim_path = "$scoopdir\shims\scoop-$cmd.ps1"
-        $line = ((Get-Content $shim_path) | Where-Object { $_.startswith('$path') })
-        if($line) {
-            Invoke-Expression -command "$line"
-            $cmd_path = $path
-        }
-        else { $cmd_path = $shim_path }
-    }
-
+    $cmd_path = relpath "..\libexec\mouse-$cmd.ps1"
     $cmd_path
 }
 
 function exec($cmd, $arguments) {
     $cmd_path = command_path $cmd
-
     & $cmd_path @arguments
 }
