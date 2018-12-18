@@ -27,7 +27,7 @@ if ($err) {
 }
 
 if (!$files) {
-    abort "ERROR File list not provided. Stop."
+    abort "mouse: ***** File or directory list not provided. Stop."
 }
 
 
@@ -47,10 +47,10 @@ $files | ForEach-Object {
             git add $name
 
             if (!opt.message) {
-                git commit -m "Added and committed $name on $dtime"
+                git commit -q -m "Added and committed $name on $dtime"
             }
             else {
-                git commit -m "${opt.message}"
+                git commit -q -m "${opt.message}"
             }
         }
         else {
@@ -60,10 +60,10 @@ $files | ForEach-Object {
             [IO.Compression.ZipFile]::CreateFromDirectory($_, $dirdest)
             git add "${basename}.zip"
             if (!opt.message) {
-                git commit -m "Added and committed $name on $dtime"
+                git commit -q -m "Added and committed $name on $dtime"
             }
             else {
-                git commit -m "${opt.message}"
+                git commit -q -m "${opt.message}"
             }
         }
 
@@ -77,8 +77,11 @@ $files | ForEach-Object {
         if (!(Test-Path "$psscriptroot\..\share\repo\info")) {
             New-Item -Path . -Name "info" -ItemType "directory"
         }
-        ($psscriptroot\..\lib\touch.ps1) ("$psscriptroot\..\share\repo\info\$name.mouseinfo")
+        ($psscriptroot\..\lib\touch.ps1) ("$psscriptroot\..\share\repo\info\$name.info")
         Set-Content -Path ("$psscriptroot\..\share\repo\info\$name.info") -Value $filejson
+
+        git add .
+        git commit -q -m "Added $name.info info file"
 
     }
     else {
@@ -86,5 +89,12 @@ $files | ForEach-Object {
     }
 }
 
-git push origin master
-success "Completed task and pushed repository to GitHub."
+if (test_internet) {
+    git push origin master > ("$psscriptroot\..\share\dump.tmp")
+    success "Added items and pushed repository to GitHub."
+}
+
+else {
+    success "Successfully added files."
+    warn "Mouse was unable to push to GitHub: there does not appear to be an internet connection."
+}
