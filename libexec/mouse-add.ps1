@@ -83,7 +83,7 @@ $files | ForEach-Object {
         $filejson = $fileinfo | ConvertTo-Json
         if (!(Test-Path "$psscriptroot\..\share\repo\info")) {
             Set-Location ~\.mouse\share\repo\
-            New-Item -Path . -Name "info" -ItemType "directory"
+            New-Item -Path . -Name "info" -ItemType "directory" > ..\dump.tmp
         }
         & $TOUCH ("$psscriptroot\..\share\repo\info\$name.info")
         Set-Content -Path ("$psscriptroot\..\share\repo\info\$name.info") -Value $filejson
