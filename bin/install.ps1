@@ -66,21 +66,21 @@ git clone -q http://github.com/kiedtl/mouse.git ./.mouse
 Write-Host " done" -f Green
 
 Write-Host 'Adding Mouse to PATH...' -NoNewline
-Set-Location ${HOME}/.mouse/
+Set-Location "${HOME}/.mouse/"
 ./lib/shim.ps1 "./bin/mouse.ps1" 
 Write-Host " done`n" -f Green
 
 Write-Host "Creating directories..." -NoNewline
-Set-Location ${HOME}/.mouse/
+Set-Location "${HOME}/.mouse/"
 New-Item -Path . -Name "share" -ItemType "directory"
-Set-Location ${HOME}/.mouse/share/
+Set-Location "${HOME}/.mouse/share/"
 New-Item -Path . -Name "tmp" -ItemType "directory"
 Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
-Set-Location ${HOME}/.mouse/share/tmp/
+Set-Location "${HOME}/.mouse/share/tmp/"
 git init
-$HUB_OUTPUT = ${HOME}/.mouse/lib/hub.exe create my-mouse-repo -d "My Mouse repository" | Out-String
+$HUB_OUTPUT = "$psscriptroot/.mouse/lib/hub.exe" create my-mouse-repo -d "My Mouse repository" | Out-String
 Set-Location ..
 $repo = ($HUB_OUTPUT.Split("`n"))[1]
 git clone $repo ./repo/
