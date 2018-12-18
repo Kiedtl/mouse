@@ -37,11 +37,12 @@ if(!($cmd)) {
 
 Commands:"
     print_summaries
-    "Type 'scoop help <command>' to get help for a specific command."
+    "Type 'mouse help <command>' to get help for a specific command."
 } elseif($commands -contains $cmd) {
     print_help $cmd
 } else {
-    "mouse help: command '$cmd' is not a valid command"; exit 1
+    "mouse help: command '$cmd' is not a valid command"
+    exit 1
 }
 
 exit 0
