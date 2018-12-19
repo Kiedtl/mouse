@@ -75,7 +75,7 @@ $files | ForEach-Object {
         }
 
         $fileinfo = New-Object -TypeName PSObject
-        $fileinfo | Add-Member -NotePropertyName opath -NotePropertyValue $_
+        $fileinfo | Add-Member -NotePropertyName opath -NotePropertyValue (friendly_path$_)
         $fileinfo | Add-Member -NotePropertyName oname -NotePropertyValue $name
         $fileinfo | Add-Member -NotePropertyName obnme -NotePropertyValue $basename
         $fileinfo | Add-Member -NotePropertyName isdir -NotePropertyValue $isDirectory
