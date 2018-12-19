@@ -55,7 +55,7 @@ $files | Foreach-Object {
                 Remove-Item ("$HOME\.mouse\dat\info\$_.info")
             }
             else {
-                warn "The file or directory info/$_.info does not exist. Please report this bug." 
+                warn "The file or directory info/$_.info does not exist." 
             }
         }
         else {
