@@ -20,7 +20,7 @@ $opt, $files, $err = getopt $args 'm:' 'message'
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 Push-Location
-Set-Location ~\.mouse
+Set-Location $HOME
 
 if ($err) {
     $err | ForEach-Object {
