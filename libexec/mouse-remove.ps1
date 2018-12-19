@@ -52,18 +52,22 @@ $files | Foreach-Object {
             if ((Test-Path ("$HOME\.mouse\dat\info\$_.info"))) {
                 Remove-Item ("$HOME\.mouse\dat\info\$_.info")
             }
+            else {
+                warn "The file or directory info/$_.info does not exist. Please report this bug." 
+            }
         }
         else {
             if ((Test-Path ("$HOME\.mouse\dat\info\$_.zip.info"))) {
                 Remove-Item ("$HOME\.mouse\dat\info\$_.zip.info")
             }
+            else {
+                warn "The file or directory info/$_.zip.info does not exist. Please report this bug." 
+            }
         }
         git add .
         git commit -q -m "Removed $_.info"
     }
-    else {
-        warn "The file or directory info/$_.info does not exist. Please report this bug." 
-    }
+
 
 if (test_internet) {
     git push origin master > ("$psscriptroot\..\share\dump.tmp")
