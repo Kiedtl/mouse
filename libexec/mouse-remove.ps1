@@ -48,8 +48,8 @@ $files | Foreach-Object {
                     Remove-Item ("$HOME\.mouse\dat\$_.zip")
         }
     }
-        git add .
-        git commit -q -m "Removed $_"
+    git add . > "$psscriptroot\..\share\dump.tmp"
+    git commit -q -m "Removed $_" > "$psscriptroot\..\share\dump.tmp"
         if (!$opt.directory) {
             if ((Test-Path ("$HOME\.mouse\dat\info\$_.info"))) {
                 Remove-Item ("$HOME\.mouse\dat\info\$_.info")
@@ -66,8 +66,8 @@ $files | Foreach-Object {
                 warn "The file or directory info/$_.zip.info does not exist. Please report this bug." 
             }
         }
-        git add .
-        git commit -q -m "Removed $_.info"
+    git add . > "$psscriptroot\..\share\dump.tmp"
+    git commit -q -m "Removed $_.info" > "$psscriptroot\..\share\dump.tmp"
     }
 
 
