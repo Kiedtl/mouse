@@ -18,7 +18,7 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\config.ps1"
 
 $opt, $files, $err = getopt $args 'dm:' 'directory', 'message'
-
+Push-Location
 
 if ($err) {
     $err | ForEach-Object {
@@ -30,6 +30,8 @@ if ($err) {
 if (!$files) {
     abort "mouse: ***** File or directory list not provided. Stop."
 }
+
+Set-Location $HOME
 
 $files | Foreach-Object {
     $_ = unfriendly_path $_
@@ -78,3 +80,5 @@ else {
     success "Successfully added files."
     warn "Mouse was unable to push to GitHub: there does not appear to be an internet connection."
 }
+
+Pop-Location
