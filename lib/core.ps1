@@ -1,3 +1,13 @@
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+function unzip_dir
+{
+    param([string]$src, [string]$dest)
+    [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
+}
+function zip_dir {
+    param([string]$src, [string]$dest)
+    [IO.Compression.ZipFile]::CreateFromDirectory($src, "$dest")
+}
 function Get-UserAgent() {
     $version = Get-Content ("$psscriptroot\..\share\version.dat")
     return ("Mouse/$version (+http://mouse.projects.kiedtl.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
