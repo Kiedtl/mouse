@@ -39,16 +39,16 @@ $files | ForEach-Object {
     info "Adding $_"
     $dtime = Get-Date
     $isDirectory = ((Get-Item $_) -is [System.IO.DirectoryInfo])
-    $dirdest = "$psscriptroot\..\share\repo\${name}.zip"
+    $dirdest = "$HOME/.mouse/dat/${name}.zip"
     if ((Test-Path $_)) {
         if (!$isDirectory) {
-            if (Test-Path "$psscriptroot\..\share\repo\$name")
+            if (Test-Path "$HOME/.mouse/dat/${name}")
             {
-                Remove-Item "$psscriptroot\..\share\repo\$name"
+                Remove-Item "$HOME/.mouse/dat/${name}"
                 warn "Overwriting $name"
             }
-            Copy-Item $_ ("$psscriptroot\..\share\repo\$name")
-            Set-Location ~\.mouse\share\repo\
+            Copy-Item $_ ("$HOME/.mouse/dat/${name}")
+            Set-Location ~\.mouse\dat\
             git add $name
 
             if (!$opt.message) {
@@ -64,7 +64,7 @@ $files | ForEach-Object {
                 warn "Overwriting $dirdest"
             }
             [IO.Compression.ZipFile]::CreateFromDirectory($_, $dirdest)
-            Set-Location ~\.mouse\share\repo\
+            Set-Location ~\.mouse\dat
             git add "${name}.zip"
             if (!$opt.message) {
                 git commit -q -m "Added and committed $name on $dtime"
@@ -81,31 +81,31 @@ $files | ForEach-Object {
         $fileinfo | Add-Member -NotePropertyName isdir -NotePropertyValue $isDirectory
         $fileinfo | Add-Member -NotePropertyName dates -NotePropertyValue (Get-Date)
         $filejson = $fileinfo | ConvertTo-Json
-        if (!(Test-Path "$psscriptroot\..\share\repo\info")) {
+        if (!(Test-Path "$HOME/.mouse/dat/info")) {
             Set-Location ~\.mouse\share\repo\
             New-Item -Path . -Name "info" -ItemType "directory" > ..\dump.tmp
         }
-        & $TOUCH ("$psscriptroot\..\share\repo\info\$name.info")
-        Set-Content -Path ("$psscriptroot\..\share\repo\info\$name.info") -Value $filejson
-        Set-Location ~\.mouse\share\repo\
+        & $TOUCH ("$HOME\.mouse\dat\info\$name.info")
+        Set-Content -Path ("$HOME\.mouse\dat\info\$name.info") -Value $filejson
+        Set-Location ~\.mouse\dat\
         git add .
         git commit -q -m "Added $name.info info file"
 
     }
     else {
-        abort "mouse: ***** The file or directory $name does not exist or is hidden. Stop."
+        error "The file $_ does not exist or is hidden."
     }
 }
 
 if (test_internet) {
-    Set-Location ~\.mouse\share\repo\
+    Set-Location ~\.mouse\dat\
     git push origin master > ("$psscriptroot\..\share\dump.tmp")
     success "Added items and pushed repository to GitHub."
 }
 
 else {
     success "Successfully added files."
-    warn "Mouse was unable to push to GitHub: there does not appear to be an internet connection."
+    warn "Mouse was unable to push to GitHub; there does not appear to be an internet connection."
 }
 
 Pop-Location
