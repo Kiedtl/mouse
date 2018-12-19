@@ -13,6 +13,7 @@
 Add-Type -assembly "System.IO.Compression.Filesystem"
 
 . "$psscriptroot\..\lib\core.ps1"
+. "$psscriptroot\..\lib\getopt.ps1"
 
 $opt, $blah, $err = getopt $args 'n:' 'nosync'
 
