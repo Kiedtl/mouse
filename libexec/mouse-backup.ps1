@@ -20,7 +20,7 @@ $opt, $blah, $err = getopt $args 'n:' 'nosync'
 Push-Location
 Set-Location $HOME/.mouse/dat/
 
-Get-ChildItem info\*.info | Foreach-ChildItem {
+Get-ChildItem info\*.info | Foreach-Object {
     $name = $_.Name
     $basename = $_.BaseName
 
