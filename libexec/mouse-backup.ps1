@@ -35,7 +35,7 @@ Get-ChildItem info\*.info | Foreach-Object {
         info "Backed up the file ${friendly_filepath}"
     }
     else {
-        [IO.Compression.ZipFile]::CreateFromDirectory($filepath, "$HOME\.mouse\dat\${filename}")
+        [IO.Compression.ZipFile]::CreateFromDirectory($filepath, "$HOME\.mouse\dat\${filename}.zip")
     }
 }
 
