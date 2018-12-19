@@ -73,7 +73,7 @@ function spinner_sticks {
         start-sleep -m $sleeptime
     }
 }
-function spinner_sticks {
+function spinner_braille {
     param(
         [int]$cycles,
         [int]$sleeptime,
