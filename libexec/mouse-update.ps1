@@ -1,3 +1,4 @@
+
 # Usage: mouse update
 # Summary: Updates Mouse
 # Help: Updates Mouse to the latest version on GitHub by a simple
@@ -10,7 +11,7 @@ $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.da
 if (test_internet) {
     $newver = dl_string $nvurl
     Push-Location
-    Set-Location "$psscriptroot\..\"
+    Set-Location "$HOME/.mouse/app"
     git pull origin master -q > "$psscriptroot\..\share\dump.tmp"
     Set-Content -Path "share\version.dat" -Value $newver
     Write-Host " done" -f Green
@@ -18,5 +19,5 @@ if (test_internet) {
 }
 else {
     Write-Host " error" -f Red
-    abort "mouse: ***** Mouse was unable to connect to the network. Stop."
+    abort "mouse: ***** Unable to connect to the network. Stop."
 }

@@ -31,41 +31,39 @@ if (!$files) {
     abort "mouse: ***** File or directory list not provided. Stop."
 }
 
-
 $files | Foreach-Object {
     $_ = unfriendly_path $_
-}
-
-
-$files | Foreach-Object {
-    if ((Test-Path ("$psscriptroot\..\share\repo\$_"))) {
-        if (!opt.directory) {
-            Remove-Item ("$psscriptroot\..\share\repo\$_")
+    if (!$opt.directory) {
+        if ((Test-Path ("$HOME\.mouse\dat\$_")) {
+            Remove-Item ("$HOME\.mouse\dat\$_")
         }
         else {
-            Remove-Item ("$psscriptroot\..\share\repo\$_.zip")
+            error "The file or directory $_ does not exist."
         }
-        git add .
-        git commit -q -m "Removed $_"
     }
     else {
-       error "The file or directory $_ does not exist." 
+            if ((Test-Path ("$HOME\.mouse\dat\$_.zip")) {
+                    Remove-Item ("$HOME\.mouse\dat\$_.zip")
+            }
     }
-
-    if ((Test-Path ("$psscriptroot\..\share\repo\$_.info"))) {
-        if (!opt.directory) {
-            Remove-Item ("$psscriptroot\..\share\repo\$_.info")
+        git add .
+        git commit -q -m "Removed $_"
+        if (!$opt.directory) {
+            if ((Test-Path ("$HOME\.mouse\dat\info\$_.info"))) {
+                Remove-Item ("$HOME\.mouse\dat\info\$_.info")
+            }
         }
         else {
-            Remove-Item ("$psscriptroot\..\share\repo\$_.zip.info")
+            if ((Test-Path ("$HOME\.mouse\dat\info\$_.zip.info"))) {
+                Remove-Item ("$HOME\.mouse\dat\info\$_.zip.info")
+            }
         }
         git add .
         git commit -q -m "Removed $_.info"
     }
     else {
-        error "The file or directory $_.info does not exist. Please report this bug." 
+        warn "The file or directory info/$_.info does not exist. Please report this bug." 
     }
-}
 
 if (test_internet) {
     git push origin master > ("$psscriptroot\..\share\dump.tmp")

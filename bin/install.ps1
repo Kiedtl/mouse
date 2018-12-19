@@ -56,29 +56,33 @@ if ((Get-ExecutionPolicy) -gt 'RemoteSigned' -or (Get-ExecutionPolicy) -eq 'ByPa
     break
 }
 
+Push-Location
+
+
 Write-Host "Downloading..." -NoNewline
 Set-Location $HOME
-git clone -q http://github.com/kiedtl/mouse.git ./.mouse
+New-Item -Path . -Name ".mouse" -ItemType "directory" > dump.tmp
+Set-Location $HOME/.mouse
+git clone -q http://github.com/kiedtl/mouse.git ./app
 Write-Host " done" -f Green
 
 Write-Host 'Adding Mouse to PATH...' -NoNewline
-Set-Location "${HOME}/.mouse/"
+Set-Location "${HOME}/.mouse/app/"
 ./lib/shim.ps1 "./bin/mouse.ps1" 
 Write-Host " done" -f Green
 
 Write-Host "Creating directories..." -NoNewline
 Set-Location "${HOME}/.mouse/"
-Set-Location "${HOME}/.mouse/share/"
-New-Item -Path . -Name "repo" -ItemType "directory" > dump.tmp
+New-Item -Path . -Name "dat" -ItemType "directory" > dump.tmp
+Set-Location "${HOME}/.mouse/dat"
 Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
-Set-Location "${HOME}/.mouse/share/repo/"
-git init > ../dump.tmp
-$HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository; see kiedtl/mouse" | Out-String
+git init > ../app/share/dump.tmp
+$HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository;" | Out-String
 Write-Host " done" -f Green 
 Write-Host "Created GitHub repository $repo" 
-Set-Location $HOME
+Pop-Location
 success "`nMouse was successfully installed!"
 success "Type `mouse help` for instructions."
 
