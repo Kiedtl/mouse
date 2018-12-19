@@ -13,13 +13,14 @@
 Add-Type -assembly "System.IO.Compression.Filesystem"
 
 . "$psscriptroot\..\lib\core.ps1"
+. "$psscriptroot\..\lib\getopt.ps1"
 
 $opt, $blah, $err = getopt $args 'n:' 'nosync'
 
 Push-Location
 Set-Location $HOME/.mouse/dat/
 
-Get-ChildItem info\*.info | Foreach-ChildItem {
+Get-ChildItem info\*.info | Foreach-Object {
     $name = $_.Name
     $basename = $_.BaseName
 
@@ -42,7 +43,7 @@ Set-location $HOME/.mouse/dat/
 
 if (test_internet) {
     if (!$opt.nosync) {
-        git push orign master > ../app/share/dump.tmp
+        git push origin master > ../app/share/dump.tmp
         success "Synchronized repository with GitHub"
     }
     else {
