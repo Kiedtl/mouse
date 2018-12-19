@@ -15,6 +15,7 @@ if (test_internet) {
     git pull origin master -q > "$psscriptroot\..\share\dump.tmp"
     Set-Content -Path "share\version.dat" -Value $newver
     Write-Host " done" -f Green
+    git commit -a -q -m "Updated Mouse"
     success "Successfully updated Mouse to $newver`n"
     Pop-Location
 }
