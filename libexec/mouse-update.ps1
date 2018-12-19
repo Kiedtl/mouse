@@ -16,6 +16,7 @@ if (test_internet) {
     Set-Content -Path "share\version.dat" -Value $newver
     Write-Host " done" -f Green
     success "Successfully updated Mouse to version $newver"
+    Pop-Location
 }
 else {
     Write-Host " error" -f Red
