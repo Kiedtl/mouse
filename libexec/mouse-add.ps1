@@ -82,7 +82,7 @@ $files | ForEach-Object {
         $fileinfo | Add-Member -NotePropertyName dates -NotePropertyValue (Get-Date)
         $filejson = $fileinfo | ConvertTo-Json
         if (!(Test-Path "$HOME/.mouse/dat/info")) {
-            Set-Location ~\.mouse\share\repo\
+            Set-Location ~\.mouse\dat\
             New-Item -Path . -Name "info" -ItemType "directory" > ..\dump.tmp
         }
         & $TOUCH ("$HOME\.mouse\dat\info\$name.info")
