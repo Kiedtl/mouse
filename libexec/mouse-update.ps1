@@ -6,7 +6,7 @@
 
 . "$psscriptroot\..\lib\core.ps1"
 
-Write-Host "Updating..." -NoNewline
+spinner_sticks 10 80 "Updating Mouse..."
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
 if (test_internet) {
     $newver = dl_string $nvurl
@@ -14,8 +14,8 @@ if (test_internet) {
     Set-Location "$HOME/.mouse/app"
     git pull origin master -q > "$psscriptroot\..\share\dump.tmp"
     Set-Content -Path "share\version.dat" -Value $newver
+    git commit -a -q -m "Updated Mouse" > ..\app\share\dump.tmp
     Write-Host " done" -f Green
-    git commit -a -q -m "Updated Mouse"
     success "Successfully updated Mouse to $newver`n"
     Pop-Location
 }
