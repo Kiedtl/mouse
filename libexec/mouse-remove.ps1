@@ -59,8 +59,8 @@ $files | Foreach-Object {
             }
         }
         else {
-            if ((Test-Path ("$HOME\.mouse\dat\info\$_.zip.info"))) {
-                Remove-Item ("$HOME\.mouse\dat\info\$_.zip.info")
+            if ((Test-Path ("$HOME\.mouse\dat\info\$_.info"))) {
+                Remove-Item ("$HOME\.mouse\dat\info\$_.info")
             }
             else {
                 warn "The file or directory info/$_.zip.info does not exist. Please report this bug." 
