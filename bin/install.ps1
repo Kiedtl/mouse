@@ -81,7 +81,15 @@ Write-Host "Creating GitHub repository..." -NoNewline
 git init > ../app/share/dump.tmp
 $HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository;" | Out-String
 Write-Host " done" -f Green 
-Write-Host "Created GitHub repository $repo" 
+Write-Host "Created GitHub repository $repo"
+
+Write-Host "Initializing Git LFS" -NoNewline
+Set-Location $HOME/.mouse/dat/
+git lfs track "*.zip" > ../app/share/dump.tmp
+git add .gitattributes > ../app/share/dump.tmp
+git commit -a -q -m "Initialized Git LFS"
+Write-Host " done" -f Green
+
 Pop-Location
 success "`nMouse was successfully installed!"
 success "Type `mouse help` for instructions."
