@@ -8,7 +8,7 @@
 #
 # Options:
 #   -m, --message               Use a custom Git commit message
-
+#   -n, --nosync                Don't synchronize repository with GitHub
 
 Add-Type -assembly "System.IO.Compression.Filesystem"
 
@@ -16,7 +16,7 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\getopt.ps1"
 . "$psscriptroot\..\lib\config.ps1"
 
-$opt, $files, $err = getopt $args 'm:' 'message'
+$opt, $files, $err = getopt $args 'm:n' 'message', 'nosync'
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 Push-Location
@@ -99,8 +99,14 @@ $files | ForEach-Object {
 
 if (test_internet) {
     Set-Location ~\.mouse\dat\
-    git push origin master > ("$psscriptroot\..\share\dump.tmp")
-    success "Added items and pushed repository to GitHub."
+    if (!$opt.nosync) {
+        git push orign master > ../app/share/dump.tmp
+        info "Synchronized repository with GitHub."
+    }
+    else {
+        info "Option --nosync set, skipping synchronization."
+    }
+    success "Successfully added files."
 }
 
 else {
