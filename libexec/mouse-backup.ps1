@@ -43,7 +43,7 @@ Set-location $HOME/.mouse/dat/
 
 if (test_internet) {
     if (!$opt.nosync) {
-        git push orign master > ../app/share/dump.tmp
+        git push origin master > ../app/share/dump.tmp
         success "Synchronized repository with GitHub"
     }
     else {
