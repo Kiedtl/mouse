@@ -34,7 +34,7 @@ if (!$files) {
 $files | Foreach-Object {
     $_ = unfriendly_path $_
     if (!$opt.directory) {
-        if ((Test-Path ("$HOME\.mouse\dat\$_")) {
+        if ((Test-Path ("$HOME\.mouse\dat\$_"))) {
             Remove-Item ("$HOME\.mouse\dat\$_")
         }
         else {
@@ -42,9 +42,9 @@ $files | Foreach-Object {
         }
     }
     else {
-            if ((Test-Path ("$HOME\.mouse\dat\$_.zip")) {
+        if ((Test-Path ("$HOME\.mouse\dat\$_.zip"))) {
                     Remove-Item ("$HOME\.mouse\dat\$_.zip")
-            }
+        }
     }
         git add .
         git commit -q -m "Removed $_"
