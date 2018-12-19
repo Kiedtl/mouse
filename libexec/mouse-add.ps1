@@ -100,7 +100,7 @@ $files | ForEach-Object {
 if (test_internet) {
     Set-Location ~\.mouse\dat\
     if (!$opt.nosync) {
-        git push origin master > ../app/share/dump.tmp
+        git push origin master > "$psscriptroot\..\share\dump.tmp"
         info "Synchronized repository with GitHub."
     }
     else {
