@@ -34,6 +34,7 @@ if (!$files) {
 }
 
 $files | ForEach-Object {
+    $rawpath = (friendly_path (friendly_path $_))
     $_ = unfriendly_path $_
     $name = fname $_
     info "Adding $_"
@@ -75,7 +76,7 @@ $files | ForEach-Object {
         }
 
         $fileinfo = New-Object -TypeName PSObject
-        $fileinfo | Add-Member -NotePropertyName opath -NotePropertyValue (friendly_path $_)
+        $fileinfo | Add-Member -NotePropertyName opath -NotePropertyValue (friendly_path $rawpath)
         $fileinfo | Add-Member -NotePropertyName oname -NotePropertyValue $name
         $fileinfo | Add-Member -NotePropertyName obnme -NotePropertyValue $basename
         $fileinfo | Add-Member -NotePropertyName isdir -NotePropertyValue $isDirectory
