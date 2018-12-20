@@ -92,7 +92,7 @@ Remember to contribute all your work to branch `develop` - master is strictly fo
 
 ### Project Tree
 ```
-kiedtl ~\source\mouse git:? master ? ~3 -0 ! ??? gc tree.json | convertfrom-json | treewiz -d -q
+kiedtl ~\source\mouse git: master ≣ ~3 -8 ! ❯❯❯ gc tree.json | convertfrom-json | treewiz -d -q
 
 source/mouse
 |   LICENSE				The license for Mouse (MIT)
