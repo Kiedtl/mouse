@@ -18,6 +18,8 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 $opt, $blah, $err = getopt $args 'n:' 'nosync'
 
 Push-Location
+Set-Location $HOME/.mouse/dat
+git-crypt unlock
 Set-Location $HOME/.mouse/dat/
 
 Get-ChildItem info\*.info | Foreach-Object {
@@ -58,5 +60,7 @@ else {
     success "Backed up file successfully."
     warn "Synchronization was skipped because there is not internet connaction."
 }
+Set-Location $HOME/.mouse/dat
+git-crypt lock
 Pop-Location
 
