@@ -26,7 +26,7 @@ set-strictmode -off
 . (relpath '..\lib\commands')
 
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
-
+$FIGLET = "$psscriptroot\..\lib\figlet.exe"
 
 $commands = commands
 if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
@@ -39,6 +39,16 @@ if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
         Write-Host ("$newver") -f Blue
     }
 }
-elseif (@($null, '--help', '/?') -contains $cmd -or $args[0] -contains '-h') { exec 'help' $args }
-elseif ($commands -contains $cmd) { exec $cmd $args }
-else { "mouse: '$cmd' isn't a valid command. Try 'mouse help'."; exit 1 }
+elseif ('mouse' -contains $cmd -or (!$cmd -and '--mouse' -contains $args)) {
+    & $FIGLET -f small -c mouse
+}
+elseif (@($null, '--help', '/?') -contains $cmd -or $args[0] -contains '-h') {
+    exec 'help' $args
+}
+elseif ($commands -contains $cmd) {
+    exec $cmd $args
+}
+else {
+    Write-Host "mouse: '$cmd' isn't a valid command. Try 'mouse help'." 
+    exit 1
+}
