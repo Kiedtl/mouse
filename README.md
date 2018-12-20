@@ -1,6 +1,6 @@
 
 <p align="center">
-<img href="http://kiedtl.surge.sh/img/mouse.png" />
+<img src="http://kiedtl.surge.sh/img/mouse.png" alt="mouse logo yay"/>
 <h1>Mouse</h1>
 </p>
 - - -
