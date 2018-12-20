@@ -27,6 +27,7 @@ set-strictmode -off
 
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
 
+
 $commands = commands
 if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
     Write-Host "Current Mouse Version: " -NoNewLine
