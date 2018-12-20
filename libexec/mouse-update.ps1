@@ -11,7 +11,7 @@ $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.da
 if (test_internet) {
     Push-Location;
 
-    $slp = Invoke-Command -ComputerName $env:ComputerName -ScriptBlock { start-sleep -s 2; } -AsJob
+    $slp = Invoke-Command -ComputerName $env:ComputerName -ScriptBlock { start-sleep -m 500; } -AsJob
     $sleeptime = 80;
     $text = "Updating Mouse... "
     
@@ -27,7 +27,7 @@ if (test_internet) {
         start-sleep -m $sleeptime
     }
 
-    $sleep = Invoke-Command -ComputerName $env:ComputerName -ScriptBlock { start-sleep -s 5; } -AsJob
+    $sleep = Invoke-Command -ComputerName $env:ComputerName -ScriptBlock { start-sleep -m 800; } -AsJob
     $sleeptime = 80;
     $text = "Updating Mouse... initializing"
     
@@ -89,7 +89,7 @@ if (test_internet) {
             start-sleep -m $sleeptime
     }
     
-        Write-Host "`r`r[ - ] Updating Mouse.... " -NoNewline
+        Write-Host "`r`r[ - ] Updating Mouse..." -NoNewline
         Write-Host " done                     " -f Green
         success "Successfully updated Mouse to $newver`n"
         Pop-Location

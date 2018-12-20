@@ -1,4 +1,4 @@
-# Mouse
+<p align="center"><h1>Mouse</h1></p>
 - - -
 <p align="center"><a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/languages/code-size/kiedtl/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/repo-size/kiedtl/mouse.svg" alt="Repository size" /></a>
@@ -6,7 +6,6 @@
 <a href="https://github.com/kiedtl/mouse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kiedtl/mouse.svg" alt="License" /></a></p>
 </p><p align="center"><a href="http://spacemacs.org"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" /></a></p>
 
----
 
 Mouse is a simple, cross-platform way to manage, store, and backup your configuration files using GitHub repositories.
 
@@ -78,7 +77,116 @@ PR's are welcome, as long as they conform to the basic code style of this reposi
 Remember to contribute all your work to branch `develop` - master is strictly for finished, tested, debugged code ready for deployment. Contributions to branch `master` **WILL NOT** be accepted.
 
 ### Project Tree
-Coming soon!
+```
+kiedtl ~\source\mouse git:? develop ? ~3 -0 ! ??? gc tree.json | convertfrom-json | filewz -d -q
+source/mouse
+|   LICENSE				The license for Mouse (MIT)
+|   README.md				The README
+|
++---bin					Main scripts for Mouse
+|       install.ps1			Installation script
+|       mouse.ps1			Main entrypoint for Mouse
+|
++---lib
+|   |   commands.ps1
+|   |   config.ps1
+|   |   core.ps1
+|   |   cow-conversion.txt
+|   |   cowsay.ps1
+|   |   cowthink.ps1
+|   |   figlet.exe
+|   |   getopt.ps1
+|   |   git.ps1
+|   |   help.ps1
+|   |   hub.exe
+|   |   json.ps1
+|   |   say.ps1
+|   |   shim.ps1
+|   |   touch.ps1
+|   |
+|   +---cows
+|   |       beavis.zen.cow
+|   |       bong.cow
+|   |       bud-frogs.cow
+|   |       bunny.cow
+|   |       cheese.cow
+|   |       cower.cow
+|   |       daemon.cow
+|   |       default.cow
+|   |       dragon-and-cow.cow
+|   |       dragon.cow
+|   |       elephant-in-snake.cow
+|   |       elephant.cow
+|   |       eyes.cow
+|   |       flaming-sheep.cow
+|   |       ghostbusters.cow
+|   |       head-in.cow
+|   |       hellokitty.cow
+|   |       kiss.cow
+|   |       kitty.cow
+|   |       koala.cow
+|   |       kosh.cow
+|   |       luke-koala.cow
+|   |       meow.cow
+|   |       milk.cow
+|   |       moofasa.cow
+|   |       moose.cow
+|   |       mutilated.cow
+|   |       ren.cow
+|   |       satanic.cow
+|   |       sheep.cow
+|   |       skeleton.cow
+|   |       small.cow
+|   |       sodomized.cow
+|   |       stegosaurus.cow
+|   |       stimpy.cow
+|   |       supermilker.cow
+|   |       surgery.cow
+|   |       telebears.cow
+|   |       three-eyes.cow
+|   |       turkey.cow
+|   |       turtle.cow
+|   |       tux.cow
+|   |       udder.cow
+|   |       vader-koala.cow
+|   |       vader.cow
+|   |       www.cow
+|   |
+|   +---fonts
+|   |       banner.flf
+|   |       big.flf
+|   |       block.flf
+|   |       bubble.flf
+|   |       digital.flf
+|   |       ivrit.flf
+|   |       lean.flf
+|   |       mini.flf
+|   |       mnemonic.flf
+|   |       script.flf
+|   |       shadow.flf
+|   |       slant.flf
+|   |       small.flf
+|   |       smscript.flf
+|   |       smshadow.flf
+|   |       smslant.flf
+|   |       standard.flf
+|   |       term.flf
+|   |
+|   \---lib
+|           opts.ps1
+|
++---libexec
+|       mouse-add.ps1
+|       mouse-backup.ps1
+|       mouse-help.ps1
+|       mouse-remove.ps1
+|       mouse-restore.ps1
+|       mouse-update.ps1
+|
+\---share
+        dump.tmp
+        version.dat
+```
 
 ## Credits
 Thanks to the maintainers of [Scoop](http://github.com/lukesampson/scoop), especially Luke Sampson, from whose repository I stole a lot of code from to put into `lib/core.ps1`.
