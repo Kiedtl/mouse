@@ -1,9 +1,9 @@
 
 <p align="center">
-<img href="http://kiedtl.surge.sh/img/mouse.png" />
-<h1>Mouse</h1>
+<img src="http://kiedtl.surge.sh/img/mouse.png" alt="mouse logo yay"/></p>
+<p align="center" ><h1 align="center">Mouse</h1>
 </p>
-- - -
+<hr />
 <p align="center"><a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/languages/code-size/kiedtl/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/repo-size/kiedtl/mouse.svg" alt="Repository size" /></a>
  <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/badge/lines%20of%20code-1720%2B-yellow.svg" alt="Lines of code" /></a> <a href="https://travis-ci.org/Kiedtl/mouse"><img src="https://travis-ci.org/Kiedtl/mouse.svg?branch=master" alt="Travis-CI" /></a>
@@ -92,7 +92,7 @@ Remember to contribute all your work to branch `develop` - master is strictly fo
 
 ### Project Tree
 ```
-kiedtl ~\source\mouse git:? master ? ~3 -0 ! ??? gc tree.json | convertfrom-json | treewiz -d -q
+kiedtl ~\source\mouse git: master ≣ ~3 -8 ! ❯❯❯ gc tree.json | convertfrom-json | treewiz -d -q
 
 source/mouse
 |   LICENSE				The license for Mouse (MIT)
