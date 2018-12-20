@@ -1,4 +1,8 @@
-# Mouse
+
+<p align="center">
+<img href="http://kiedtl.surge.sh/img/mouse.png" />
+<h1>Mouse</h1>
+</p>
 - - -
 <p align="center"><a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/languages/code-size/kiedtl/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/repo-size/kiedtl/mouse.svg" alt="Repository size" /></a>
@@ -6,7 +10,6 @@
 <a href="https://github.com/kiedtl/mouse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kiedtl/mouse.svg" alt="License" /></a></p>
 </p><p align="center"><a href="http://spacemacs.org"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" /></a></p>
 
----
 
 Mouse is a simple, cross-platform way to manage, store, and backup your configuration files using GitHub repositories.
 
@@ -71,6 +74,16 @@ Every so often, I release a new version of Mouse via the `master` branch of this
 mouse update
 ```
 
+### **Uninstalling Mouse**
+If you don't like Mouse, you think its buggy and unpredictable, or if you just don't like its name, thats okay. Just run in the terminal:
+```powershell
+mouse uninstall
+```
+and it will remove the `.mouse` folder and remove `$HOME/.mouse/app/bin/mouse.ps1` from your PATH.
+
+## Easter eggs
+I've buried at least 10 easter eggs in Mouse. If you think you've found one, remember to file an issue!
+
 ## Contributing
 PR's are welcome, as long as they conform to the basic code style of this repository:
 - In the command implementation files (e.g. `libexec/mouse-help.ps1`), the Powershell code should **NOT** use any aliases. (for example, type `Foreach-Object { ... }` instead of `% { ... }`.)
@@ -78,7 +91,55 @@ PR's are welcome, as long as they conform to the basic code style of this reposi
 Remember to contribute all your work to branch `develop` - master is strictly for finished, tested, debugged code ready for deployment. Contributions to branch `master` **WILL NOT** be accepted.
 
 ### Project Tree
-Coming soon!
+```
+kiedtl ~\source\mouse git:? master ? ~3 -0 ! ??? gc tree.json | convertfrom-json | treewiz -d -q
+
+source/mouse
+|   LICENSE				The license for Mouse (MIT)
+|   README.md				The README
+|
++---bin					Main scripts for Mouse
+|       install.ps1			Installation script
+|       mouse.ps1			Main entrypoint for Mouse
+|
++---lib					Utility scripts and dependencies
+|   |   commands.ps1			Command parser
+|   |   core.ps1			Collection of helper functions
+|   |   cow-conversion.txt		Dependency for cowsay.ps1 and cowthink.ps1
+|   |   cowsay.ps1			Dependency
+|   |   cowthink.ps1			Dependency
+|   |   figlet.exe			Dependency
+|   |   getopt.ps1			Command argument parser
+|   |   git.ps1
+|   |   help.ps1			Help parser
+|   |   hub.exe				Dependency for installation script
+|   |   json.ps1
+|   |   say.ps1				Dependency
+|   |   shim.ps1			Dependency for installation script
+|   |   touch.ps1			Dependency
+|   |
+|   +---cows				Dependency for cowsay.ps1
+|   |       ...
+|   |
+|   +---fonts				Dependency for figlet.exe
+|   |       ...
+|   |
+|   \---lib				
+|           opts.ps1			Argument parser (same as getopt.ps1)
+|
++---libexec				Mouse command implementations
+|       mouse-add.ps1			'Add' command
+|       mouse-backup.ps1		'Backup' command
+|       mouse-help.ps1		'Help' command
+|       mouse-remove.ps1		'Remove' command
+|       mouse-restore.ps1		'Restore' command
+|       mouse-update.ps1		'Update' command
+|
+\---share					Shared data
+        dump.tmp
+        version.dat			Latest version data
+```
 
 ## Credits
-Thanks to the maintainers of [Scoop](http://github.com/lukesampson/scoop), especially Luke Sampson, from whose repository I stole a lot of code from to put into `lib/core.ps1`.
+Thanks to the maintainers of [Scoop](http://github.com/lukesampson/scoop), especially Luke Sampson, from whose repository I stole a lot of stuff.
+
