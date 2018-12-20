@@ -8,6 +8,7 @@
 
 $newver = dl_string $nvurl;
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
+          
 if (test_internet) {
     Push-Location;
 
