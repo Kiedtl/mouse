@@ -15,6 +15,7 @@ function Get-UserAgent() {
 function abort($msg, [int] $exit_code=1) { write-host $msg -f red; exit $exit_code }
 function error($msg) { write-host "ERROR $msg" -f red }
 function warn($msg) {  write-host "WARN  $msg" -f yellow }
+
 function info($msg) {  write-host "INFO  $msg" -f gray }
 function debug($msg, $indent = $false) {
     if($indent) {
