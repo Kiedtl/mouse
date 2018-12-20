@@ -95,19 +95,19 @@ Remember to contribute all your work to branch `develop` - master is strictly fo
 kiedtl ~\source\mouse git: master ≣ ~3 -8 ! ❯❯❯ gc tree.json | convertfrom-json | treewiz -d -q
 
 source/mouse
-|   LICENSE				The license for Mouse (MIT)
-|   README.md				The README
-|
-+---bin					Main scripts for Mouse
+| LICENSE			    	The license for Mouse  
+| README.md				    The README                
+|                                                    
++---bin					    Main scripts for Mouse
 |       install.ps1			Installation script
 |       mouse.ps1			Main entrypoint for Mouse
 |
-+---lib					Utility scripts and dependencies
-|   |   commands.ps1			Command parser
++---lib					    Utility scripts and dependencies
+|   |   commands.ps1		Command parser
 |   |   core.ps1			Collection of helper functions
-|   |   cow-conversion.txt		Dependency for cowsay.ps1 and cowthink.ps1
+|   |   cow-conversion.txt	Dependency for cowsay.ps1 and cowthink.ps1
 |   |   cowsay.ps1			Dependency
-|   |   cowthink.ps1			Dependency
+|   |   cowthink.ps1		Dependency
 |   |   figlet.exe			Dependency
 |   |   getopt.ps1			Command argument parser
 |   |   git.ps1
@@ -125,15 +125,15 @@ source/mouse
 |   |       ...
 |   |
 |   \---lib				
-|           opts.ps1			Argument parser (same as getopt.ps1)
+|           opts.ps1		Argument parser (same as getopt.ps1)
 |
-+---libexec				Mouse command implementations
-|       mouse-add.ps1			'Add' command
-|       mouse-backup.ps1		'Backup' command
++---libexec				    Mouse command implementations
+|       mouse-add.ps1		'Add' command
+|       mouse-backup.ps1	'Backup' command
 |       mouse-help.ps1		'Help' command
-|       mouse-remove.ps1		'Remove' command
-|       mouse-restore.ps1		'Restore' command
-|       mouse-update.ps1		'Update' command
+|       mouse-remove.ps1	'Remove' command
+|       mouse-restore.ps1	'Restore' command
+|       mouse-update.ps1	'Update' command
 |
 \---share					Shared data
         dump.tmp
