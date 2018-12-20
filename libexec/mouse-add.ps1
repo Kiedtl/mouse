@@ -20,6 +20,8 @@ $opt, $files, $err = getopt $args 'm:n' 'message', 'nosync'
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 Push-Location
+Set-Location $HOME/.mouse/dat
+git-crypt unlock
 Set-Location $HOME
 
 if ($err) {
@@ -115,4 +117,6 @@ else {
     warn "Mouse was unable to push to GitHub; there does not appear to be an internet connection."
 }
 
+Set-Location $HOME/.mouse/dat
+git-crypt lock
 Pop-Location

@@ -1,7 +1,7 @@
 
 # Usage: mouse update
 # Summary: Updates Mouse
-# Help: Updates Mouse to the latest version on GitHub by a simple
+# Help: Updates Mouse to the latest version on GitHub with a simple
 #       `git pull`.
 
 . "$psscriptroot\..\lib\core.ps1"
