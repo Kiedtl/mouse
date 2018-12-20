@@ -11,6 +11,8 @@ $opt, $files, $err = getopt $args 'b:' 'blah'
 $COWSAY = ("$psscriptroot\..\lib\cowsay.ps1")
 
 Push-Location
+Set-Location $HOME/.mouse/dat
+git-crypt unlock
 Set-Location $HOME/.mouse/dat/
 
 # Easter egg
@@ -124,5 +126,7 @@ else {
 
 Set-location $HOME/.mouse/dat/
 success "Restored files successfully."
+Set-Location $HOME/.mouse/dat
+git-crypt lock
 Pop-Location
 
