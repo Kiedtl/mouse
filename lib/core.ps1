@@ -55,5 +55,177 @@ function friendly_path($path) {
 }
 function unfriendly_path($path) { return "$path" -replace "~", "$HOME" }
 function is_local($path) { ($path -notmatch '^https?://') -and (test-path $path) }
-function relpath($path) { "$($myinvocation.psscriptroot)\$path" } 
+function relpath($path) { "$($myinvocation.psscriptroot)\$path" }
+function spinner_sticks {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r[ | ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ / ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ - ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ \ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+function spinner_ucva {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r[ u ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ c ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ v ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ a ] $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+
+function spinner_stars {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r[ * ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ + ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ x ] $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+function spinner_o1 {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r(●    ) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r( ●   ) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(  ●  ) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(   ● ) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(    ●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(   ● ) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(  ●  ) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r( ●   ) $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+function spinner_o2 {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r( ●●●●●●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(  ●●●●●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(   ●●●●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(●   ●●●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(●●   ●●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(●●●   ●) $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r(●●●●   ) $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+function spinner_eq1 {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r[=    ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ =   ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[  =  ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[   = ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[    =] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[   = ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[  =  ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ =   ] $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+function spinner_eq2 {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r[ ======] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[  =====] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[   ====] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[=   ===] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[==   ==] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[===   =] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[===    ] $text" -NoNewline
+        start-sleep -m $sleeptime
+    }
+}
+function spinner_braille {
+    param(
+        [int]$cycles,
+        [int]$sleeptime,
+        [string]$text
+    )
+    1..$cycles | % {
+        write-host "`r`r[ ⣾ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⣷ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⣯ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⣟ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⡿ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⢿ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⣻ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+        write-host "`r`r[ ⣽ ] $text" -NoNewline
+        start-sleep -m $sleeptime
+
+    }
+}
 
