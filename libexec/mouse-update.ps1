@@ -13,10 +13,10 @@ if (test_internet) {
     Push-Location;
     $newver = dl_string $nvurl;
     Set-Location "$HOME/.mouse/app";
-    git stash > $psscriptroot\..\share\dump.tmp
-    git pull origin master -q | Out-Null
+    git stash | Out-Null
+    git pull origin master --quiet | Out-Null
     Set-Content -Path "share\version.dat" -Value $newver;
-    git commit -a -q -m "Updated Mouse" > ..\app\share\dump.tmp;
+    git commit -a -q -m "Updated Mouse" | Out-Null
 
     Write-Host "`r`r[ - ] Updating Mouse..." -NoNewline
     Write-Host " done                        " -f Green
