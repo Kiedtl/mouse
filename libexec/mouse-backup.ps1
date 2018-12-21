@@ -19,7 +19,7 @@ $opt, $blah, $err = getopt $args 'n:' 'nosync'
 
 Push-Location
 Set-Location $HOME/.mouse/dat
-git-crypt unlock
+git-crypt unlock $HOME/.mouse/git_crypt_key.key
 Set-Location $HOME/.mouse/dat/
 
 Get-ChildItem info\*.info | Foreach-Object {
