@@ -10,7 +10,7 @@ if ($confimation -eq $null) {
 }
 $conf = $confirmation.ToLower()
 
-if (($conf -eq "yes") -or ($conf -eq "y")) {
+if ($conf -eq "y" -or $conf -eq "yes") {
     & $UNINSTALL_SCRIPT
 }
 else {
