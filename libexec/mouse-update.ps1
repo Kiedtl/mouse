@@ -14,7 +14,7 @@ if (test_internet) {
     $newver = dl_string $nvurl;
     Set-Location "$HOME/.mouse/app";
     git stash > $HOME/.mouse/dump.tmp
-    git pull origin master --quiet | Out-Null
+    git pull origin master --quiet --force | Out-Null
     Set-Content -Path "share\version.dat" -Value $newver;
     git commit -a -q -m "Updated Mouse" | Out-Null
 
