@@ -1,23 +1,4 @@
 # Copyright (c) 2018 Kied T Llaentenn
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation
-# the rights to use, copy, modify, merge, publish, distribute, sublicense,
-# and/or sell copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-#
 # Usage:
 # `Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/Kiedtl/mouse/master/bin/install.ps1"))`
 # Summary: Installs Mouse on a windows/Linux/macOS computer in ~/.mouse
@@ -79,11 +60,11 @@ Write-Host " done" -f Green
 
 Write-Host "Creating GitHub repository..." -NoNewline
 git init > ../app/share/dump.tmp
-$HUB_OUTPUT = hub.exe create my-mouse-repo -d "My personal Mouse repository;" | Out-String
+$HUB_OUTPUT = hub create my-mouse-repo -d "My personal Mouse repository;" | Out-String
 Write-Host " done" -f Green 
 Write-Host "Created GitHub repository $repo"
 
-Write-Host "Initializing Git LFS" -NoNewline
+Write-Host "Initializing Git LFS..." -NoNewline
 Set-Location $HOME/.mouse/dat/
 git lfs track "*.zip" > ../app/share/dump.tmp
 git add .gitattributes > ../app/share/dump.tmp
@@ -92,14 +73,14 @@ Write-Host " done" -f Green
 
 Set-Location $HOME/.mouse/dat/
 git-crypt init > ../app/share/dump.tmp
-Add-Content -Path .gitattributes -Value "*authinfo* filter=git-crypt diff=git-crypt"
-Add-Content -Path .gitattributes -Value "*auth* filter=git-crypt diff=git-crypt"
-Add-Content -Path .gitattributes -Value "*rsa* filter=git-crypt diff=git-crypt"
-Add-Content -Path .gitattributes -Value "info/*.info filter=git-crypt diff=git-crypt"
-Add-Content -Path .gitattributes -Value "*/*.info filter=git-crypt diff=git-crypt"
-Add-Content -Path .gitattributes -Value "*.info filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value "* filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value ".gitattributes !filter !diff"
+New-Item -Path . -Name "info" -ItemType "directory" > dump.tmp
+Add-Content -Path .gitattributes -Value "* filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value ".gitattributes !filter !diff"
 git add .gitattributes > ../app/share/dump.tmp
 git commit -a -q -m "Initialized Git-Crypt"
+
 git-crypt export-key $HOME/.mouse/git_crypt_key.key
 
 git-crypt lock

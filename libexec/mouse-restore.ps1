@@ -12,7 +12,8 @@ $COWSAY = ("$psscriptroot\..\lib\cowsay.ps1")
 
 Push-Location
 Set-Location $HOME/.mouse/dat
-git-crypt unlock
+git-crypt unlock $HOME/.mouse/git_crypt_key.key
+git pull origin master --allow-unrelated-histories
 Set-Location $HOME/.mouse/dat/
 
 # Easter egg
