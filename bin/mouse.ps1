@@ -35,5 +35,5 @@ elseif ($commands -contains $cmd) {
 }
 else {
     Write-Host "mouse: '$cmd' isn't a valid command. Try 'mouse help'." 
-    exit 1
+    exit 12
 }

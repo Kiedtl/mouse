@@ -19,7 +19,7 @@ $opt, $blah, $err = getopt $args 'n:' 'nosync'
 
 Push-Location
 Set-Location $HOME/.mouse/dat
-git-crypt unlock
+git-crypt unlock $HOME/.mouse/git_crypt_key.key
 Set-Location $HOME/.mouse/dat/
 
 Get-ChildItem info\*.info | Foreach-Object {
@@ -48,6 +48,7 @@ Set-location $HOME/.mouse/dat/
 
 if (test_internet) {
     if (!$opt.nosync) {
+        git pull origin master --allow-unrelated-histories | Out-Null
         git push origin master > ../app/share/dump.tmp
         success "Synchronized repository with GitHub"
     }
