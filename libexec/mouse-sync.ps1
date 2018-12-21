@@ -11,6 +11,7 @@ $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 Push-Location
 Set-Location $HOME/.mouse/dat
+git-crypt lock
 
 git pull origin master --allow-unrelated-histories
 git push origin master

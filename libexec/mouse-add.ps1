@@ -21,7 +21,7 @@ $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 Push-Location
 Set-Location $HOME/.mouse/dat
-git-crypt unlock
+git-crypt unlock $HOME/.mouse/git_crypt_key.key
 Set-Location $HOME
 
 if ($err) {
@@ -98,6 +98,7 @@ $files | ForEach-Object {
     }
     else {
         abort "mouse: ***** The file $_ does not exist or is hidden. Stop.
+
 "
     }
 }
