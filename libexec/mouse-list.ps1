@@ -11,6 +11,8 @@ $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
 Push-Location
 Set-Location $HOME/.mouse/dat
+git commit -q -a -m "Automatic modifications by Mouse"
+git stash | Out-Null
 git-crypt unlock $HOME/.mouse/git_crypt_key.key
 Set-Location $HOME/.mouse/app
 
