@@ -48,6 +48,7 @@ Set-location $HOME/.mouse/dat/
 
 if (test_internet) {
     if (!$opt.nosync) {
+        git pull origin master --allow-unrelated-histories | Out-Null
         git push origin master > ../app/share/dump.tmp
         success "Synchronized repository with GitHub"
     }

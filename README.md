@@ -22,10 +22,12 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - [Git](http://git-scm.com) installed and configured.
 - [Git LFS](http://github.com/git-lfs/git-lfs) must be installed.
 - [Hub](http://github.com/github/hub) must installed and configured.
+- Gnu Privacy Guard (GPG)
+- Git-Crypt
 Most of the above, except the .NET Framework, can be installed with [Scoop](http://github.com/lukesampson/scoop) on Windows, and Homebrew on macOS. For example, on Windows one could run:
 ```powershell
-scoop install pwsh git
-scoop install git-lfs hub
+scoop install pwsh git gpg
+scoop install git-lfs hub git-crypt
 ```
 ...and Scoop would automatically download, install, and add each of these apps to your PATH.
 
