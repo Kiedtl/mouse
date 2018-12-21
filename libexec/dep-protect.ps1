@@ -1,3 +1,8 @@
+# WARNING: THIS FILE IS STILL UNDER DEVELOPMENT.
+# IT IS NOT RECOMMENDED FOR USERS TO USE THE FUNCTIONS
+# DEFINED IN THIS FILE.
+
+
 # Usage: mouse protect [ item | lock | unlock | expkey | adduser | status]
 # Summary: Manage Mouse's encryption functions with Git-Crypt.
 # Help: Configure Mouse to protect a particular file or directory, to lock or  
@@ -45,29 +50,21 @@ elseif ($cmd -eq "file") {
     $file = $arg1
     Set-Location $HOME/.mouse/dat
     git-crypt unlock
-    if ((Test-Path $file)) {
         Add-Content -Path .gitattributes -Value "$file filter=git-crypt diff=git-crypt"
         git add .gitattributes > ../app/share/dump.tmp
         git commit -a -q -m "Protected file $file with Git-Crypt"
-    }
-    else {
-        error "The file $file does not exist or is hidden"
-    }
-    git-crypt lock
+        git-crypt lock
 }
 elseif ($cmd -eq "dir") {
     $dir = "${arg1}.zip"
     $rdir = $arg1
     Set-Location $HOME/.mouse/dat
     git-crypt unlock
-    if ((Test-Path "$dir")) {
+
         Add-Content -Path .gitattributes -Value "$dir filter=git-crypt diff=git-crypt"
         git add .gitattributes > ../app/share/dump.tmp
         git commit -a -q -m "Protected directory $rdir with Git-Crypt"
-    }
-    else {
-        error "The directory $rdir does not exist or is hidden"
-    }
+
     git-crypt lock
 }
 elseif ($cmd -eq "lock") {
@@ -76,7 +73,7 @@ elseif ($cmd -eq "lock") {
 }
 elseif ($cmd -eq "unlock") {
     Set-Location $HOME/.mouse/dat
-    Set-Location $HOME/.mouse/da
+    Set-Location $HOME/.mouse/dat
     git-crypt unlock
 }
 elseif ($cmd -eq "expkey") {
