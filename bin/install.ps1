@@ -90,13 +90,17 @@ git add .gitattributes > ../app/share/dump.tmp
 git commit -a -q -m "Initialized Git LFS"
 Write-Host " done" -f Green
 
-Write-Host "Initializing Git-Crypt" -NoNewline
 Set-Location $HOME/.mouse/dat/
 git-crypt init > ../app/share/dump.tmp
+Add-Content -Path .gitattributes -Value "*authinfo* filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value "*auth* filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value "*rsa* filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value "info/*.info filter=git-crypt diff=git-crypt"
+Add-Content -Path .gitattributes -Value "*/*.info filter=git-crypt diff=git-crypt"
 Add-Content -Path .gitattributes -Value "*.info filter=git-crypt diff=git-crypt"
 git add .gitattributes > ../app/share/dump.tmp
 git commit -a -q -m "Initialized Git-Crypt"
-Write-Host " done" -f Green
+git-crypt export-key $HOME/.mouse/git_crypt_key.key
 
 git-crypt lock
 Pop-Location
