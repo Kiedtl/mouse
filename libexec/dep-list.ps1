@@ -9,18 +9,22 @@
 
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
 
+Set-Location $HOME/.mouse/dat
+
 Push-Location
 Set-Location $HOME/.mouse/dat
 git commit -q -a -m "Automatic modifications by Mouse"
 git stash | Out-Null
+Set-Location $HOME/.mouse/dat
 git-crypt unlock $HOME/.mouse/git_crypt_key.key
-Set-Location $HOME/.mouse/app
+Set-Location $HOME/.mouse/dat/info
 
 $list = @{}
 
 # Now the party starts
-Get-ChildItem ../dat\.\info/.\*.info | Foreach-Object {
+Get-ChildItem .\*.info | Foreach-Object {
     $filejson = Get-Content $_
+    Write-Host "$filejson" -f Green
     $fileinfo = $filejson | ConvertFrom-Json
     $oname = $fileinfo.oname
     $opath = $fileinfo.opath
@@ -32,3 +36,5 @@ Get-ChildItem ../dat\.\info/.\*.info | Foreach-Object {
 }
 
 $list.getenumerator() | Sort-Object name | Format-Table -hidetablehead -autosize -wrap
+
+Pop-Location
