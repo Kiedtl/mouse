@@ -13,6 +13,12 @@
 
 Mouse is a simple, cross-platform way to manage, store, and backup your configuration files using GitHub repositories.
 
+## Features
+- Backs up everything to GitHub.
+- :lock_with_ink_pen: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
+- :sparkles: Intuitive and memorable commands.
+- :clock130: Speed that is best measured by a stopwatch, not a calendar.
+
 ## Installation Requirements
 
 - Windows 7 SP1+ / Windows Server 2008+
@@ -22,14 +28,16 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - [Git](http://git-scm.com) installed and configured.
 - [Git LFS](http://github.com/git-lfs/git-lfs) must be installed.
 - [Hub](http://github.com/github/hub) must installed and configured.
-- Gnu Privacy Guard (GPG)
-- Git-Crypt
-Most of the above, except the .NET Framework, can be installed with [Scoop](http://github.com/lukesampson/scoop) on Windows, and Homebrew on macOS. For example, on Windows one could run:
+- [GnuPG](https://gnupg.org/) must be installed (for Git-Crypt)
+- [Git-Crypt](http://github.com/agwa/git-crypt/)
+
+Most of the above can be installed with [Scoop](http://github.com/lukesampson/scoop) on Windows, and Homebrew on macOS. For example, on Windows one could run:
+
 ```powershell
 scoop install pwsh git gpg
 scoop install git-lfs hub git-crypt
 ```
-...and Scoop would automatically download, install, and add each of these apps to your PATH.
+...and Scoop would automatically download, install, and add each of these programs to your PATH.
 
 ## Installation
 
@@ -38,12 +46,14 @@ Simply run this command in PowerShell:
 iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh')
 ```
 
-Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\`, and unfortunately this cannot be changed in the current version of Mouse.
+Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\, and unfortunately this cannot be changed in the current version of Mouse.
 
-## What can Mouse do?
+**NOTE**: Mouse will automatically export the Git-Crypt key to `$HOME/.mouse/git_crypt_key.key`. It is highly recommended that this file is backed up somewhere safe - if this key is lost, you will lose all your data in Mouse.
 
-Mouse tries to make it easy to manage your configuration files (e.g., like your Powershell profile or your `.vimrc`). It backs up your configuration file by uploading to a GitHub repository. (Unless you make the GitHub repository private, anybody - *anybody* can see what is in the repository. For this reason, be very careful not add your `.authinfo` file or any other file that might contain passwords or other sensitive data.)
+## Usage
+Mouse tries to make it easy to manage your configuration files (e.g., like your Powershell profile or your `.vimrc`). It backs up your configuration file by uploading to a GitHub repository. 
 For example, to configure Mouse to track your Powershell profile, run the following code:
+
 ```powershell
 mouse add $PROFILE
 ```
@@ -81,10 +91,22 @@ If you don't like Mouse, you think its buggy and unpredictable, or if you just d
 ```powershell
 mouse uninstall
 ```
-and it will remove the `.mouse` folder and remove `$HOME/.mouse/app/bin/mouse.ps1` from your PATH.
+and it will remove the `.mouse/app` folder, the `.mouse/dat` and remove `$HOME/.mouse/app/bin/mouse.ps1` from your PATH. The uninstallation script will **NOT** remove the `.mouse/git_crypt_key.key file`, nor will it remove the GitHub repository. This must be done manually.
+
+### **Re-installing Mouse**
+1. Uninstall Mouse as shown above, by executing the `mouse uninstall` command.
+2. **Move the `.mouse/git_crypt_key.key` file to somewhere else, like `~/documents`.** 
+3. Delete the `~/.mouse/` folder.
+4. Re-install Mouse as normal, by executing (in Powershell) the command `iex (new-object net.webclient).downloadstring("http://getmouse.surge.sh/")`
+5. Then, move the key file which you moved earlier in set 2 back to where it was, in `.mouse/git_crypt_key.key`, replacing the file that was there.
+6. Run `mouse sync`.
+7. There is no seventh step. You're done!
+
+### **Mouse and the `protect` command**
+...
 
 ## Easter eggs
-I've buried at least 10 easter eggs in Mouse. If you think you've found one, remember to file an issue!
+I've buried at least 10 easter eggs in Mouse. If you think you've found one, please file an issue!
 
 ## Contributing
 PR's are welcome, as long as they conform to the basic code style of this repository:
@@ -94,31 +116,14 @@ Remember to contribute all your work to branch `develop` - master is strictly fo
 
 ### Project Tree
 ```
-kiedtl ~\source\mouse git: master ≣ ~3 -8 ! ❯❯❯ gc tree.json | convertfrom-json | treewiz -d -q
 
 source/mouse
 | LICENSE			    	The license for Mouse  
 | README.md				    The README                
 |                                                    
-+---bin					    Main scripts for Mouse
-|       install.ps1			Installation script
-|       mouse.ps1			Main entrypoint for Mouse
++---bin					    Main entrypoint for Mouse
 |
 +---lib					    Utility scripts and dependencies
-|   |   commands.ps1		Command parser
-|   |   core.ps1			Collection of helper functions
-|   |   cow-conversion.txt	Dependency for cowsay.ps1 and cowthink.ps1
-|   |   cowsay.ps1			Dependency
-|   |   cowthink.ps1		Dependency
-|   |   figlet.exe			Dependency
-|   |   getopt.ps1			Command argument parser
-|   |   git.ps1
-|   |   help.ps1			Help parser
-|   |   hub.exe				Dependency for installation script
-|   |   json.ps1
-|   |   say.ps1				Dependency
-|   |   shim.ps1			Dependency for installation script
-|   |   touch.ps1			Dependency
 |   |
 |   +---cows				Dependency for cowsay.ps1
 |   |       ...
@@ -127,19 +132,9 @@ source/mouse
 |   |       ...
 |   |
 |   \---lib				
-|           opts.ps1		Argument parser (same as getopt.ps1)
 |
 +---libexec				    Mouse command implementations
-|       mouse-add.ps1		'Add' command
-|       mouse-backup.ps1	'Backup' command
-|       mouse-help.ps1		'Help' command
-|       mouse-remove.ps1	'Remove' command
-|       mouse-restore.ps1	'Restore' command
-|       mouse-update.ps1	'Update' command
-|
 \---share					Shared data
-        dump.tmp
-        version.dat			Latest version data
 ```
 
 ## Credits
