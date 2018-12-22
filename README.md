@@ -19,6 +19,9 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - :sparkles: Intuitive and memorable commands.
 - :clock130: Speed that is best measured by a stopwatch, not a calendar.
 
+## Mouse in action
+![Mouse in action](https://raw.githubusercontent.com/Kiedtl/mouse/master/img/mouse_add.gif)
+
 ## Installation Requirements
 
 - Windows 7 SP1+ / Windows Server 2008+
