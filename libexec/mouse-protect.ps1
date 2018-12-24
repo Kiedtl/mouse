@@ -27,6 +27,7 @@ param (
 . "$psscriptroot\..\lib\core.ps1"
 
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
+$ea_cats = Get-Random -Maximum 100
 
 Push-Location
 Set-Location $HOME/.mouse/dat
@@ -34,6 +35,25 @@ git-crypt unlock $HOME/.mouse/git_crypt_key.key
 
 if ($cmd -eq $null) {
     abort "mouse: ***** Command or action not provided. Stop."
+}
+elseif ($cmd -eq "mouse") {
+    spinner_ugva 10 80 "Protecting mice..."
+    info "Removed rat traps"
+    info "Removed rat poison"
+
+    error "Unable to drown first cat."
+
+    spinner_sticks 10 80 "Drowning $cats cats..."
+    [int32]$catcount = 2
+
+    1..$cats | Foreach-Object {
+        info "Drowned ${catcount}th cat..."
+        if ($catcount -eq $cats) {
+            success "Finished protecting mice, removed traps, and drowning cats."
+            break
+        }
+        $catcount++
+    }
 }
 elseif ($cmd -eq "lock") {
     Set-Location $HOME/.mouse/dat
