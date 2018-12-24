@@ -2,17 +2,23 @@
 # Summary: Uninstalls Mouse from the local machine.
 # Help: Delete the local Mose directory and related data, but does not delete the remove repository.
 
+. "$psscriptroot\..\lib\core.ps1"
+
 $UNINSTALL_SCRIPT = "$psscriptroot\..\bin\uninstall.ps1"
 
-$confirmation = Read-Host "Are you sure?? (y/N)"
-if ($confimation -eq $null) {
-    break
-}
-$conf = $confirmation.ToLower()
+warn 'This will uninstall Mouse and delete all local data!'
+$conf = read-host 'Are you sure?? (y/N)'
 
-if ($conf -eq "y" -or $conf -eq "yes") {
-    & $UNINSTALL_SCRIPT
+# E a s t e r   e g g !!!!
+if ($conf -like '*bla*') {
+    success "Blah!"
+    exit
 }
-else {
-    break
+
+
+if ($conf -notlike 'y*') {
+    exit
 }
+
+
+& $UNINSTALL_SCRIPT
