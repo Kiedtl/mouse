@@ -5,8 +5,12 @@ Remove-Item "$HOME\AppData\Local\shims\mouse.cmd" -Force
 Remove-Item "$HOME\AppData\Local\shims\mouse.ps1" -Force
 success "Removed Mouse from your PATH"
 
-# Delete the .mouse directory
-Remove-Item -Recurse -Force "$HOME/.mouse"
-success "Deleted .mouse directory"
+# Delete Mouse
+Remove-Item -Recurse -Force "$HOME/.mouse/dat"
+success "Deleted .mouse/dat directory"
+
+Remove-Item -Recurse -Force "$HOME/.mouse/app"
+success "Finished uninstalling Mouse."
 info "Mouse cannot delete your GitHub repository. You must delete this yourself."
+
 break
