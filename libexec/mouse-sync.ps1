@@ -4,10 +4,23 @@
 
 . "$psscriptroot\..\lib\core.ps1"
 
-# . "$psscriptroot\..\lib\getopt.ps1"
-# $opt, $files, $err = getopt $args 'm:n' 'message', 'nosync'
-
+. "$psscriptroot\..\lib\getopt.ps1"
+$opt, $cmd, $err = getopt $args 'ef' 'eeeee', 'fffff'
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
+$DINORUN = ("$psscriptroot\..\lib\dinorun.exe")
+
+if ($opt.eeeee) {
+    if ($IsWindows) {
+        & $DINORUN
+    }
+    elseif ($opt.fffff) {
+        & $DINORUN
+    }
+    else {
+        success "Eeeeeeee `naeeeee `nse `nteeeeee `nee `nreeeeeeeee `ne `ngeee. `nGeee `nseee `n!ee."
+        break
+    }
+}
 
 Push-Location
 Set-Location $HOME/.mouse/dat
