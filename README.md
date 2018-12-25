@@ -14,10 +14,11 @@
 Mouse is a simple, cross-platform way to manage, store, and backup your configuration files using GitHub repositories.
 
 ## Features
-- :computer: (alomost!) Completely cross-platform - (should) works on macOS, Windows, and Linux.
+- :computer: (Almost!) completely cross-platform - (should) works on macOS, Windows, and Linux.
 - :moneybag: Absolutely free!
 - :closed_lock_with_key: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
-- :wrench: Mouse worries about updating itself and downloading patches, so you won't have to.
+- :wrench: Mouse worrie
+s about updating itself and downloading patches, so you won't have to.
 - :sparkles: Intuitive and memorable commands.
 - :clock130: Speed that is best measured by a stopwatch, not a calendar.
 - Automatically uploads everything to GitHub, so you can take your data to another computer as well.
@@ -117,7 +118,7 @@ PR's are welcome, as long as they conform to the basic code style of this reposi
 - In the supporting files, such as `lib/core.ps1`, code is expected to use every alias possible (type `gm` instead of `Get-Member`).
 Remember to contribute all your work to branch `develop` - master is strictly for finished, tested, debugged code ready for deployment. Contributions to branch `master` **WILL NOT** be accepted.
 
-### Project Tree
+### Project Layout
 ```
 
 source/mouse
@@ -137,6 +138,9 @@ source/mouse
 |   \---lib				
 |
 +---libexec				    Mouse command implementations
+|   
++---libsrc                  Mouse submodules and code for lib dependencies  
+| 
 \---share					Shared data
 ```
 
