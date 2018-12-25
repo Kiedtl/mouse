@@ -37,7 +37,7 @@ if ($cmd -eq $null) {
     abort "mouse: ***** Command or action not provided. Stop."
 }
 elseif ($cmd -eq "mouse") {
-    spinner_ugva 10 80 "Protecting mice..."
+    spinner_ucva 10 80 "Protecting mice..."
     info "Removed rat traps"
     info "Removed rat poison"
 

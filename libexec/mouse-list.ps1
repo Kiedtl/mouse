@@ -14,7 +14,7 @@ Push-Location
 Set-Location $HOME/.mouse/dat
 
 if ($opt.mice) {
-    spinner_ugva 10 80 "Listing mice..."
+    spinner_ucva 10 80 "Listing mice..."
     [int32]$mc = 1
     1..10 | Foreach-Object {
         $fname = -join ((65..90) | Get-Random -Count 100 | % {[char]$_})
