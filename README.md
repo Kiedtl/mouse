@@ -6,12 +6,22 @@
 <hr />
 <p align="center"><a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/languages/code-size/kiedtl/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/repo-size/kiedtl/mouse.svg" alt="Repository size" /></a>
- <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/badge/lines%20of%20code-1720%2B-yellow.svg" alt="Lines of code" /></a> <a href="https://travis-ci.org/Kiedtl/mouse"><img src="https://travis-ci.org/Kiedtl/mouse.svg?branch=master" alt="Travis-CI" /></a>
+ <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/badge/lines%20of%20code-1800%2B-yellow.svg" alt="Lines of code" /></a> <a href="https://travis-ci.org/Kiedtl/mouse"><img src="https://travis-ci.org/Kiedtl/mouse.svg?branch=master" alt="Travis-CI" /></a>
 <a href="https://github.com/kiedtl/mouse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kiedtl/mouse.svg" alt="License" /></a></p>
 </p><p align="center"><a href="http://spacemacs.org"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" /></a></p>
 
 
 Mouse is a simple, cross-platform way to manage, store, and backup your configuration files using GitHub repositories.
+
+## Features
+- :computer: (Almost!) completely cross-platform - (should) works on macOS, Windows, and Linux.
+- :moneybag: Absolutely free!
+- :closed_lock_with_key: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
+- :wrench: Mouse worrie
+s about updating itself and downloading patches, so you won't have to.
+- :sparkles: Intuitive and memorable commands.
+- :clock130: Speed that is best measured by a stopwatch, not a calendar.
+- Automatically uploads everything to GitHub, so you can take your data to another computer as well.
 
 ## Installation Requirements
 
@@ -22,14 +32,16 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - [Git](http://git-scm.com) installed and configured.
 - [Git LFS](http://github.com/git-lfs/git-lfs) must be installed.
 - [Hub](http://github.com/github/hub) must installed and configured.
-- Gnu Privacy Guard (GPG)
-- Git-Crypt
-Most of the above, except the .NET Framework, can be installed with [Scoop](http://github.com/lukesampson/scoop) on Windows, and Homebrew on macOS. For example, on Windows one could run:
+- [GnuPG](https://gnupg.org/) must be installed (for Git-Crypt)
+- [Git-Crypt](http://github.com/agwa/git-crypt/)
+
+Most of the above can be installed with [Scoop](http://github.com/lukesampson/scoop) on Windows, and Homebrew on macOS. For example, on Windows one could run:
+
 ```powershell
 scoop install pwsh git gpg
 scoop install git-lfs hub git-crypt
 ```
-...and Scoop would automatically download, install, and add each of these apps to your PATH.
+...and Scoop would automatically download, install, and add each of these programs to your PATH.
 
 ## Installation
 
@@ -38,21 +50,25 @@ Simply run this command in PowerShell:
 iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh')
 ```
 
-Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\`, and unfortunately this cannot be changed in the current version of Mouse.
+Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\, and unfortunately this cannot be changed in the current version of Mouse.
 
-## What can Mouse do?
+**NOTE**: Mouse will automatically export the Git-Crypt key to `$HOME/.mouse/git_crypt_key.key`. It is highly recommended that this file is backed up somewhere safe - if this key is lost, you will lose all your data in Mouse.
 
-Mouse tries to make it easy to manage your configuration files (e.g., like your Powershell profile or your `.vimrc`). It backs up your configuration file by uploading to a GitHub repository. (Unless you make the GitHub repository private, anybody - *anybody* can see what is in the repository. For this reason, be very careful not add your `.authinfo` file or any other file that might contain passwords or other sensitive data.)
-For example, to configure Mouse to track your Powershell profile, run the following code:
+## Usage
+Mouse tries to make it easy to manage your configuration files (e.g., like your Powershell profile or your `.vimrc`). It backs up your configuration file by uploading to a GitHub repository. 
+For example, to configure Mouse to track your bash profile, run the following code:
+
 ```powershell
-mouse add $PROFILE
+mouse add ~/.bashrc
 ```
 Mouse would then copy that file to its repository (located in `$HOME/.mouse/dat/`), commit the file, and then push its changes to GitHub.
 
 To remove the file, run:
 ```powershell
-mouse remove Microsoft.PowerShell_profile.ps1
+mouse remove .bashrc
 ```
+
+**Note that for ADDING a file to Mouse, you must type its full path, but for REMOVING the file, you must only type its name.**
 
 ### **Backup and Restore**
 If you changed the file and need to back up the file again, instead of running `mouse add` again, you can simply type:
@@ -67,7 +83,7 @@ mouse restore
 ```
 If you wanted to restore only ONE file, run:
 ```powershell
-mouse restore <blah>
+mouse restore <blah.blah>
 ```
 
 ### **Updating Mouse**
@@ -81,10 +97,27 @@ If you don't like Mouse, you think its buggy and unpredictable, or if you just d
 ```powershell
 mouse uninstall
 ```
-and it will remove the `.mouse` folder and remove `$HOME/.mouse/app/bin/mouse.ps1` from your PATH.
+and it will remove the `.mouse/app` folder, the `.mouse/dat` and remove `$HOME/.mouse/app/bin/mouse.ps1` from your PATH. The uninstallation script will **NOT** remove the `.mouse/git_crypt_key.key file`, nor will it remove the GitHub repository. This must be done manually.
+
+### **Re-installing Mouse**
+1. Uninstall Mouse as shown above, by executing the `mouse uninstall` command.
+2. **Move the `.mouse/git_crypt_key.key` file to somewhere else, like `~/documents`.** 
+3. Delete the `~/.mouse/` folder.
+4. Re-install Mouse as normal, by executing (in Powershell) the command `iex (new-object net.webclient).downloadstring("http://getmouse.surge.sh/")`
+5. Then, move the key file which you moved earlier in set 2 back to where it was, in `.mouse/git_crypt_key.key`, replacing the file that was there.
+6. Run `mouse sync`.
+7. There is no seventh step. You're done!
+
+### **Mouse and the `protect` command**
+...
+
+## Cross-Compatibility
+While Mouse is theoretically cross-compatible because it is built on an open-source technology, Mouse may not be completely cross-compatible in practice. One example is the easter eggs, some of which work only on Windows.
+In addition, Mouse has not been tested or debugged on any other platformo he rhan Windows 10.
+For this reason, contributions and isues outlining problems with Mouse on other platforms and providing a fix for it would be welcome.
 
 ## Easter eggs
-I've buried at least 10 easter eggs in Mouse. If you think you've found one, remember to file an issue!
+I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue!
 
 ## Contributing
 PR's are welcome, as long as they conform to the basic code style of this repository:
@@ -92,54 +125,30 @@ PR's are welcome, as long as they conform to the basic code style of this reposi
 - In the supporting files, such as `lib/core.ps1`, code is expected to use every alias possible (type `gm` instead of `Get-Member`).
 Remember to contribute all your work to branch `develop` - master is strictly for finished, tested, debugged code ready for deployment. Contributions to branch `master` **WILL NOT** be accepted.
 
-### Project Tree
+### Project Layout
 ```
-kiedtl ~\source\mouse git: master ≣ ~3 -8 ! ❯❯❯ gc tree.json | convertfrom-json | treewiz -d -q
 
 source/mouse
 | LICENSE			    	The license for Mouse  
 | README.md				    The README                
 |                                                    
-+---bin					    Main scripts for Mouse
-|       install.ps1			Installation script
-|       mouse.ps1			Main entrypoint for Mouse
++---bin					    Main entrypoint for Mouse
 |
 +---lib					    Utility scripts and dependencies
-|   |   commands.ps1		Command parser
-|   |   core.ps1			Collection of helper functions
-|   |   cow-conversion.txt	Dependency for cowsay.ps1 and cowthink.ps1
-|   |   cowsay.ps1			Dependency
-|   |   cowthink.ps1		Dependency
-|   |   figlet.exe			Dependency
-|   |   getopt.ps1			Command argument parser
-|   |   git.ps1
-|   |   help.ps1			Help parser
-|   |   hub.exe				Dependency for installation script
-|   |   json.ps1
-|   |   say.ps1				Dependency
-|   |   shim.ps1			Dependency for installation script
-|   |   touch.ps1			Dependency
-|   |
-|   +---cows				Dependency for cowsay.ps1
-|   |       ...
-|   |
-|   +---fonts				Dependency for figlet.exe
-|   |       ...
-|   |
-|   \---lib				
-|           opts.ps1		Argument parser (same as getopt.ps1)
-|
+|                                                   
+| +---cows			    	Dependency for cowsay.ps1
+|                                                   
+|                                                   
+| +---fonts			    	Dependency for figlet.exe 
+|                                                 
+|                                               
+| \---lib                                     
+|                                                 
 +---libexec				    Mouse command implementations
-|       mouse-add.ps1		'Add' command
-|       mouse-backup.ps1	'Backup' command
-|       mouse-help.ps1		'Help' command
-|       mouse-remove.ps1	'Remove' command
-|       mouse-restore.ps1	'Restore' command
-|       mouse-update.ps1	'Update' command
-|
+|   
++---libsrc                  Mouse submodules and code for lib dependencies  
+| 
 \---share					Shared data
-        dump.tmp
-        version.dat			Latest version data
 ```
 
 ## Credits
