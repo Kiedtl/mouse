@@ -107,7 +107,23 @@ and it will remove the `.mouse/app` folder, the `.mouse/dat` and remove `$HOME/.
 7. There is no seventh step. You're done!
 
 ### **Mouse and the `protect` command**
-...
+The `protect` command was intended to be a bridge between the usual Mouse user and the underlying Git-Crypt instance that Mouse utilizes to encrypt/decrypt the local repository.
+
+#### **Subcommands:**
+- lock ( `mouse protect lock` )
+- unlock ( `mouse protect unlock` )
+- expkey ( `mouse protect expkey` )
+- adduser ( `mouse protect adduser` )
+- status ( `mouse protect status` )
+
+##### `mouse protect lock`
+This command **locks** the local repository with Git-Crypt (using the command `git crypt lock`).
+Use this command when you need to manually access the data in `$HOME/.mouse/dat` without the Mouse tool. Remember to lock the repository when you have finished.
+
+#####
+
+
+<!-- TRY TYPING "MOUSE PROTECT MOUSE" -->
 
 ## Easter eggs
 I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue!
