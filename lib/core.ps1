@@ -229,4 +229,27 @@ function spinner_braille {
 
     }
 }
+function is_prime {
+    param(
+        [Parameter(ValueFromPipeline=$true)]
+        [int32]$number
+    )
+    Process {
+        $prime = $true;
+        if ($number -eq 1) {
+            $prime = $false;
+        }
+        if ($number -gt 3) {
+            $sqrt = [math]::Sqrt($number); 
+            for($i = 2; $i -le $sqrt; $i++) {
+                if ($number % $i -eq 0) {
+                    $prime = $false;
+                    break;
+                }
+            }
+        }
+        return $prime;
+    }
+}
+
 

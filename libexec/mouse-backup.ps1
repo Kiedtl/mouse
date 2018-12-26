@@ -15,12 +15,17 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\getopt.ps1"
 
-$opt, $blah, $err = getopt $args 'n:' 'nosync'
+$opt, $blah, $err = getopt $args 'yn:' 'yay', 'nosync'
+$SNAKES = "$psscriptroot\..\lib\snake.ps1"
 
 Push-Location
 Set-Location $HOME/.mouse/dat
 git-crypt unlock $HOME/.mouse/git_crypt_key.key
 Set-Location $HOME/.mouse/dat/
+
+if ($opt.yay) {
+    & $SNAKES
+}
 
 Get-ChildItem info\*.info | Foreach-Object {
     $name = $_.Name
