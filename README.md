@@ -56,19 +56,17 @@ Once the Mouse installer has completed, you can run `mouse --version` to check t
 
 ## Usage
 Mouse tries to make it easy to manage your configuration files (e.g., like your Powershell profile or your `.vimrc`). It backs up your configuration file by uploading to a GitHub repository. 
-For example, to configure Mouse to track your bash profile, run the following code:
+For example, to configure Mouse to track your Powershell profile, run the following code:
 
 ```powershell
-mouse add ~/.bashrc
+mouse add $PROFILE
 ```
 Mouse would then copy that file to its repository (located in `$HOME/.mouse/dat/`), commit the file, and then push its changes to GitHub.
 
 To remove the file, run:
 ```powershell
-mouse remove .bashrc
+mouse remove Microsoft.PowerShell_profile.ps1
 ```
-
-**Note that for ADDING a file to Mouse, you must type its full path, but for REMOVING the file, you must only type its name.**
 
 ### **Backup and Restore**
 If you changed the file and need to back up the file again, instead of running `mouse add` again, you can simply type:
@@ -83,7 +81,7 @@ mouse restore
 ```
 If you wanted to restore only ONE file, run:
 ```powershell
-mouse restore <blah.blah>
+mouse restore <blah>
 ```
 
 ### **Updating Mouse**
@@ -111,11 +109,6 @@ and it will remove the `.mouse/app` folder, the `.mouse/dat` and remove `$HOME/.
 ### **Mouse and the `protect` command**
 ...
 
-## Cross-Compatibility
-While Mouse is theoretically cross-compatible because it is built on an open-source technology, Mouse may not be completely cross-compatible in practice. One example is the easter eggs, some of which work only on Windows.
-In addition, Mouse has not been tested or debugged on any other platformo he rhan Windows 10.
-For this reason, contributions and isues outlining problems with Mouse on other platforms and providing a fix for it would be welcome.
-
 ## Easter eggs
 I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue!
 
@@ -135,15 +128,15 @@ source/mouse
 +---bin					    Main entrypoint for Mouse
 |
 +---lib					    Utility scripts and dependencies
-|                                                   
-| +---cows			    	Dependency for cowsay.ps1
-|                                                   
-|                                                   
-| +---fonts			    	Dependency for figlet.exe 
-|                                                 
-|                                               
-| \---lib                                     
-|                                                 
+|   |
+|   +---cows				Dependency for cowsay.ps1
+|   |       ...
+|   |
+|   +---fonts				Dependency for figlet.exe
+|   |       ...
+|   |
+|   \---lib				
+|
 +---libexec				    Mouse command implementations
 |   
 +---libsrc                  Mouse submodules and code for lib dependencies  
