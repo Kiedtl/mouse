@@ -38,16 +38,16 @@ if ($cmd -eq $null) {
 }
 elseif ($cmd -eq "mouse") {
     spinner_ucva 10 80 "Protecting mice..."
-    info "Removed rat traps"
+    info "`nRemoved rat traps"
     info "Removed rat poison"
 
+    info "Found $cats cats to drown"
     error "Unable to drown first cat."
-
     spinner_sticks 10 80 "Drowning $cats cats..."
-    [int32]$catcount = 2
-
+    [int32]$catcount = 1
+    Write-Host "`n" -NoNewline
     1..$cats | Foreach-Object {
-        info "Drowned ${catcount}th cat..."
+        info "Drowned cat number ${catcount}..."
         if ($catcount -eq $cats) {
             success "Finished protecting mice, removed traps, and drowning cats."
             break

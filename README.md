@@ -118,9 +118,13 @@ The `protect` command was intended to be a bridge between the usual Mouse user a
 
 ##### `mouse protect lock`
 This command **locks** the local repository with Git-Crypt (using the command `git crypt lock`).
+
+##### `mouse protect unlock`
+This command **unlocks** the local repository with Git-Crypt.
 Use this command when you need to manually access the data in `$HOME/.mouse/dat` without the Mouse tool. Remember to lock the repository when you have finished.
 
-#####
+##### `mouse protect expkey`
+Use this command to ...
 
 
 <!-- TRY TYPING "MOUSE PROTECT MOUSE" -->

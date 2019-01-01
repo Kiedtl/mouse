@@ -5,6 +5,7 @@ param($cmd)
 set-strictmode -off
 
 . "$psscriptroot\..\lib\core.ps1"
+. "$psscriptroot\..\lib\gitutils.ps1"
 . (relpath '..\lib\commands')
 
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
@@ -14,7 +15,7 @@ $CRAFT = "$psscriptroot\..\lib\craft.exe"
 
 [int32]$update = Get-Random -Maximum 13
 if ((is_prime $update)) {
-    warn "Mouse is may be out of date."
+    warn "Mouse may be out of date."
     warn "Mouse is being automatically updated."
     mouse update
 }
