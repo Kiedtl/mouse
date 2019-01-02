@@ -18,6 +18,9 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\config.ps1"
 
 $opt, $files, $err = getopt $args 'dm:' 'directory', 'message'
+$directory = $opt.directory -or $opt.d
+$message = $opt.message -or $opt.m
+
 Push-Location
 
 if ($err) {
@@ -37,7 +40,7 @@ Set-Location $HOME
 
 $files | Foreach-Object {
     $_ = unfriendly_path $_
-    if (!$opt.directory) {
+    if (!$directory) {
         if ((Test-Path ("$HOME\.mouse\dat\$_"))) {
             Remove-Item ("$HOME\.mouse\dat\$_")
         }
@@ -74,10 +77,15 @@ $files | Foreach-Object {
 
 
 if (test_internet) {
-    git push origin master > ("$psscriptroot\..\share\dump.tmp")
-    success "Removed items and pushed repository to GitHub."
+    if (!$nosync) {
+        git push origin master > ("$psscriptroot\..\share\dump.tmp")
+        success "Removed items and pushed repository to GitHub."
+    }
+    else {
+        warn "Option --nosync set, skipping synchronization"
+        success "Removed items."
+    }
 }
-
 else {
     success "Successfully added files."
     warn "Mouse was unable to push to GitHub: there does not appear to be an internet connection."

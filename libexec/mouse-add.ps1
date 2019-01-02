@@ -18,6 +18,8 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 
 $opt, $files, $err = getopt $args 'm:n' 'message', 'nosync'
 $TOUCH = ("$psscriptroot\..\lib\touch.ps1")
+$message = $opt.message -or $opt.m
+$nosync = $opt.nosync -or $opt.n
 
 Push-Location
 Set-Location $HOME/.mouse/dat
@@ -55,7 +57,7 @@ $files | ForEach-Object {
             Set-Location ~\.mouse\dat\
             git add $name
 
-            if (!$opt.message) {
+            if (!$message) {
                 git commit -q -m "Added and committed $name on $dtime"
             }
             else {
@@ -103,7 +105,7 @@ $files | ForEach-Object {
 
 if (test_internet) {
     Set-Location ~\.mouse\dat\
-    if (!$opt.nosync) {
+    if (!$nosync) {
         git pull origin master --allow-unrelated-histories > "$psscriptroot\..\share\dump.tmp"
         git push origin master > "$psscriptroot\..\share\dump.tmp"
         info "Synchronized repository with GitHub."

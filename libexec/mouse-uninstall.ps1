@@ -16,7 +16,7 @@ if ($conf -like '*bla*') {
 }
 
 if ($conf -notlike 'y*') {
-    exit
+    exit 0
 }
 
 

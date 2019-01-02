@@ -16,6 +16,9 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\getopt.ps1"
 
 $opt, $blah, $err = getopt $args 'yn:' 'yay', 'nosync'
+$yay = $opt.yay -or $opt.y
+$nosync = $opt.nosync -or $opt.n
+
 $SNAKES = "$psscriptroot\..\lib\snake.ps1"
 
 Push-Location
@@ -23,7 +26,7 @@ Set-Location $HOME/.mouse/dat
 git-crypt unlock $HOME/.mouse/git_crypt_key.key
 Set-Location $HOME/.mouse/dat/
 
-if ($opt.yay) {
+if ($yay) {
     & $SNAKES
 }
 
@@ -52,13 +55,13 @@ Get-ChildItem info\*.info | Foreach-Object {
 Set-location $HOME/.mouse/dat/
 
 if (test_internet) {
-    if (!$opt.nosync) {
+    if (!$nosync) {
         git pull origin master --allow-unrelated-histories | Out-Null
         git push origin master > ../app/share/dump.tmp
         success "Synchronized repository with GitHub"
     }
     else {
-        info "Option --nosync set, skipping synchronization"
+        warn "Option --nosync set, skipping synchronization"
     }
     success "Backed up files successfully."
 }
