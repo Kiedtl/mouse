@@ -1,3 +1,4 @@
+. "$psscriptroot\..\lib\gitutils.ps1"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 function unzip_dir
 {
@@ -251,5 +252,11 @@ function is_prime {
         return $prime;
     }
 }
+function mouse_outdated() {
+    $branch = Get-GitBranch
+    $loc_sha = git rev-parse $branch
+    $rem_sha = git rev-parse origin/$branch
 
-
+    if ($loc_sha -eq $rem_sha) { return $false }
+    else { return $true }
+}
