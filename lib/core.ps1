@@ -253,7 +253,7 @@ function is_prime {
     }
 }
 function mouse_outdated() {
-    if (!Test-Path "$HOME/.mouse/config.json") {
+    if (!(Test-Path "$HOME/.mouse/config.json")) {
         ni -path "$HOME/.mouse/config.json" -force
         sc -path "$HOME/.mouse/config.json" -value "{ `"lastupdatetime`": `"`"  }"
     }
