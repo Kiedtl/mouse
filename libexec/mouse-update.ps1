@@ -41,12 +41,12 @@ if (test_internet) {
     Set-Content -Path "share\version.dat" -Value $newver;
     git commit -a -q -m "Updated Mouse" | Out-Null
 
-    Write-Host "`r`r[ - ] Updating Mouse..." -NoNewline
-    Write-Host " done                        " -f Green
-
     if (($res -ne 0)){
+        Write-Host " error" -f Red
         abort "mouse error: Last exit code ( $lastexitcode  ) not equal to 0, update may have failed."
     }
+
+    Write-Host " done" -f Green
 
     git --no-pager log --no-decorate --date=local --since="`"$lastupdatetime`"" --format="`"tformat: * %C(yellow)%h%Creset %<|(72,trunc)%s %C(cyan)%cr%Creset`"" HEAD
     $lastupdatetime = [System.DateTime]::Now.ToString("s")
@@ -54,7 +54,6 @@ if (test_internet) {
     $config_json = $config | ConvertTo-Json
     Set-Content -Path "$HOME/.mouse/app/share/config.json" -Value $config_json
 
-    Write-Host " done" -f Green
     success "Successfully updated Mouse."
     Pop-Location
     break
