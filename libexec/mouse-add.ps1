@@ -97,9 +97,7 @@ $files | ForEach-Object {
 
     }
     else {
-        abort "mouse: ***** The file $_ does not exist or is hidden. Stop.
-
-"
+        abort "mouse: ***** The file $_ does not exist or is hidden. Stop."
     }
 }
 

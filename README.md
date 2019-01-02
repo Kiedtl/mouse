@@ -165,15 +165,15 @@ source/mouse
 +---bin					    Main entrypoint for Mouse
 |
 +---lib					    Utility scripts and dependencies
-|   |
-|   +---cows				Dependency for cowsay.ps1
-|   |       ...
-|   |
-|   +---fonts				Dependency for figlet.exe
-|   |       ...
-|   |
-|   \---lib				
-|
+|                                                    |     |
+| +---cows				Dependency for cowsay.ps1  |     |
+|                                                    | ... |
+|                                                    |     |
+| +---fonts				Dependency for figlet.exe |     |
+|                                                    | ... |
+|                                                    |     |
+| \---lib                                            |     |
+|                                                    |     |
 +---libexec				    Mouse command implementations
 |   
 +---libsrc                  Mouse submodules and code for lib dependencies  
