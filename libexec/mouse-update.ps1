@@ -23,13 +23,13 @@ if (!$git) {
 
 
 if (test_internet) {
+    Write-Host "Updating Mouse..." -NoNewline
     $config = Get-Content "$HOME/.mouse/app/share/config.json" | ConvertFrom-Json
     $lastupdatetime = $config.lastupdatetime
     if (!$lastupdatetime)
     {
         $lastupdatetime = [System.DateTime]::Now.ToString("s")
     }
-    spinner_sticks 10 80 "Updating Mouse..."
     Push-Location;
     $newver = dl_string $nvurl;
     Set-Location "$HOME/.mouse/app";
@@ -54,8 +54,10 @@ if (test_internet) {
     $config_json = $config | ConvertTo-Json
     Set-Content -Path "$HOME/.mouse/app/share/config.json" -Value $config_json
 
+    Write-Host " done" -f Green
     success "Successfully updated Mouse."
     Pop-Location
+    break
 }
 
 else {

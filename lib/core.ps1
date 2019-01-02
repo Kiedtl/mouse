@@ -253,10 +253,11 @@ function is_prime {
     }
 }
 function mouse_outdated() {
-    $branch = Get-GitBranch
-    $loc_sha = git rev-parse $branch
-    $rem_sha = git rev-parse origin/$branch
-
-    if ($loc_sha -eq $rem_sha) { return $false }
-    else { return $true }
+    $conf = gc "$HOME/.mouse/app/share/config.json" | ConvertFrom-Json
+    $last_update = $conf.lastupdatetime
+    $now = [System.DateTime]::Now
+    if($null -eq $last_update) {
+        return $true
+    }
+    return $last_update.AddHours(3) -lt $now.ToLocalTime()
 }
