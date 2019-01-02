@@ -262,7 +262,12 @@ function mouse_outdated() {
     if($null -eq $last_update_str) {
         return $true
     }
-    $last_update = [System.DateTime]::Parse($last_update_str)
+    try {
+        $last_update = [System.DateTime]::Parse($last_update_str)
+    }
+    catch {
+        return $true
+    }
     $now = [System.DateTime]::Now
 
     return $last_update.AddHours(3) -lt $now.ToLocalTime()
