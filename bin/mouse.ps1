@@ -13,10 +13,7 @@ $FIGLET = "$psscriptroot\..\lib\figlet.exe"
 $SAY = "$psscriptroot\..\lib\say.ps1"
 $CRAFT = "$psscriptroot\..\lib\craft.exe"
 
-[int32]$update = Get-Random -Maximum 13
-if ((is_prime $update)) {
-    warn "Mouse may be out of date."
-    warn "Mouse is being automatically updated."
+if (mouse_outdated) {
     mouse update
 }
 
