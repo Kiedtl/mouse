@@ -23,6 +23,12 @@ if (!$git) {
 
 
 if (test_internet) {
+    $config = Get-Content "$HOME/.mouse/app/share/config.json" | ConvertFrom-Json
+    $lastupdatetime = $config.lastupdatetime
+    if (!$lastupdatetime)
+    {
+        $lastupdatetime = [System.DateTime]::Now.ToString("s")
+    }
     spinner_sticks 10 80 "Updating Mouse..."
     Push-Location;
     $newver = dl_string $nvurl;
@@ -42,7 +48,11 @@ if (test_internet) {
         abort "mouse error: Last exit code ( $lastexitcode  ) not equal to 0, update may have failed."
     }
 
-    git --no-pager log --no-decorate --date=local --since="`"$last_update`"" --format="`"tformat: * %C(yellow)%h%Creset %<|(72,trunc)%s %C(cyan)%cr%Creset`"" HEAD
+    git --no-pager log --no-decorate --date=local --since="`"$lastupdatetime`"" --format="`"tformat: * %C(yellow)%h%Creset %<|(72,trunc)%s %C(cyan)%cr%Creset`"" HEAD
+    $lastupdatetime = [System.DateTime]::Now.ToString("s")
+    $config.lastupdatetime = $lastupdatetime
+    $config_json = $config | ConvertTo-Json
+    Set-Content -Path "$HOME/.mouse/app/share/config.json" -Value $config_json
 
     success "Successfully updated Mouse."
     Pop-Location
