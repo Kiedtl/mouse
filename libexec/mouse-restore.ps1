@@ -16,7 +16,7 @@ git-crypt unlock $HOME/.mouse/git_crypt_key.key
 git pull origin master --allow-unrelated-histories
 Set-Location $HOME/.mouse/dat/
 
-# Easter egg
+# eE-a-s-t-e*-r  e-g-g
 if ($opt.blah) {
     & $COWSAY -f dragon Blah!
 } 
@@ -80,13 +80,11 @@ else {
                 $filename = $fileinfo.oname
                 $isdir = $fileinfo.isdir
 
-                        if (!$isdir) {
+         if (!$isdir) {
             if ((Test-Path $filepath)) {
-                $confirmation = Read-Host "The file ${friendly_filepath} already exists! Overwrite? (y/N)"
-                if ($confirmation -eq "N" -or $confirmation -eq "n") {
-                    break
-                }
-                elseif ($confirmation -eq "Y" -or $confirmation -eq "y") 
+                warn "The directory $filepath already exists! "
+                $confirmation = Read-Host "Overwrite? (y/N)"
+                if ($confirmation -like "y*")
                 {
                     Remove-Item $filepath -Force
                 }
@@ -99,22 +97,17 @@ else {
         }
         else {
             if ((Test-Path $filepath)) {
-                $confirmation = Read-Host "The directory $filepath already exists! Overwrite? (y/N)"
-                if ($confirmation -eq "N" -or $confirmation -eq "n") {
-                    break
-                }
-                elseif ($confirmation -eq "Y" -or $confirmation -eq "y") 
+                warn "The directory $filepath already exists! "
+                $confirmation = Read-Host "Overwrite? (y/N)"
+                if ($confirmation -like "y*")
                 {
-                    Remove-Item -Path $filepath -Force
+                    Remove-Item $filepath -Force
                 }
                 else {
                     break
                 }
             }
             unzip_dir $filepath $file
-        }
-    }
-            }
             else {
                 error "The info file $file.info does not exist and Mouse was unable to restore the file or directory $file."
             }
@@ -123,11 +116,10 @@ else {
             error "The file or directory $_ does not exist or is hidden."
         }
     }
-}
 
 Set-location $HOME/.mouse/dat/
 success "Restored files successfully."
 Set-Location $HOME/.mouse/dat
-git-crypt lock
+git-crypt lock --force
 Pop-Location
 
