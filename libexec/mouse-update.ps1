@@ -36,15 +36,8 @@ if (test_internet) {
     git stash > $HOME/.mouse/dump.tmp
     git pull origin $branch --quiet --force | Out-Null
 
-    $res = $lastexitcode
-
     Set-Content -Path "share\version.dat" -Value $newver;
     git commit -a -q -m "Updated Mouse" | Out-Null
-
-    if (($res -ne 0)){
-        Write-Host " error" -f Red
-        abort "mouse error: Last exit code ( $lastexitcode  ) not equal to 0, update may have failed."
-    }
 
     Write-Host " done" -f Green
 
