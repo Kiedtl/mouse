@@ -25,7 +25,7 @@ s about updating itself and downloading patches, so you won't have to.
 
 ## Installation Requirements
 
-- Windows 7 SP1+ / Windows Server 2008+
+- Windows 7 SP1+
 - [PowerShell 3](https://www.microsoft.com/en-us/download/details.aspx?id=34595) (or later) 
 - [.NET Framework 4.5+](https://www.microsoft.com/net/download)
 - The Powershell execution policy must be set to RemoteSigned or ByPass.
@@ -33,7 +33,7 @@ s about updating itself and downloading patches, so you won't have to.
 - [Git LFS](http://github.com/git-lfs/git-lfs) must be installed.
 - [Hub](http://github.com/github/hub) must installed and configured.
 - [GnuPG](https://gnupg.org/) must be installed (for Git-Crypt)
-- [Git-Crypt](http://github.com/agwa/git-crypt/)
+- [Git-Crypt](http://github.com/agwa/git-crypt/) must be installed.
 
 Most of the above can be installed with [Scoop](http://github.com/lukesampson/scoop) on Windows, and Homebrew on macOS. For example, on Windows one could run:
 
@@ -123,8 +123,14 @@ This command **locks** the local repository with Git-Crypt (using the command `g
 This command **unlocks** the local repository with Git-Crypt.
 Use this command when you need to manually access the data in `$HOME/.mouse/dat` without the Mouse tool. Remember to lock the repository when you have finished.
 
-##### `mouse protect expkey`
-Use this command to ...
+##### `mouse protect expkey <path>`
+Use this command to export the Git-Crypt key to a path.
+
+##### `mouse protect adduser`
+Use tis command to add a GPG user to Git-Crypt. See the Git-Crypt documentation at http://github.com/agwa/git-crypt.
+
+##### `mouse protect status`
+Use this command to get the Git-Crypt status, such as information on which files are encrypted and which files or directories aren't. See the Git-Crypt documentation for more information.
 
 
 <!-- TRY TYPING "MOUSE PROTECT MOUSE" -->
@@ -137,6 +143,17 @@ PR's are welcome, as long as they conform to the basic code style of this reposi
 - In the command implementation files (e.g. `libexec/mouse-help.ps1`), the Powershell code should **NOT** use any aliases. (for example, type `Foreach-Object { ... }` instead of `% { ... }`.)
 - In the supporting files, such as `lib/core.ps1`, code is expected to use every alias possible (type `gm` instead of `Get-Member`).
 Remember to contribute all your work to branch `develop` - master is strictly for finished, tested, debugged code ready for deployment. Contributions to branch `master` **WILL NOT** be accepted.
+
+### Setting up Mouse repository for development
+When cloning the Mouse repository, use the `--recurse` parameter because the Mouse repository contains multile submodules:
+
+**Without SSH**
+`git clone http://github.com/kiedtl/mouse.git --recurse --verbose --progress`
+
+**With SSH**
+`git clone git@github.com:kiedtl/mouse.git --recurse --verbose --progress`
+
+Also, make sure when installing Mouse to test and debug new features pushed to the develop branch, to run `mouse develop` to switch to the devlop branch.
 
 ### Project Layout
 ```
