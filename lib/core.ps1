@@ -254,7 +254,8 @@ function is_prime {
 }
 function mouse_outdated() {
     $conf = gc "$HOME/.mouse/app/share/config.json" | ConvertFrom-Json
-    $last_update = $conf.lastupdatetime
+    $last_update_str = $conf.lastupdatetime
+    $last_update = [System.DateTime]::Parse($last_update_str)
     $now = [System.DateTime]::Now
     if($null -eq $last_update) {
         return $true
