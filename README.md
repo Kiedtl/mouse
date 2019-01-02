@@ -155,6 +155,7 @@ When cloning the Mouse repository, use the `--recurse` parameter because the Mou
 
 Also, make sure when installing Mouse to test and debug new features pushed to the develop branch, to run `mouse develop` to switch to the devlop branch.
 
+
 ### Project Layout
 ```
 

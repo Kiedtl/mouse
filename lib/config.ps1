@@ -1,4 +1,4 @@
-$cfgpath = "~/.scoop"
+$cfgpath = "~/.mouse.config"
 
 function hashtable($obj) {
     $h = @{ }
