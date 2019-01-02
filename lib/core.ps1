@@ -253,12 +253,13 @@ function is_prime {
     }
 }
 function mouse_outdated() {
-    $conf = gc "$HOME/.mouse/app/share/config.json" | ConvertFrom-Json
+    $conf = gc "$HOME/.mouse/config.json" | ConvertFrom-Json
     $last_update_str = $conf.lastupdatetime
-    $last_update = [System.DateTime]::Parse($last_update_str)
-    $now = [System.DateTime]::Now
-    if($null -eq $last_update) {
+    if($null -eq $last_update_str) {
         return $true
     }
+    $last_update = [System.DateTime]::Parse($last_update_str)
+    $now = [System.DateTime]::Now
+
     return $last_update.AddHours(3) -lt $now.ToLocalTime()
 }

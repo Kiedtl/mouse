@@ -24,7 +24,7 @@ if (!$git) {
 
 if (test_internet) {
     Write-Host "Updating Mouse..." -NoNewline
-    $config = Get-Content "$HOME/.mouse/app/share/config.json" | ConvertFrom-Json
+    $config = Get-Content "$HOME/.mouse/config.json" | ConvertFrom-Json
     $lastupdatetime = $config.lastupdatetime
     if (!$lastupdatetime)
     {
@@ -45,7 +45,7 @@ if (test_internet) {
     $lastupdatetime = [System.DateTime]::Now.ToString("s")
     $config.lastupdatetime = $lastupdatetime
     $config_json = $config | ConvertTo-Json
-    Set-Content -Path "$HOME/.mouse/app/share/config.json" -Value $config_json
+    Set-Content -Path "$HOME/.mouse/config.json" -Value $config_json
 
     success "Successfully updated Mouse."
     Pop-Location
