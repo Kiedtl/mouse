@@ -136,7 +136,7 @@ Use this command to get the Git-Crypt status, such as information on which files
 <!-- TRY TYPING "MOUSE PROTECT MOUSE" -->
 
 ## Easter eggs
-I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue!
+I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue with the `easter egg` label!
 
 ## Contributing
 PR's are welcome, as long as they conform to the basic code style of this repository:
