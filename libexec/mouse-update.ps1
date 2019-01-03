@@ -41,7 +41,8 @@ if (test_internet) {
 
     Write-Host " done" -f Green
 
-    git --no-pager log --no-decorate --date=local --since="`"$lastupdatetime`"" --format="`"tformat: * %C(yellow)%h%Creset %<|(72,trunc)%s %C(cyan)%cr%Creset`"" HEAD
+    git --no-pager log --no-decorate --date=local --since="`"$lastupdatetime`"" --format="`"tformat: - %C(yellow)%h%Creset %<|(72,trunc)%s %C(cyan)%cr%Creset`"" HEAD
+
     $lastupdatetime = [System.DateTime]::Now.ToString("s")
     $config.lastupdatetime = $lastupdatetime
     $config_json = $config | ConvertTo-Json

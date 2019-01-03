@@ -12,6 +12,7 @@ set-strictmode -off
 # Mouse command implementations
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\gitutils.ps1"
+. "$psscriptroot\..\lib\errors.ps1"
 . (relpath '..\lib\commands')
 
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
@@ -76,9 +77,21 @@ elseif ('--mouse' -contains $cmd -or (!$cmd -and '-z' -contains $args)) {
 # `--help` or `-h`
 elseif (@($null, '--help', '/?') -contains $cmd -or $args[0] -contains '-h') {
     exec 'help' $args
+    exit 8
 }
+# Execute appropriate command
 elseif ($commands -contains $cmd) {
-    exec $cmd $args
+    try {
+        exec $cmd $args
+    }
+    catch {
+        debug "An unhandled exception was thrown in Mouse."
+        debug "Please report the following error code:"
+        $err = (Get-ErrorString $_ "mouse.ps1" "${cmd}|${args}" (getversion )
+        debug "Error string: ${err}" $true
+        exit 70
+    }
+    exit 0
 }
 else {
     Write-Host "mouse: '$cmd' isn't a valid command. Try 'mouse help'." 

@@ -20,7 +20,7 @@ function warn($msg) {  write-host "WARN  $msg" -f yellow }
 function info($msg) {  write-host "INFO  $msg" -f gray }
 function debug($msg, $indent = $false) {
     if($indent) {
-        write-host "    DEBUG $msg" -f magenta
+        write-host "`tDEBUG $msg" -f magenta
     } else {
         write-host "DEBUG $msg" -f magenta
     }
@@ -267,8 +267,11 @@ function mouse_outdated() {
     }
     catch {
         return $true
+
     }
     $now = [System.DateTime]::Now
-
     return $last_update.AddHours(3) -lt $now.ToLocalTime()
+}
+function getversion() {
+    return (Get-Content ("$psscriptroot\..\share\version.dat"))
 }
