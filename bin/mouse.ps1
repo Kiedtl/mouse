@@ -85,10 +85,10 @@ elseif ($commands -contains $cmd) {
         exec $cmd $args
     }
     catch {
-        debug "An unhandled exception was thrown in Mouse."
-        debug "Please report the following error code:"
+        error "An unhandled exception was thrown in Mouse."
+        error "Please report the following error code:"
         $err = (Get-ErrorString $_ "mouse.ps1" "${cmd}|${args}" (getversion ))
-        debug "Error string: ${err}" $true
+        info "`tError string: ${err}" 
         exit 70
     }
     exit 0
