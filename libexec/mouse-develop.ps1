@@ -6,8 +6,8 @@
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\gitutils.ps1"
 
-Pop-Location
-Set-Location $HOME/.mouse/
+Push-Location
+Set-Location $HOME/.mouse/app/
 
 $curr_branch = Get-GitBranch
 
@@ -22,4 +22,5 @@ else {
     git checkout master --force
 }
 
-Push-Location
+Pop-Location
+
