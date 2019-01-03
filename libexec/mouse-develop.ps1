@@ -14,12 +14,12 @@ $curr_branch = Get-GitBranch
 if ($curr_branch -eq "master") {
     info "On branch master"
     info "Switching to branch develop"
-    git checkout develop --force
+    git checkout develop --force | Out-Null
 }
 else {
     info "On branch develop"
     info "Switching to branch master"
-    git checkout master --force
+    git checkout master --force | Out-Null
 }
 
 mouse update
