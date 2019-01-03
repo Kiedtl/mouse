@@ -136,7 +136,7 @@ Use this command to get the Git-Crypt status, such as information on which files
 <!-- TRY TYPING "MOUSE PROTECT MOUSE" -->
 
 ## Easter eggs
-I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue!
+I've buried around 8  easter eggs in Mouse. If you think you've found one, please file an issue with the `easter egg` label!
 
 ## Contributing
 PR's are welcome, as long as they conform to the basic code style of this repository:
@@ -160,26 +160,26 @@ Also, make sure when installing Mouse to test and debug new features pushed to t
 ```
 
 source/mouse
-| LICENSE			    	The license for Mouse  
-| README.md				    The README                
+| LICENSE			               	The license for Mouse  
+| README.md				             The README                
 |                                                    
-+---bin					    Main entrypoint for Mouse
++-------bin					            Main entrypoint for Mouse
 |
-+---lib					    Utility scripts and dependencies
-|                                                    |     |
-| +---cows				Dependency for cowsay.ps1  |     |
-|                                                    | ... |
-|                                                    |     |
-| +---fonts				Dependency for figlet.exe |     |
-|                                                    | ... |
-|                                                    |     |
-| \---lib                                            |     |
-|                                                    |     |
-+---libexec				    Mouse command implementations
++-------lib					            Utility scripts and dependencies
+|     |                                                
+|     +---cows			          	Dependency for cowsay.ps1 
+|     |                                            
+|     |
+|     +---fonts			         	Dependency for figlet.exe 
+|     |                                            
+|     |                                            
+|     \---lib                                       
+|                                                  
++---libexec				             Mouse command implementations
 |   
 +---libsrc                  Mouse submodules and code for lib dependencies  
 | 
-\---share					Shared data
+\---share				              	Shared data
 ```
 
 ## Credits
