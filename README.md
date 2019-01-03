@@ -1,7 +1,7 @@
 
 <p align="center">
 <img src="http://kiedtl.surge.sh/img/mouse.png" alt="mouse logo yay"/></p>
-<p align="center" ><h1 align="center">Mouse</h1>
+<p align="center" ><h1 align="center">mouse(1)</h1>
 </p>
 <hr />
 <p align="center"><a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/languages/code-size/kiedtl/mouse.svg" alt="Code-Size" /></a>
