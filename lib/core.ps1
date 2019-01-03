@@ -270,7 +270,7 @@ function mouse_outdated() {
 
     }
     $now = [System.DateTime]::Now
-    return $last_update.AddHours(3) -lt $now.ToLocalTime()
+    return $last_update.AddHours(13) -lt $now.ToLocalTime()
 }
 function getversion() {
     return (Get-Content ("$psscriptroot\..\share\version.dat"))
