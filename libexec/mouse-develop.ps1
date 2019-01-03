@@ -22,5 +22,6 @@ else {
     git checkout master --force
 }
 
+mouse update
 Pop-Location
 
