@@ -50,6 +50,7 @@ Get-ChildItem info\*.info | Foreach-Object {
         }
         [IO.Compression.ZipFile]::CreateFromDirectory($filepath, "$HOME\.mouse\dat\${filename}.zip")
     }
+    git commit -a -q -m "Backed up file $friendly_filepath" | Out-Null
 }
 
 Set-location $HOME/.mouse/dat/
