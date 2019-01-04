@@ -252,12 +252,14 @@ function is_prime {
         return $prime;
     }
 }
+function getmousehome() {
+    return "$HOME/.mouse/"
+}
 function mouse_outdated() {
-    if (!(Test-Path "$HOME/.mouse/config.json")) {
-        ni -path "$HOME/.mouse/config.json" -force
-        sc -path "$HOME/.mouse/config.json" -value "{ `"lastupdatetime`": `"`"  }"
+    if (!(Test-Path (getmouseconfig))) {
+        createconfig
     }
-    $conf = gc "$HOME/.mouse/config.json" | ConvertFrom-Json
+    $conf = loadconfig
     $last_update_str = $conf.lastupdatetime
     if($null -eq $last_update_str) {
         return $true
@@ -267,11 +269,23 @@ function mouse_outdated() {
     }
     catch {
         return $true
-
     }
     $now = [System.DateTime]::Now
     return $last_update.AddHours(13) -lt $now.ToLocalTime()
 }
 function getversion() {
     return (Get-Content ("$psscriptroot\..\share\version.dat"))
+}
+function getmouseconfig() {
+    return "$(getmousehome)app/share/config.json"
+}
+function createconfig() {
+    [string]$config_boilerplate = "{ `"lastupdatetime`": `"`", 
+                                     `"git_crypt_key`": `"$(getmousehome)git_crypt_key.key`"  
+                                   }"
+    ni -path (getmouseconfig) -force
+    sc -path (getmouseconfig) -value $config_boilerplate
+}
+function loadconfig() {
+    return gc (getmouseconfig) | ConvertFrom-Json
 }
