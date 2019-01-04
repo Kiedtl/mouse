@@ -24,7 +24,7 @@ if (!$git) {
 
 if (test_internet) {
     Write-Host "Updating Mouse..." -NoNewline
-    $config = Get-Content "$HOME/.mouse/config.json" | ConvertFrom-Json
+    $config = loadconfig
     $lastupdatetime = $config.lastupdatetime
     if (!$lastupdatetime)
     {
