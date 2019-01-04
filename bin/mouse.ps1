@@ -109,9 +109,10 @@ elseif ($commands -contains $cmd) {
         error "Please report the following error code:"
         $err = (Get-ErrorString $_ "libexec/mouse-${cmd}.ps1@entrypoint/cmd_exec" "${cmd}|${args}" (getversion ))
         info "`tError string: ${err}" 
-        exit 70
     }
-    exit 0
+    finally {
+        lock_repo
+    }
 }
 else {
     Write-Host "mouse: '$cmd' isn't a valid command. Try 'mouse help'." 
