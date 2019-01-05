@@ -17,8 +17,7 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - :computer: (Almost!) completely cross-platform - (should) works on macOS, Windows, and Linux.
 - :moneybag: Absolutely free!
 - :closed_lock_with_key: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
-- :wrench: Mouse worrie
-s about updating itself and downloading patches, so you won't have to.
+- :wrench: Mouse worries about updating itself and downloading patches, so you won't have to.
 - :sparkles: Intuitive and memorable commands.
 - :clock130: Speed that is best measured by a stopwatch, not a calendar.
 - Automatically uploads everything to GitHub, so you can take your data to another computer as well.
@@ -145,7 +144,7 @@ PR's are welcome, as long as they conform to the basic code style of this reposi
 Remember to contribute all your work to branch `develop` - master is strictly for finished, tested, debugged code ready for deployment. Contributions to branch `master` **WILL NOT** be accepted.
 
 ### Setting up Mouse repository for development
-When cloning the Mouse repository, use the `--recurse` parameter because the Mouse repository contains multile submodules:
+When cloning the Mouse repository, use the `--recurse` parameter because the Mouse repository contains multiple submodules:
 
 **Without SSH**
 `git clone http://github.com/kiedtl/mouse.git --recurse --verbose --progress`
