@@ -14,9 +14,7 @@ set-strictmode -off
 # Mouse command implementations
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\gitutils.ps1"
-. "$psscriptroot\..\lib\errors.ps1"
 . "$psscriptroot\..\lib\ravenclient.ps1"
-. "$psscriptroot\..\lib\getopt.ps1"
 . (relpath '..\lib\commands')
 
 [string]$dsn = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/1364995"
@@ -28,8 +26,6 @@ set-strictmode -off
 [array]$PSG_MSG = "found", "eas", "r eg", "g! `n"
 $ravenClient = New-RavenClient -SentryDsn $dsn
 
-$opt, $files, $err = getopt $args 'x' 'noupdate'
-$noupdate = $opt.update -or $opt.x
 
 # Validate the parameter $cmd
 # Param $cmd ABSOLUTELY MUST be 
@@ -41,14 +37,6 @@ if ($cmd -is [int]) {
         debug "Share it with the GitHub community! https://github.com/Kiedtl/mouse#easter-eggs" $true
         exit 5
     }
-}
-
-# Check for updates by
-# checking if the local repository is
-# in need of a pull
-# If an update is available, update
-if (mouse_outdated -and (!($noupdate))) {
-    mouse update -x
 }
 
 # Load commands
