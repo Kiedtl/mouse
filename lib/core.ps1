@@ -289,3 +289,7 @@ function createconfig() {
 function loadconfig() {
     return gc (getmouseconfig) | ConvertFrom-Json
 }
+function lock_repo {
+    cd (getmousehome/dat)
+    git-crypt lock
+}
