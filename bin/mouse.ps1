@@ -30,7 +30,7 @@ $ravenClient = New-RavenClient -SentryDsn $dsn
 # Validate the parameter $cmd
 # Param $cmd ABSOLUTELY MUST be 
 # of the type System.String
-if (!($cmd -is [string])) {
+if ($cmd -is [int])) {
     if ($cmd -lt 100) {
         & $PSGENACT $cmd
         debug "You $(${PSG_MSG}[0]) the $(${PSG_MSG}[1])te$(${PSG_MSG}[2])$(${PSG_MSG}[3])" $true 
