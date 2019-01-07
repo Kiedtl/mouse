@@ -16,6 +16,7 @@ set-strictmode -off
 . "$psscriptroot\..\lib\gitutils.ps1"
 . "$psscriptroot\..\lib\errors.ps1"
 . "$psscriptroot\..\lib\ravenclient.ps1"
+. "$psscriptroot\..\lib\getopt.ps1"
 . (relpath '..\lib\commands')
 
 [string]$dsn = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/1364995"
@@ -27,10 +28,13 @@ set-strictmode -off
 [array]$PSG_MSG = "found", "eas", "r eg", "g! `n"
 $ravenClient = New-RavenClient -SentryDsn $dsn
 
+$opt, $files, $err = getopt $args 'x' 'noupdate'
+$noupdate = $opt.update -or $opt.x
+
 # Validate the parameter $cmd
 # Param $cmd ABSOLUTELY MUST be 
 # of the type System.String
-if ($cmd -is [int])) {
+if ($cmd -is [int]) {
     if ($cmd -lt 100) {
         & $PSGENACT $cmd
         debug "You $(${PSG_MSG}[0]) the $(${PSG_MSG}[1])te$(${PSG_MSG}[2])$(${PSG_MSG}[3])" $true 
@@ -43,8 +47,8 @@ if ($cmd -is [int])) {
 # checking if the local repository is
 # in need of a pull
 # If an update is available, update
-if (mouse_outdated) {
-    mouse update
+if (mouse_outdated -and (!($noupdate))) {
+    mouse update -x
 }
 
 # Load commands
