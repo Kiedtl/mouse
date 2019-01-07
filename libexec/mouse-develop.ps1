@@ -6,20 +6,22 @@
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\gitutils.ps1"
 
-Pop-Location
-Set-Location $HOME/.mouse/
+Push-Location
+Set-Location $HOME/.mouse/app/
 
 $curr_branch = Get-GitBranch
 
 if ($curr_branch -eq "master") {
     info "On branch master"
     info "Switching to branch develop"
-    git checkout develop --force
+    git checkout develop --force | Out-Null
 }
 else {
     info "On branch develop"
     info "Switching to branch master"
-    git checkout master --force
+    git checkout master --force | Out-Null
 }
 
-Push-Location
+mouse update
+Pop-Location
+

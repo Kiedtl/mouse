@@ -8,6 +8,22 @@ Add-Type -assembly "System.IO.Compression.Filesystem"
 . "$psscriptroot\..\lib\getopt.ps1"
 
 $opt, $files, $err = getopt $args 'b:' 'blah'
+$blah = $opt.blah -or $opt.b
+
+trap {
+    . "$psscriptroot\..\lib\core.ps1"
+    warn "An error occurred in Mouse. "
+    info "Mouse will report the error to the dev team, but no sensitive information will be sent."
+    Write-Host "Reporting error... " -NoNewline
+    . "$psscriptroot\..\lib\ravenclient.ps1"
+    [uint64]$d_snn = 16850863275
+    [string]$directory_singular_nuisance = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/$($d_snn / 12345)"
+    $ravenClient = New-RavenClient -SentryDsn $dsn
+    $ravenClient.CaptureException($_)
+    Write-Host "done" -f Green
+}
+
+
 $COWSAY = ("$psscriptroot\..\lib\cowsay.ps1")
 
 Push-Location
@@ -17,7 +33,7 @@ git pull origin master --allow-unrelated-histories
 Set-Location $HOME/.mouse/dat/
 
 # eE-a-s-t-e*-r  e-g-g
-if ($opt.blah) {
+if ($blah) {
     & $COWSAY -f dragon Blah!
 } 
 

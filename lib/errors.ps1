@@ -47,3 +47,41 @@ function Get-ErrorString {
     $hash = Hash-ErrorString $errorString
     return "${errorString}@incident[${hash}]"
 }
+
+function Get-SentryErrorObject {
+        param(
+        $_exception, 
+        [string]$file = "0", 
+        $c_args = "0", 
+        [string]$version = "0.0.0"
+    )
+    $messg = $_exception.ErrorDetails.Message 
+    $datetime = [System.DateTime]::Now.ToString("o")
+    $errstring = Get-ErrorString $_ $file $c_args $version
+    $ferrstring = Format-ErrorString $_ $file $c_args $version
+    $hash = Hash-ErrorString $ferrstring
+    $linen = $_exception.InvocationInfo.ScriptLineNumber
+    $chars = $_exception.InvocationInfo.OffsetInLine
+
+
+    $errorobj = New-Object -Type PSObject
+    $errorobj | Add-Member -NotePropertyName release -NotePropertyValue $version
+    $errorobj | Add-Member -NotePropertyName platform -NotePropertyValue (Get-SentryPlatform)
+    $errorobj | Add-Member -NotePropertyName message -NotePropertyValue $messg
+    $errorobj | Add-Member -NotePropertyName errinfo -NotePropertyValue "${file}::${linen}::${chars}"
+    $errorobj | Add-Member -NotePropertyName datetime -NotePropertyValue $datetime
+
+    $errorobj | Add-Member -NotePropertyName ferrstring -NotePropertyValue $errstring
+    $errorobj | Add-Member -NotePropertyName incident_id -NotePropertyValue $hash
+    $errorobj | Add-Member -NotePropertyName errstring -NotePropertyValue $ferrstring
+
+    return $errorobj
+}
+
+function Get-SentryPlatform {
+    $psver = $PsVersionTable.PsVersion.ToString()
+    $pshed = $PsVersionTable.PsEdition
+    $opsys = $PsVersionTable.OS
+
+    return "${psed}::${pshed}::${opsys}"
+}

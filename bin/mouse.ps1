@@ -1,7 +1,9 @@
 #requires -v 3
 # Copyright (c) 2018 Kied T Llaentenn
 
-param($cmd)
+param(
+    $cmd
+)
 set-strictmode -off
 
 # Load files with helper functions
@@ -13,12 +15,29 @@ set-strictmode -off
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\gitutils.ps1"
 . "$psscriptroot\..\lib\errors.ps1"
+. "$psscriptroot\..\lib\ravenclient.ps1"
 . (relpath '..\lib\commands')
 
-$nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
-$FIGLET = "$psscriptroot\..\lib\figlet.exe"
-$SAY = "$psscriptroot\..\lib\say.ps1"
-$CRAFT = "$psscriptroot\..\lib\craft.exe"
+[string]$dsn = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/1364995"
+[string]$nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
+[string]$FIGLET = "$psscriptroot\..\lib\figlet.exe"
+[string]$SAY = "$psscriptroot\..\lib\say.ps1"
+[string]$CRAFT = "$psscriptroot\..\lib\craft.exe"
+[string]$PSGENACT = "$psscriptroot\..\lib\psgenact.ps1"
+[array]$PSG_MSG = "found", "eas", "r eg", "g! `n"
+$ravenClient = New-RavenClient -SentryDsn $dsn
+
+# Validate the parameter $cmd
+# Param $cmd ABSOLUTELY MUST be 
+# of the type System.String
+if (!($cmd -is [string])) {
+    if ($cmd -lt 100) {
+        & $PSGENACT $cmd
+        debug "You $(${PSG_MSG}[0]) the $(${PSG_MSG}[1])te$(${PSG_MSG}[2])$(${PSG_MSG}[3])" $true 
+        debug "Share it with the GitHub community! https://github.com/Kiedtl/mouse#easter-eggs" $true
+        exit 5
+    }
+}
 
 # Check for updates by
 # checking if the local repository is
@@ -43,23 +62,20 @@ if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
         Write-Host ("$newver") -f Blue
     }
 }
-elseif ('--craft' -contains $cms -or (!$cmd -and '-x' -contains $args)) {
+elseif ('--craft' -contains $cmd -or (!$cmd -and '-x' -contains $args)) {
     if ($IsWindows) {
         & $CRAFT
     }
     else {
         warn "MouseCraft is compatible with Win32 systems only."
         $yn = Read-Host "Start anyway? (y/N)"
-        if ($yn -notlike 'y*') {
-            break
-        }
-        else {
-            & $CRAFT
-        }
+        if ($yn -notlike 'y*') { break }
+        else { & $CRAFT }
     }
 }
 elseif ('--yay' -contains $cmd -or (!$cmd -and '-y' -contains $args)) {
-    & $SAY yay!!! -v "Microsoft Zira Desktop" -r -5}
+    & $SAY yay!!! -v "Microsoft Zira Desktop" -r -5
+}
 elseif ('--mouse' -contains $cmd -or (!$cmd -and '-z' -contains $args)) {
     if ($IsWindows) {
         & $FIGLET -f small -c mouse
@@ -85,13 +101,16 @@ elseif ($commands -contains $cmd) {
         exec $cmd $args
     }
     catch {
-        debug "An unhandled exception was thrown in Mouse."
-        debug "Please report the following error code:"
-        $err = (Get-ErrorString $_ "mouse.ps1" "${cmd}|${args}" (getversion )
-        debug "Error string: ${err}" $true
-        exit 70
+        $ravenClient.CaptureException($_)
+        # DEPRECATED: We now use Ravenclient to handle exceptions now.
+        # error "An unhandled exception was thrown in Mouse."
+        # error "Please report the following error code:"
+        # $err = (Get-ErrorString $_ "libexec/mouse-${cmd}.ps1@entrypoint/cmd_exec" "${cmd}|${args}" (getversion ))
+        # info "`tError string: ${err}" 
     }
-    exit 0
+    finally {
+        lock_repo
+    }
 }
 else {
     Write-Host "mouse: '$cmd' isn't a valid command. Try 'mouse help'." 
