@@ -60,7 +60,7 @@ if (test_internet) {
     $lastupdatetime = [System.DateTime]::Now.ToString("s")
     $config.lastupdatetime = $lastupdatetime
     $config_json = $config | ConvertTo-Json
-    Set-Content -Path "$HOME/.mouse/config.json" -Value $config_json
+    Set-Content -Path (getmouseconfig) -Value $config_json
 
     success "Successfully updated Mouse."
     Pop-Location

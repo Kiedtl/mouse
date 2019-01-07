@@ -101,7 +101,9 @@ elseif ($commands -contains $cmd) {
         # info "`tError string: ${err}" 
     }
     finally {
-        lock_repo
+        $config = loadconfig
+        Set-Location $HOME/.mouse/dat
+        git-crypt unlock $config.git_crypt_key
     }
 }
 else {
