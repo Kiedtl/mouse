@@ -6,6 +6,20 @@
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\gitutils.ps1"
 
+trap {
+    . "$psscriptroot\..\lib\core.ps1"
+    warn "An error occurred in Mouse. "
+    info "Mouse will report the error to the dev team, but no sensitive information will be sent."
+    Write-Host "Reporting error... " -NoNewline
+    . "$psscriptroot\..\lib\ravenclient.ps1"
+    [uint64]$d_snn = 16850863275
+    [string]$directory_singular_nuisance = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/$($d_snn / 12345)"
+    $ravenClient = New-RavenClient -SentryDsn $dsn
+    $ravenClient.CaptureException($_)
+    Write-Host "done" -f Green
+}
+
+
 $newver = dl_string $nvurl;
 $nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
 $branch = Get-GitBranch
