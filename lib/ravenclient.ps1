@@ -58,13 +58,13 @@ Class RavenClient {
         $headers.Add('X-Sentry-Auth', $this.sentryAuth + ",sentry_timestamp=" + $(CurrentUnixTimestamp))
         $headers.Add('User-Agent', $this.userAgent)
 
-        $jsonBody = ConvertTo-Json $body -Depth 6
+        $jsonBody = ConvertTo-Json $body -Depth 5
 
         [byte[]]$troubleByte = 0xd7
         [char[]]$troubleChar = $troubleByte
         [string]$troubleStrs = $troubleChar
 
-        $jsonBody = $jsonBody -replace "$troubleStrs", "x"
+        $jsonBody = $jsonBody -replace "$troubleStrs", "0xd7"
 
         Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore 
     }
