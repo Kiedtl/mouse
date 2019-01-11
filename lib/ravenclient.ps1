@@ -39,12 +39,13 @@ Class RavenClient {
 
         $body = @{}
         $body['event_id'] = $eventid
+        $body['platform'] = "other"
         $body['timestamp'] = [string]$iso8601
         $body['logger'] = 'root'
         $body['platform'] = 'other'
         $body['sdk'] = @{
             'name' = 'RavenMousePSH'
-            'version' = '1.0'
+            'version' = '1.1'
         }
         $body['server_name'] = [System.Net.Dns]::GetHostName()
         $body['message'] = $message
@@ -65,7 +66,7 @@ Class RavenClient {
         [string]$troubleStrs = $troubleChar
 
         $jsonBody = $jsonBody -replace "$troubleStrs", "0xd7"
-
+        write-host "$jsonBody"
         Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore 
     }
 
@@ -75,9 +76,7 @@ Class RavenClient {
             'frames' = @()
         }
         $frames = @()
-
-        for ($i=0; $i -lt $callstackFrames.Count; $i++) {
-            $stackframe = $callstackFrames[$i]
+            $stackframe = $callstackFrames[0]
             $frame = @{}
             $frame['filename'] = $stackframe.ScriptName
             $frame['abs_path'] = $stackframe.ScriptName
@@ -96,10 +95,9 @@ Class RavenClient {
             $frame['pre_context'] = $pre_context
             $frame['post_context'] = $post_context
 
-            $frame['vars'] = $frameVariables[$i]
+            $frame['vars'] = $frameVariables[0]
 
             $frames += $frame
-        }
 
         for ($i = $frames.Count - 1; $i -ge 0; $i--) {
             $stacktrace['frames'] += $frames[$i]
@@ -121,7 +119,6 @@ Class RavenClient {
 
     [void]CaptureException([System.Management.Automation.ErrorRecord]$errorRecord) {
         
-        # skip ourselves
         $this.CaptureException($errorRecord, 1)
     }
 
