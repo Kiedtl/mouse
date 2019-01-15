@@ -18,7 +18,7 @@ set-strictmode -off
 . (relpath '..\lib\commands')
 
 [string]$dsn = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/1364995"
-[string]$nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
+[string]$nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/share/version.dat"
 [string]$FIGLET = "$psscriptroot\..\lib\figlet.exe"
 [string]$SAY = "$psscriptroot\..\lib\say.ps1"
 [string]$CRAFT = "$psscriptroot\..\lib\craft.exe"

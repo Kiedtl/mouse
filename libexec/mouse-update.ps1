@@ -21,7 +21,7 @@ trap {
 
 
 $newver = dl_string $nvurl;
-$nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
+$nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/share/version.dat"
 $branch = Get-GitBranch
 
 $git = try {
