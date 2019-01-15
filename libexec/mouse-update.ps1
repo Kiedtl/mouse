@@ -21,7 +21,7 @@ trap {
 
 
 $newver = dl_string $nvurl;
-$nvurl = "https://raw.githubusercontent.com/Kiedtl/mouse/master/share/version.dat"
+$nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/share/version.dat"
 $branch = Get-GitBranch
 
 $git = try {
@@ -48,6 +48,8 @@ if (test_internet) {
     $newver = dl_string $nvurl;
     Set-Location "$HOME/.mouse/app";
     git stash > $HOME/.mouse/dump.tmp
+    git remote remove origin
+    git remote add origin "https://github.com/kiedtl/kiedtl"
     git pull origin $branch --quiet --force | Out-Null
 
     Set-Content -Path "share\version.dat" -Value $newver;
