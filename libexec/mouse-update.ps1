@@ -48,8 +48,6 @@ if (test_internet) {
     $newver = dl_string $nvurl;
     Set-Location "$HOME/.mouse/app";
     git stash > $HOME/.mouse/dump.tmp
-    git remote remove origin
-    git remote add origin "https://github.com/kiedtl/kiedtl"
     git pull origin $branch --quiet --force | Out-Null
 
     Set-Content -Path "share\version.dat" -Value $newver;
