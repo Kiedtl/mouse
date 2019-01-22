@@ -1,7 +1,11 @@
 . "$psscriptroot\..\lib\gitutils.ps1"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-function unzip_dir
-{
+
+function getmouseversion  {
+    return "v1.3.0"
+}
+
+function unzip_dir {
     param([string]$src, [string]$dest)
     [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
 }
@@ -11,7 +15,7 @@ function zip_dir {
 }
 function Get-UserAgent() {
     $version = Get-Content ("$psscriptroot\..\share\version.dat")
-    return ("Mouse/$version (+http://mouse.projects.kiedtl.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
+    return ("Mouse/$version (+http://getmouse.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
 }
 function abort($msg, [int] $exit_code=1) { write-host $msg -f red; exit $exit_code }
 function error($msg) { write-host "ERROR $msg" -f red }

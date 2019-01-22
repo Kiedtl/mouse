@@ -50,9 +50,6 @@ if (test_internet) {
     git stash > $HOME/.mouse/dump.tmp
     git pull origin $branch --quiet --force | Out-Null
 
-    Set-Content -Path "share\version.dat" -Value $newver;
-    git commit -a -q -m "Updated Mouse" | Out-Null
-
     Write-Host " done" -f Green
 
     git --no-pager log --no-decorate --date=local --since="`"$lastupdatetime`"" --format="`"tformat: - %C(yellow)%h%Creset %<|(72,trunc)%s %C(cyan)%cr%Creset`"" HEAD
