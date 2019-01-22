@@ -1,5 +1,10 @@
+
 function CurrentUnixTimestamp () {
     return [int64](([datetime]::UtcNow)-(get-date "1/1/1970")).TotalSeconds
+}
+
+function get-psinfo {
+    return "$($PSVersionTable.PSVersion.ToString())","$($PSVersionTable.PSEdition)"
 }
 
 
@@ -25,7 +30,7 @@ Class RavenClient {
         $this.projectId = $uri.Segments[1]
         $this.storeUri = "$($uri.Scheme)://$($uri.Host):$($uri.Port)/api/$($this.projectId)/store/"
 
-        $this.userAgent = 'RavenMousePSH/1.0'
+        $this.userAgent = 'RavenMousePSH/1.2'
         $this.sentryAuth = "Sentry sentry_version=5,sentry_key=$($this.sentryKey),sentry_secret=$($this.sentrySecret)"
 
         $this._getFrameVariablesIsFixed = $false
@@ -45,7 +50,7 @@ Class RavenClient {
         $body['platform'] = 'other'
         $body['sdk'] = @{
             'name' = 'RavenMousePSH'
-            'version' = '1.1'
+            'version' = '1.2'
         }
         $body['server_name'] = [System.Net.Dns]::GetHostName()
         $body['message'] = $message
@@ -66,7 +71,18 @@ Class RavenClient {
         [string]$troubleStrs = $troubleChar
 
         $jsonBody = $jsonBody -replace "$troubleStrs", "0xd7"
+
+        #  $data = [Text.Encoding]::Unicode.GetBytes($jsonBody)
+
+        #  $compressedStream = [IO.MemoryStream]::New()
+        #  $zipStream = [System.IO.Compression.GZipStream]::New($compressedStream, [System.IO.Compression.CompressionMode]::Compress)
+
+        #  $zipStream.Write($data, 0, $data.Length);
+        #  $zipStream.Close()
+        #  $data = [System.Convert]::ToBase64String($compressedStream.ToArray())
+
         write-host "$jsonBody"
+
         Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore 
     }
 
@@ -95,7 +111,11 @@ Class RavenClient {
             $frame['pre_context'] = $pre_context
             $frame['post_context'] = $post_context
 
-            $frame['vars'] = $frameVariables[0]
+            $frame['vars'] = @{
+                                 HOME = "$env:UserProfile";
+                                 POWERSHELL_EDITION = "$((get-psinfo)[1])";
+                                 POWERSHELL_VERSION = "$((get-psinfo)[0])"
+                             }
 
             $frames += $frame
 
