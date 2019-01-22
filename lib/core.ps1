@@ -2,7 +2,7 @@
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function getmouseversion  {
-    return "v1.3.0"
+    return "v0.3.0"
 }
 
 function unzip_dir {
