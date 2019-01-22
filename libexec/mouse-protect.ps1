@@ -45,7 +45,12 @@ $ea_cats = Get-Random -Maximum 100
 
 Push-Location
 Set-Location $HOME/.mouse/dat
-git-crypt unlock $HOME/.mouse/git_crypt_key.key
+
+if ($true) { # TODO: Implement --plumbing flag and change $true to if !($plumbing)
+    Write-Host "Unlocking repository..." -NoNewline
+    git-crypt unlock $HOME/.mouse/git_crypt_key.key | out-null
+    Write-Host " done" -f Green
+}
 
 if ($cmd -eq $null) {
     abort "mouse: ***** Command or action not provided. Stop."

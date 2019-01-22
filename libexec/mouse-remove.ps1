@@ -49,7 +49,11 @@ if (!$files) {
 }
 
 Set-Location $HOME/.mouse/dat
-git-crypt unlock $HOME/.mouse/git_crypt_key.key
+if ($true) { # TODO: Implement --plumbing flag and change $true to if !($plumbing)
+    Write-Host "Unlocking repository..." -NoNewline
+    git-crypt unlock $HOME/.mouse/git_crypt_key.key | out-null
+    Write-Host " done" -f Green
+}
 Set-Location $HOME
 
 $files | Foreach-Object {

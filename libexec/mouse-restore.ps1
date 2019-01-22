@@ -28,8 +28,11 @@ $COWSAY = ("$psscriptroot\..\lib\cowsay.ps1")
 
 Push-Location
 Set-Location $HOME/.mouse/dat
-git-crypt unlock $HOME/.mouse/git_crypt_key.key
-git pull origin master --allow-unrelated-histories
+if ($true) { # TODO: Implement --plumbing flag and change $true to if !($plumbing)
+    Write-Host "Unlocking repository..." -NoNewline
+    git-crypt unlock $HOME/.mouse/git_crypt_key.key | out-null
+    Write-Host " done" -f Green
+}
 Set-Location $HOME/.mouse/dat/
 
 # eE-a-s-t-e*-r  e-g-g
