@@ -6,10 +6,11 @@
 #   -p, --plumbing              Output non-stylized, machine readable text.
 
 . "$psscriptroot\..\lib\core.ps1"
-
 . "$psscriptroot\..\lib\getopt.ps1"
+
 $opt, $files, $err = getopt $args 'mp' 'mice', 'plumbing'
 $mice = $opt.m -or $opt.mice
+$plumbing = $opt.p -or $opt.plumbing
 
 trap {
     . "$psscriptroot\..\lib\core.ps1"
@@ -47,9 +48,16 @@ if ($mice) {
 git commit -q -a -m "Automatic modifications by Mouse" | Out-Null
 git stash | Out-Null
 Set-Location $HOME/.mouse/dat
-Write-Host "Unlocking repository..." -NoNewline
-git-crypt unlock $HOME/.mouse/git_crypt_key.key | out-null
-Write-Host " done" -f Green
+
+if (!($plumbing)) {
+    Write-Host "Unlocking repository..." -NoNewline
+    git-crypt unlock $HOME/.mouse/git_crypt_key.key | out-null
+    Write-Host " done" -f Green
+}
+else {
+    git-crypt unlock $HOME/.mouse/git_crypt_key.key | out-null
+}
+
 Set-Location $HOME/.mouse/dat/info
 
 # Now the party starts
@@ -59,25 +67,32 @@ Get-ChildItem .\*.info | Foreach-Object {
     $oname = $fileinfo.oname
     $opath = $fileinfo.opath
     $isdir = $fileinfo.isdir
-    if ($isdir) { $otype = "[Directory]"}
-    else { $otype = "[File]     " }
+    if ($isdir) { $otype = @("[Directory]","DIR ")}
+    else { $otype = @("[File]     ","FILE") }
 
     $cpath = "..\$oname"
     if ($isdir) { $cpath = "..\$oname.zip" }
 
     if ((test-path $opath)) { 
-        $latest_hash = Get-FileHash -Algorithm SHA256 -Path $cpath 
-        $current_hash = Get-FileHash -Algorithm SHA256 -Path $opath -ea ignore
+        $latest_hash = (Get-FileHash -Algorithm SHA256 -Path $cpath).Hash
+        $current_hash = (Get-FileHash -Algorithm SHA256 -Path $opath -ea si).Hash
 
-        $status = if ($latest_hash -eq $current_hash) { "red" }
-                  else { "green" }
+        $status = if (!($current_hash -eq $latest_hash)) { @("darkred","RE ") }
+        else { @("green","OK ") }
     }
-    else { $status = "cyan" }
+    else { $status = @("black","ERR") }
 
-    Write-Host " " -BackgroundColor $status -NoNewline
-    Write-Host " $otype`t" -ForegroundColor Yellow -NoNewline
-    Write-Host "$oname`t" -NoNewline -ForegroundColor White
-    Write-Host "$opath" -ForegroundColor DarkCyan
+    if ($isdir) { $status = @("darkblue","DIR ") }
+
+    if (!($plumbing)) {
+        Write-Host " " -BackgroundColor ($status)[0] -NoNewline
+        Write-Host " $(($otype)[0])`t" -ForegroundColor Yellow -NoNewline
+        Write-Host "$oname`t" -NoNewline -ForegroundColor White
+        Write-Host "$opath" -ForegroundColor DarkCyan
+    }
+    else {
+        Write-Output "$(($status)[1]) $(($otype)[1]) $oname $(unfriendly_path $opath)"
+    }
 
 }
 
