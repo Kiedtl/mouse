@@ -1,5 +1,5 @@
-#requires -v 3
-# Copyright (c) 2018 Kied T Llaentenn
+#requires -v 4
+# Copyright (c) 2018 Kied T Llaentenn and other Mouse contributers
 
 param(
     $cmd
