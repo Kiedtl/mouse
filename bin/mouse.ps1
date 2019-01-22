@@ -101,7 +101,9 @@ elseif ($commands -contains $cmd) {
         # info "`tError string: ${err}" 
     }
     finally {
-        git-crypt lock
+        if (!($cmd -eq "protect")) {
+            git-crypt lock
+        }
     }
 }
 else {
