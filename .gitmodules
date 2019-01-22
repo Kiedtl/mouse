@@ -4,9 +4,6 @@
 [submodule "libsrc/figlet"]
 	path = libsrc/figlet
 	url = http://github.com/lukesampson/figlet
-[submodule "libsrc/craft"]
-	path = libsrc/craft
-	url = http://github.com/fogleman/craft
 [submodule "libsrc/psgenact"]
 	path = libsrc/psgenact
 	url = http://github.com/kiedtl/psgenact
