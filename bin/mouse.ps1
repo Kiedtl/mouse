@@ -43,7 +43,7 @@ $commands = commands
 if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
     # Load current version from a file
     Write-Host "Current Mouse Version: " -NoNewLine
-    $currver = Get-Content "$psscriptroot\..\share\version.dat"
+    $currver = getmouseversion
     Write-Host -f Green ("$currver")
     # Only write remote version if there
     # is an internet connection
