@@ -1,13 +1,13 @@
 
 <p align="center">
-<img src="http://kiedtl.surge.sh/img/mouse.png" alt="mouse logo yay"/></p>
-<p align="center" ><h1 align="center">mouse(1)</h1>
+<img src="https://raw.githubusercontent.com/lptstr/lptstr-images/master/proj/mouse/mouse-logos.png" alt="mouse logo yay"/></p>
+<p align="center" ><h1 align="center">mouse</h1>
 </p>
 <hr />
-<p align="center"><a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/languages/code-size/kiedtl/mouse.svg" alt="Code-Size" /></a>
-<a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/github/repo-size/kiedtl/mouse.svg" alt="Repository size" /></a>
- <a href="https://github.com/kiedtl/mouse"><img src="https://img.shields.io/badge/lines%20of%20code-2500%2B-yellow.svg" alt="Lines of code" /></a> <a href="https://travis-ci.org/Kiedtl/mouse"><img src="https://travis-ci.org/Kiedtl/mouse.svg?branch=master" alt="Travis-CI" /></a>
-<a href="https://github.com/kiedtl/mouse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kiedtl/mouse.svg" alt="License" /></a></p>
+<p align="center"><a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/languages/code-size/lptstr/mouse.svg" alt="Code-Size" /></a>
+<a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/repo-size/lptstr/mouse.svg" alt="Repository size" /></a>
+ <a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/badge/lines%20of%20code-2500%2B-yellow.svg" alt="Lines of code" /></a> <a href="https://travis-ci.org/Kiedtl/mouse"><img src="https://travis-ci.org/Kiedtl/mouse.svg?branch=master" alt="Travis-CI" /></a>
+<a href="https://github.com/lptstr/mouse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/lptstr/mouse.svg" alt="License" /></a></p>
 </p><p align="center"><a href="http://spacemacs.org"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" /></a></p>
 
 
@@ -46,7 +46,7 @@ scoop install git-lfs hub git-crypt
 
 Simply run this command in PowerShell:
 ```powershell
-iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh')
+iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh/get/')
 ```
 
 Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\, and unfortunately this cannot be changed in the current version of Mouse.
@@ -147,10 +147,10 @@ Remember to contribute all your work to branch `develop` - master is strictly fo
 When cloning the Mouse repository, use the `--recurse` parameter because the Mouse repository contains multiple submodules:
 
 **Without SSH**
-`git clone http://github.com/kiedtl/mouse.git --recurse --verbose --progress`
+`git clone http://github.com/lptstr/mouse.git --recurse --verbose --progress`
 
 **With SSH**
-`git clone git@github.com:kiedtl/mouse.git --recurse --verbose --progress`
+`git clone git@github.com:lptstr/mouse.git --recurse --verbose --progress`
 
 Also, make sure when installing Mouse to test and debug new features pushed to the develop branch, to run `mouse develop` to switch to the devlop branch.
 
