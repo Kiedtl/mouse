@@ -47,7 +47,7 @@ function log {
     $current_date = [datetime]::now.tostring("o")
     $status_string = Get-StatusCode $status
     $c_log = "$current_date MOUSE $status_string : $msg"
-    $show_logs = $opt.l -or $opt.show-logs
+    $show_logs = $opt.l -or $opt.showlogs
     if ($show_logs) {
         write-output "$c_log"
     }
