@@ -9,7 +9,7 @@
 # Options:
 #   -m, --message               Use a custom Git commit message
 #   -n, --nosync                Don't synchronize repository with GitHub
-#   -l, --show-logs             Output additional logging information.
+#   -l, --showlogs             Output additional logging information.
 
 Add-Type -assembly "System.IO.Compression.Filesystem"
 
