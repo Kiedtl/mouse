@@ -24,7 +24,8 @@ set-strictmode -off
 [string]$PSGENACT = "$psscriptroot\..\lib\psgenact.ps1"
 [array]$PSG_MSG = "found", "eas", "r eg", "g! `n"
 $ravenClient = New-RavenClient -SentryDsn $dsn
-
+$global:cmd = $cmd
+$global:args = $args
 
 # Validate the parameter $cmd
 # Param $cmd ABSOLUTELY MUST be 
