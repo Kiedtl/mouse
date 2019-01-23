@@ -3,7 +3,6 @@
 <img src="https://raw.githubusercontent.com/lptstr/lptstr-images/master/proj/mouse/mouse-logos.png" alt="mouse logo yay"/></p>
 <p align="center" ><h1 align="center">mouse</h1>
 </p>
-<hr />
 <p align="center"><a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/languages/code-size/lptstr/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/repo-size/lptstr/mouse.svg" alt="Repository size" /></a>
  <a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/badge/lines%20of%20code-2500%2B-yellow.svg" alt="Lines of code" /></a> <a href="https://travis-ci.org/Kiedtl/mouse"><img src="https://travis-ci.org/Kiedtl/mouse.svg?branch=master" alt="Travis-CI" /></a>
@@ -14,7 +13,7 @@
 Mouse is a simple, cross-platform way to manage, store, and backup your configuration files using GitHub repositories.
 
 ## Features
-- :computer: (Almost!) completely cross-platform - (should) works on macOS, Windows, and Linux.
+- :computer: (Almost!) completely cross-platform - works on macOS, Windows, and Linux.
 - :moneybag: Absolutely free!
 - :closed_lock_with_key: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
 - :wrench: Mouse worries about updating itself and downloading patches, so you won't have to.
@@ -44,12 +43,16 @@ scoop install git-lfs hub git-crypt
 
 ## Installation
 
+### Windows
 Simply run this command in PowerShell:
 ```powershell
 iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh/get/')
 ```
 
-Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\, and unfortunately this cannot be changed in the current version of Mouse.
+### macOS, Linux
+
+
+Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\`, and unfortunately this cannot be changed in the current version of Mouse.
 
 **NOTE**: Mouse will automatically export the Git-Crypt key to `$HOME/.mouse/git_crypt_key.key`. It is highly recommended that this file is backed up somewhere safe - if this key is lost, you will lose all your data in Mouse.
 
