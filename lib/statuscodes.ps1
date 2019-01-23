@@ -25,4 +25,5 @@ $statuscodes.Add("401", "UE191 (ARG PARSING ERROR)")
 $statuscodes.Add("402", "UE192 (COMMAND ERROR)    ")
 $statuscodes.Add("404", "UE194 (ITEM NOT FOUND)   ")
 $statuscodes.Add("500", "IE1F4 (INTERNAL ERROR)   ")
+$statuscodes.Add("501", "IE1F5 (REPORTING ERROR)  ")
 
