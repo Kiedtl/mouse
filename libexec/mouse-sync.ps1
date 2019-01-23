@@ -46,4 +46,6 @@ git-crypt lock
 git pull origin master --allow-unrelated-histories
 git push origin master
 
+Pop-Location
+
 success "Synchronized repository with GitHub."
