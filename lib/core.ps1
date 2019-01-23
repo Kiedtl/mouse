@@ -2,8 +2,12 @@
 . "$psscriptroot\..\lib\statuscodes.ps1"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
+function getmouserawversion {
+    return "1.3.0"
+}
+
 function getmouseversion  {
-    return "v1.3.0"
+    return "v$(getmouserawversion)"
 }
 
 function unzip_dir {
