@@ -24,7 +24,8 @@ set-strictmode -off
 [string]$PSGENACT = "$psscriptroot\..\lib\psgenact.ps1"
 [array]$PSG_MSG = "found", "eas", "r eg", "g! `n"
 $ravenClient = New-RavenClient -SentryDsn $dsn
-
+$global:cmd = $cmd
+$global:args = $args
 
 # Validate the parameter $cmd
 # Param $cmd ABSOLUTELY MUST be 
@@ -43,7 +44,7 @@ $commands = commands
 if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
     # Load current version from a file
     Write-Host "Current Mouse Version: " -NoNewLine
-    $currver = Get-Content "$psscriptroot\..\share\version.dat"
+    $currver = getmouseversion
     Write-Host -f Green ("$currver")
     # Only write remote version if there
     # is an internet connection

@@ -1,3 +1,16 @@
+#    Use the following code to test this file out:
+#
+#    . "C:\Repos\LPTSTR\mouse\lib\ravenclient.ps1"
+#    [string]$dsn = "<dsn />"
+#    
+#    $ravenClient = New-RavenClient -SentryDsn $dsn
+#    
+#    try {
+#        & "C:\Repos\LPTSTR\mouse\scripts\mkerr.ps1"
+#    } catch {
+#        $ravenClient.CaptureException($_)
+#    }
+#    
 
 function CurrentUnixTimestamp () {
     return [int64](([datetime]::UtcNow)-(get-date "1/1/1970")).TotalSeconds
@@ -7,6 +20,10 @@ function get-psinfo {
     return "$($PSVersionTable.PSVersion.ToString())","$($PSVersionTable.PSEdition)"
 }
 
+function release {
+    . "$psscriptroot\..\lib\core.ps1"
+    return getmouserawversion
+}
 
 Class RavenClient {
 
@@ -64,6 +81,7 @@ Class RavenClient {
         $headers.Add('X-Sentry-Auth', $this.sentryAuth + ",sentry_timestamp=" + $(CurrentUnixTimestamp))
         $headers.Add('User-Agent', $this.userAgent)
 
+        $body.Add("release", "mouse@$(release)")
         $jsonBody = ConvertTo-Json $body -Depth 5
 
         [byte[]]$troubleByte = 0xd7
@@ -81,9 +99,7 @@ Class RavenClient {
         #  $zipStream.Close()
         #  $data = [System.Convert]::ToBase64String($compressedStream.ToArray())
 
-        write-host "$jsonBody"
-
-        Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore 
+        $global:mouse_return_msg = Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore -Verbose
     }
 
     [hashtable]ParsePSCallstack([System.Management.Automation.CallStackFrame[]]$callstackFrames, [hashtable[]]$frameVariables) {
@@ -92,8 +108,11 @@ Class RavenClient {
             'frames' = @()
         }
         $frames = @()
+        for ($i=0; $i -lt $callstackFrames.Count; $i++) {
             $stackframe = $callstackFrames[0]
+
             $frame = @{}
+
             $frame['filename'] = $stackframe.ScriptName
             $frame['abs_path'] = $stackframe.ScriptName
             $frame['context_line'] = $stackframe.Position.StartScriptPosition.Line
@@ -104,20 +123,36 @@ Class RavenClient {
             $script_lines_arr = $stackframe.Position.StartScriptPosition.GetFullScript() -split '\r?\n'
             $script_line_index = $stackframe.ScriptLineNumber - 1
             $script_lines_count = $script_lines_arr.Count
-            $script_before_idx = if ($script_line_index -lt $context_lines_count) { 0 } else { $script_line_index - $context_lines_count }
-            $script_after_idx = if ($script_line_index -gt $script_lines_count - $context_lines_count) { $script_lines_count - 1  } else { $script_line_index + $context_lines_count }
-            $pre_context = if ($script_line_index -eq 0) { @() } else { $script_lines_arr[$script_before_idx..($script_line_index - 1)] }
-            $post_context = if ($script_line_index -eq $script_lines_count - 1) { @() } else { $script_lines_arr[($script_line_index + 1)..$script_after_idx] }
+            $script_before_idx = if ($script_line_index -lt $context_lines_count) { 0 } 
+                                 else { $script_line_index - $context_lines_count }
+            $script_after_idx = if ($script_line_index -gt $script_lines_count - $context_lines_count) { $script_lines_count - 1 }
+                                else { $script_line_index + $context_lines_count }
+            $pre_context = if ($script_line_index -eq 0) { @() } 
+                           else { $script_lines_arr[$script_before_idx..($script_line_index - 1)] }
+            $post_context = if ($script_line_index -eq $script_lines_count - 1) { @() } 
+                            else { $script_lines_arr[($script_line_index + 1)..$script_after_idx] }
             $frame['pre_context'] = $pre_context
             $frame['post_context'] = $post_context
+
+            $frame['vars'] = $frameVariables[$i]
 
             $frame['vars'] = @{
                                  HOME = "$env:UserProfile";
                                  POWERSHELL_EDITION = "$((get-psinfo)[1])";
-                                 POWERSHELL_VERSION = "$((get-psinfo)[0])"
+                                 POWERSHELL_VERSION = "$((get-psinfo)[0])";
                              }
 
             $frames += $frame
+        }
+
+        $newframe = @{
+                             HOME = "$env:UserProfile";
+                             POWERSHELL_EDITION = "$((get-psinfo)[1])";
+                             POWERSHELL_VERSION = "$((get-psinfo)[0])";
+                     }
+
+        $frames += $newframe
+
 
         for ($i = $frames.Count - 1; $i -ge 0; $i--) {
             $stacktrace['frames'] += $frames[$i]

@@ -1,7 +1,16 @@
 . "$psscriptroot\..\lib\gitutils.ps1"
+. "$psscriptroot\..\lib\statuscodes.ps1"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-function unzip_dir
-{
+
+function getmouserawversion {
+    return "1.3.0"
+}
+
+function getmouseversion  {
+    return "v$(getmouserawversion)"
+}
+
+function unzip_dir {
     param([string]$src, [string]$dest)
     [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
 }
@@ -11,8 +20,10 @@ function zip_dir {
 }
 function Get-UserAgent() {
     $version = Get-Content ("$psscriptroot\..\share\version.dat")
-    return ("Mouse/$version (+http://mouse.projects.kiedtl.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
+    return ("Mouse/$version (+http://getmouse.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
 }
+
+
 function abort($msg, [int] $exit_code=1) { write-host $msg -f red; exit $exit_code }
 function error($msg) { write-host "ERROR $msg" -f red }
 function warn($msg) {  write-host "WARN  $msg" -f yellow }
@@ -26,6 +37,22 @@ function debug($msg, $indent = $false) {
     }
 }
 function success($msg) { write-host $msg -f green }
+function log {
+    param (
+        [string]$level,
+        [string]$msg,
+        [int]$status = 100,
+        $opt
+    )
+    $current_date = [datetime]::now.tostring("o")
+    $status_string = Get-StatusCode $status
+    $c_log = "$current_date MOUSE $status_string : $msg"
+    $show_logs = $opt.l -or $opt.showlogs
+    if ($show_logs) {
+        write-output "$c_log"
+    }
+}
+
 function fname($path) { split-path $path -leaf }
 function strip_ext($fname) { $fname -replace '\.[^\.]*$', '' }
 function strip_filename($path) { $path -replace [regex]::escape((fname $path)) }
@@ -75,183 +102,6 @@ function spinner_sticks {
         start-sleep -m $sleeptime
     }
 }
-function spinner_ucva {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r[ u ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ c ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ v ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ a ] $text" -NoNewline
-        start-sleep -m $sleeptime
-    }
-}
-
-function spinner_stars {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r[ * ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ + ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ x ] $text" -NoNewline
-        start-sleep -m $sleeptime
-    }
-}
-function spinner_o1 {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r(●    ) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r( ●   ) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(  ●  ) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(   ● ) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(    ●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(   ● ) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(  ●  ) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r( ●   ) $text" -NoNewline
-        start-sleep -m $sleeptime
-    }
-}
-function spinner_o2 {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r( ●●●●●●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(  ●●●●●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(   ●●●●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(●   ●●●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(●●   ●●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(●●●   ●) $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r(●●●●   ) $text" -NoNewline
-        start-sleep -m $sleeptime
-    }
-}
-function spinner_eq1 {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r[=    ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ =   ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[  =  ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[   = ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[    =] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[   = ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[  =  ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ =   ] $text" -NoNewline
-        start-sleep -m $sleeptime
-    }
-}
-function spinner_eq2 {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r[ ======] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[  =====] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[   ====] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[=   ===] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[==   ==] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[===   =] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[===    ] $text" -NoNewline
-        start-sleep -m $sleeptime
-    }
-}
-function spinner_braille {
-    param(
-        [int]$cycles,
-        [int]$sleeptime,
-        [string]$text
-    )
-    1..$cycles | % {
-        write-host "`r`r[ ⣾ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⣷ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⣯ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⣟ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⡿ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⢿ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⣻ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-        write-host "`r`r[ ⣽ ] $text" -NoNewline
-        start-sleep -m $sleeptime
-
-    }
-}
-function is_prime {
-    param(
-        [Parameter(ValueFromPipeline=$true)]
-        [int32]$number
-    )
-    Process {
-        $prime = $true;
-        if ($number -eq 1) {
-            $prime = $false;
-        }
-        if ($number -gt 3) {
-            $sqrt = [math]::Sqrt($number); 
-            for($i = 2; $i -le $sqrt; $i++) {
-                if ($number % $i -eq 0) {
-                    $prime = $false;
-                    break;
-                }
-            }
-        }
-        return $prime;
-    }
-}
 function getmousehome() {
     return "$HOME/.mouse/"
 }
@@ -274,7 +124,7 @@ function mouse_outdated() {
     return $last_update.AddHours(13) -lt $now.ToLocalTime()
 }
 function getversion() {
-    return (Get-Content ("$psscriptroot\..\share\version.dat"))
+    return getmouseversion
 }
 function getmouseconfig() {
     return "$(getmousehome)app/share/config.json"
