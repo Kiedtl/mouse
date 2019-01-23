@@ -301,7 +301,7 @@ function mouse_outdated() {
     return $last_update.AddHours(13) -lt $now.ToLocalTime()
 }
 function getversion() {
-    return (Get-Content ("$psscriptroot\..\share\version.dat"))
+    return getmouseversion
 }
 function getmouseconfig() {
     return "$(getmousehome)app/share/config.json"
