@@ -25,10 +25,12 @@ $statuscodes.Add("300", "W012C (WARNING)          ")
 $statuscodes.Add("301", "W012D (OVERWRITING FILE) ")
 $statuscodes.Add("302", "W012E (VCS GIT ERROR)    ")
 $statuscodes.Add("303", "W012F (GIT_CRYPT ERROR)  ")
+$statuscodes.Add("304", "W0130 (NO INTERNET)      ")
 
 $statuscodes.Add("400", "UE190 (CLIENT ERROR)     ")
 $statuscodes.Add("401", "UE191 (ARG PARSING ERROR)")
 $statuscodes.Add("402", "UE192 (COMMAND ERROR)    ")
 $statuscodes.Add("404", "UE194 (ITEM NOT FOUND)   ")
+
 $statuscodes.Add("500", "IE1F4 (INTERNAL ERROR)   ")
 
