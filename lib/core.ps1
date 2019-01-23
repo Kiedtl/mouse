@@ -1,4 +1,5 @@
 . "$psscriptroot\..\lib\gitutils.ps1"
+. "$psscriptroot\..\lib\statuscodes.ps1"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function getmouseversion  {
@@ -17,6 +18,8 @@ function Get-UserAgent() {
     $version = Get-Content ("$psscriptroot\..\share\version.dat")
     return ("Mouse/$version (+http://getmouse.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
 }
+
+
 function abort($msg, [int] $exit_code=1) { write-host $msg -f red; exit $exit_code }
 function error($msg) { write-host "ERROR $msg" -f red }
 function warn($msg) {  write-host "WARN  $msg" -f yellow }
@@ -30,6 +33,22 @@ function debug($msg, $indent = $false) {
     }
 }
 function success($msg) { write-host $msg -f green }
+function log {
+    param (
+        [string]$level,
+        [string]$msg,
+        [int]$status = 100,
+        $opt
+    )
+    $current_date = [datetime]::now.tostring("o")
+    $status_string = Get-StatusCode $status
+    $c_log = "$current_date MOUSE $status_string : $msg"
+    $show_logs = $opt.l -or $opt.show-logs
+    if ($show_logs) {
+        write-output "$c_log"
+    }
+}
+
 function fname($path) { split-path $path -leaf }
 function strip_ext($fname) { $fname -replace '\.[^\.]*$', '' }
 function strip_filename($path) { $path -replace [regex]::escape((fname $path)) }
