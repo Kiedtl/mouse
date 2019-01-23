@@ -22,7 +22,6 @@ trap {
 
 $newver = dl_string $nvurl;
 $nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/share/version.dat"
-$branch = Get-GitBranch
 
 $git = try {
     Get-Command git -ErrorAction Stop
@@ -38,15 +37,22 @@ if (!$git) {
 
 if (test_internet) {
     Write-Host "Updating Mouse..." -NoNewline
+    Push-Location
+    Set-Location "$HOME/.mouse/app"
+    
+    $branch = Get-GitBranch
+    if ($branch -eq "") { $branch = "master" }
+    
     $config = loadconfig
     $lastupdatetime = $config.lastupdatetime
+    
     if (!$lastupdatetime)
     {
         $lastupdatetime = [System.DateTime]::Now.ToString("s")
     }
-    Push-Location;
-    $newver = dl_string $nvurl;
-    Set-Location "$HOME/.mouse/app";
+
+    $newver = dl_string $nvurl
+    
     git stash > $HOME/.mouse/dump.tmp
     git pull origin $branch --quiet --force | Out-Null
 
