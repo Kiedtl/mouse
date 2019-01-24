@@ -19,7 +19,7 @@ function zip_dir {
     [IO.Compression.ZipFile]::CreateFromDirectory($src, "$dest")
 }
 function Get-UserAgent() {
-    $version = Get-Content ("$psscriptroot\..\share\version.dat")
+    $version = getmouseversion
     return ("Mouse/$version (+http://getmouse.surge.sh/) PowerShell/$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor) (Windows NT $([System.Environment]::OSVersion.Version.Major).$([System.Environment]::OSVersion.Version.Minor); $(if($env:PROCESSOR_ARCHITECTURE -eq 'AMD64'){'Win64; x64; '})$(if($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'){'WOW64; '})$PSEdition)")
 }
 
