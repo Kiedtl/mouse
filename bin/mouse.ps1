@@ -85,8 +85,11 @@ elseif ($commands -contains $cmd) {
         # info "`tError string: ${err}" 
     }
     finally {
-        if (!($cmd -eq "protect")) {
+        if (!($cmd -eq "protect" -or ($cmd -eq "help"))) {
+            Push-Location
+            Set-Location $HOME/.mouse/dat
             git-crypt lock
+            Pop-Location
         }
     }
 }

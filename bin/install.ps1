@@ -6,9 +6,9 @@
 
 
 $OLD_ERRORACTIONPREFERENCE = $erroractionpreference
-$MOUSE_CORE_URL = 'https://raw.githubusercontent.com/kiedtl/mouse/master/lib/core.ps1'
+$MOUSE_CORE_URL = 'https://raw.githubusercontent.com/lptstr/mouse/master/lib/core.ps1'
 $SCOOP_CORE_URL = 'https://raw.githubusercontent.com/lukesampson/scoop/master/lib/core.ps1'
-$URL = 'https://github.com/kiedtl/mouse.git'
+$URL = 'https://github.com/lptstr/mouse.git'
 
 $erroractionpreference = 'stop' # quit if anything goes wrong
 
@@ -44,7 +44,7 @@ Write-Host "Downloading..." -NoNewline
 Set-Location $HOME
 New-Item -Path . -Name ".mouse" -ItemType "directory" > dump.tmp
 Set-Location $HOME/.mouse
-git clone -q http://github.com/kiedtl/mouse.git ./app
+git clone -q http://github.com/lptstr/mouse.git ./app
 Write-Host " done" -f Green
 
 Write-Host 'Adding Mouse to PATH...' -NoNewline
