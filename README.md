@@ -1,7 +1,20 @@
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/lptstr/lptstr-images/master/proj/mouse/mouse-logos.png" alt="mouse logo yay"/></p>
-<p align="center" ><h1 align="center">mouse</h1>
+<img src="https://raw.githubusercontent.com/lptstr/lptstr-images/master/proj/mouse/mouse-logos.png" alt="Long live the Ascii Mouse!"/></p>
+<p align="center">
+<b><a href="https://github.com/lptstr/mouse#features">Features</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse#installation-requirements">Installation Requirements</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse#installation">Installation</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse/wiki">Usage</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse#contributing">Contributing</a></b>
+</p>
+
+- - -
+<p align="center" >
 </p>
 <p align="center"><a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/languages/code-size/lptstr/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/repo-size/lptstr/mouse.svg" alt="Repository size" /></a>
