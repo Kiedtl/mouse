@@ -43,14 +43,15 @@ scoop install git-lfs hub git-crypt
 
 ## Installation
 
-### Windows
-Simply run this command in PowerShell:
-```powershell
-iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh/get/')
-```
+#### **Windows**
+- Simply run this command in PowerShell:<br>
+      ```powershell
+      curl 'https://getmouse.surge.sh/' | iex
+      ```  
+- Or, if you are scared of piping things into `iex`, you can just download the <br>installer instead (check the releases section).
 
-### macOS, Linux
-
+#### **macOS, Linux**
+- Becuase the installer 
 
 Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\`, and unfortunately this cannot be changed in the current version of Mouse.
 
