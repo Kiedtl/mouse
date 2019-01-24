@@ -16,7 +16,7 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - :computer: (Almost!) completely cross-platform - works on macOS, Windows, and Linux.
 - :moneybag: Absolutely free!
 - :closed_lock_with_key: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
-- :wrench: Mouse worries about updating itself and downloading patches, so you won't have to.
+- :wrench: <del>Mouse worries about updating itself and downloading patches, so you won't have to.</del> **Removed in commit [`598f14e`](https://github.com/lptstr/mouse/commit/598f14e707ef7e28876ead6c14c942dc201b2f95)**
 - :sparkles: Intuitive and memorable commands.
 - :clock130: Speed that is best measured by a stopwatch, not a calendar.
 - Automatically uploads everything to GitHub, so you can take your data to another computer as well.
