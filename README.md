@@ -51,7 +51,25 @@ scoop install git-lfs hub git-crypt
 - Or, if you are scared of piping things into `iex`, you can just download the <br>installer instead (check the releases section).
 
 #### **macOS, Linux**
-- Becuase the installer 
+Because the installer is not completely compatible with \*nix systems, I'd recommend that you manually install Mouse using the following steps:
+- go to your home directory in a terminal.
+- run `mkdir .mouse`, then `cd .mouse`.
+- run `mkdir dat`.
+- clone this repository into the app directory: `git clone git@github.com:lptstr/mouse.git app`
+- `cd` into the dat directory, then run the following command:
+ - `git init `
+ - `hub create my-mouse-repo -d "My personal Mouse repository"`
+ - `git lfs track "*.zip"` 
+ - `git add .gitattributes`
+ - `git commit -a -q -m "Initialized Git LFS"`
+ - `git-crypt init`
+ - `echo "* filter=git-crypt diff=git-crypt" >> .gitattributes`
+ - `echo ".gitattributes !filter !diff" >> .gitattributes`
+ - `mkdir info`
+ - `git add .gitattributes`
+ - `git commit -a -q -m "Initialized Git-Crypt"`
+ - `git-crypt export-key $HOME/.mouse/git_crypt_key.key`
+ - `git-crypt lock`
 
 Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\`, and unfortunately this cannot be changed in the current version of Mouse.
 
