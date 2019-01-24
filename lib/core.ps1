@@ -3,7 +3,7 @@
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function getmouserawversion {
-    return "1.3.0"
+    return "1.3.1"
 }
 
 function getmouseversion  {

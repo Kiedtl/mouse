@@ -69,7 +69,6 @@ elseif ('--mouse' -contains $cmd -or (!$cmd -and '-z' -contains $args)) {
 # `--help` or `-h`
 elseif (@($null, '--help', '/?') -contains $cmd -or $args[0] -contains '-h') {
     exec 'help' $args
-    exit 8
 }
 # Execute appropriate command
 elseif ($commands -contains $cmd) {
@@ -82,10 +81,10 @@ elseif ($commands -contains $cmd) {
         # error "An unhandled exception was thrown in Mouse."
         # error "Please report the following error code:"
         # $err = (Get-ErrorString $_ "libexec/mouse-${cmd}.ps1@entrypoint/cmd_exec" "${cmd}|${args}" (getversion ))
-        # info "`tError string: ${err}" 
+        # info "`tError string: ${err}"
     }
     finally {
-        if (!($cmd -eq "protect" -or ($cmd -eq "help"))) {
+        if (!($cmd -eq "protect" -or ($cmd -eq "help") -or ($cmd -eq "update"))) {
             Push-Location
             Set-Location $HOME/.mouse/dat
             git-crypt lock
