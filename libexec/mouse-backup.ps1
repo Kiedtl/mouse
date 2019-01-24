@@ -48,9 +48,27 @@ if ($yay) {
     & $SNAKES
 }
 
+$ball = [System.Text.Encoding]::UTF8.GetString((226,151,143))
+
+$spinner = "( ${ball}${ball}${ball}${ball}${ball}${ball}${ball})", 
+		"(  ${ball}${ball}${ball}${ball}${ball}${ball})", 
+		"(   ${ball}${ball}${ball}${ball}${ball})",
+		"(${ball}   ${ball}${ball}${ball}${ball})",
+		"(${ball}${ball}   ${ball}${ball}${ball})",
+		"(${ball}${ball}${ball}   ${ball}${ball})", 
+		"(${ball}${ball}${ball}    ${ball})", 
+		"(${ball}${ball}${ball}${ball}    )", 
+		"(${ball}${ball}${ball}${ball}${ball}   )", 
+		"(${ball}${ball}${ball}${ball}${ball}${ball}  )"
+        
+$spin_c = 0
+$i = 0
+$errors = @()
+
 Get-ChildItem info\*.info | Foreach-Object {
     $name = $_.Name
     $basename = $_.BaseName
+    if (!(test-path $_)) { $errors += "UE194: Item $_ was not found!"; continue }
 
     $fileinfo = Get-Content $_ | ConvertFrom-Json
     $filepath = (unfriendly_path $fileinfo.opath)
@@ -59,16 +77,20 @@ Get-ChildItem info\*.info | Foreach-Object {
     $isdir = $fileinfo.isdir
 
     if (!$isdir) {
+        $type = "file"
         Copy-Item -Path $filepath -Destination $file -Force
-        info "Backed up the file ${friendly_filepath}"
     }
     else {
+        $type = "directory"
         if ((Test-Path "$HOME\.mouse\dat\${filename}.zip")) {
             Remove-Item "$HOME\.mouse\dat\${filename}.zip"
         }
         [IO.Compression.ZipFile]::CreateFromDirectory($filepath, "$HOME\.mouse\dat\${filename}.zip")
     }
+    write-host "`r`r$($spinner[$spin_c % ($spinner.Length)]) Processing $type ${basename} ..." -nonewline
     git commit -a -q -m "Backed up file $friendly_filepath" | Out-Null
+    $i++
+    $spin_c++
 }
 
 Set-location $HOME/.mouse/dat/
@@ -77,18 +99,23 @@ if (test_internet) {
     if (!$nosync) {
         git pull origin master --allow-unrelated-histories | Out-Null
         git push origin master > ../app/share/dump.tmp
-        success "Synchronized repository with GitHub"
+        write-host "`r`r$($spinner[$spin_c % ($spinner.Length)]) Synchronizing repository ..." -nonewline
     }
     else {
-        warn "Option --nosync set, skipping synchronization"
+        write-host "`r`r$($spinner[$spin_c % ($spinner.Length)]) Skipping synchronization ..." -nonewline
     }
-    success "Backed up files successfully."
+    $spin_c++
 }
 else {
-    success "Backed up file successfully."
-    warn "Synchronization was skipped because there is not internet connaction."
+    write-host "`r`r$($spinner[$spin_c % ($spinner.Length)]) Skipping synchronization, no internet connection ..." -nonewline
+    $spin_c++
 }
-Set-Location $HOME/.mouse/dat
-git-crypt lock
+
+write-host "`r`rBackup: processed $i items, with $($errors.Length) errors." -f Green
+if (($errors.Length) -ne 0) {
+    $errors | foreach-object {
+        error $_
+    }
+}
 Pop-Location
 
