@@ -20,6 +20,22 @@ function get-psinfo {
     return "$($PSVersionTable.PSVersion.ToString())","$($PSVersionTable.PSEdition)"
 }
 
+function gethost {
+    return $Host
+}
+
+function getcmd {
+    return $global:cmd
+}
+
+function getargs {
+    return $global:args
+}
+
+function getinvoc {
+    return ($MyInvocation | ConvertTo-Json -Compress)
+}
+
 function release {
     . "$psscriptroot\..\lib\core.ps1"
     return getmouserawversion
@@ -99,16 +115,18 @@ Class RavenClient {
         #  $zipStream.Close()
         #  $data = [System.Convert]::ToBase64String($compressedStream.ToArray())
 
-        $global:mouse_return_msg = Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore -Verbose
+
+        $global:mouse_return_msg = Invoke-RestMethod -Uri $this.storeUri -Method Post -Body $jsonBody -ContentType 'application/json' -Headers $headers -ErrorAction Ignore
     }
 
     [hashtable]ParsePSCallstack([System.Management.Automation.CallStackFrame[]]$callstackFrames, [hashtable[]]$frameVariables) {
-        $context_lines_count = 10
+        $context_lines_count = 15
         $stacktrace = @{
             'frames' = @()
         }
         $frames = @()
-        for ($i=0; $i -lt $callstackFrames.Count; $i++) {
+
+        for ($i = 0; $i -lt $callstackFrames.Count; $i++) {
             $stackframe = $callstackFrames[0]
 
             $frame = @{}
@@ -138,21 +156,16 @@ Class RavenClient {
 
             $frame['vars'] = @{
                                  HOME = "$env:UserProfile";
-                                 POWERSHELL_EDITION = "$((get-psinfo)[1])";
-                                 POWERSHELL_VERSION = "$((get-psinfo)[0])";
-                             }
+                                 PSEdition = "$((get-psinfo)[1])";
+                                 PSVersion = "$((get-psinfo)[0])";
+                                 PSHost = "$(gethost | convertto-json -compress)";
+                                 MyInvocation = "$(getinvoc)";
+                                 Command = "$(getcmd)";
+                                 Arguments = "$(getargs)";
+                              }
 
             $frames += $frame
         }
-
-        $newframe = @{
-                             HOME = "$env:UserProfile";
-                             POWERSHELL_EDITION = "$((get-psinfo)[1])";
-                             POWERSHELL_VERSION = "$((get-psinfo)[0])";
-                     }
-
-        $frames += $newframe
-
 
         for ($i = $frames.Count - 1; $i -ge 0; $i--) {
             $stacktrace['frames'] += $frames[$i]
