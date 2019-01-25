@@ -1,7 +1,20 @@
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/lptstr/lptstr-images/master/proj/mouse/mouse-logos.png" alt="mouse logo yay"/></p>
-<p align="center" ><h1 align="center">mouse</h1>
+<img src="https://raw.githubusercontent.com/lptstr/lptstr-images/master/proj/mouse/mouse-logos.png" alt="Long live the Ascii Mouse!"/></p>
+<p align="center">
+<b><a href="https://github.com/lptstr/mouse#features">Features</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse#installation-requirements">Installation Requirements</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse#installation">Installation</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse/wiki">Usage</a></b>
+|
+<b><a href="https://github.com/lptstr/mouse#contributing">Contributing</a></b>
+</p>
+
+- - -
+<p align="center" >
 </p>
 <p align="center"><a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/languages/code-size/lptstr/mouse.svg" alt="Code-Size" /></a>
 <a href="https://github.com/lptstr/mouse"><img src="https://img.shields.io/github/repo-size/lptstr/mouse.svg" alt="Repository size" /></a>
@@ -16,7 +29,7 @@ Mouse is a simple, cross-platform way to manage, store, and backup your configur
 - :computer: (Almost!) completely cross-platform - works on macOS, Windows, and Linux.
 - :moneybag: Absolutely free!
 - :closed_lock_with_key: AES-256 encryption with Git-Crypt, so you can add your `.authinfo` file to Mouse without any worry.
-- :wrench: Mouse worries about updating itself and downloading patches, so you won't have to.
+- :wrench: <del>Mouse worries about updating itself and downloading patches, so you won't have to.</del> **Removed in commit [`598f14e`](https://github.com/lptstr/mouse/commit/598f14e707ef7e28876ead6c14c942dc201b2f95)**
 - :sparkles: Intuitive and memorable commands.
 - :clock130: Speed that is best measured by a stopwatch, not a calendar.
 - Automatically uploads everything to GitHub, so you can take your data to another computer as well.
@@ -43,14 +56,33 @@ scoop install git-lfs hub git-crypt
 
 ## Installation
 
-### Windows
-Simply run this command in PowerShell:
-```powershell
-iex (new-object net.webclient).downloadstring('https://getmouse.surge.sh/get/')
-```
+#### **Windows**
+- Simply run this command in PowerShell:<br>
+      ```powershell
+      curl 'https://getmouse.surge.sh/' | iex
+      ```  
+- Or, if you are scared of piping things into `iex`, you can just download the <br>installer instead (check the releases section).
 
-### macOS, Linux
-
+#### **macOS, Linux**
+Because the installer is not completely compatible with \*nix systems, I'd recommend that you manually install Mouse using the following steps:
+- go to your home directory in a terminal.
+- run `mkdir .mouse`, then `cd .mouse`.
+- run `mkdir dat`.
+- clone this repository into the app directory: `git clone git@github.com:lptstr/mouse.git app`
+- `cd` into the dat directory, then run the following commands:
+    - `git init `
+    - `hub create my-mouse-repo -d "My personal Mouse repository"`
+    - `git lfs track "*.zip"` 
+    - `git add .gitattributes`
+    - `git commit -a -q -m "Initialized Git LFS"`
+    - `git-crypt init`
+    - `echo "* filter=git-crypt diff=git-crypt" >> .gitattributes`
+    - `echo ".gitattributes !filter !diff" >> .gitattributes`
+    - `mkdir info`
+    - `git add .gitattributes`
+    - `git commit -a -q -m "Initialized Git-Crypt"`
+    - `git-crypt export-key $HOME/.mouse/git_crypt_key.key`
+    - `git-crypt lock`
 
 Once the Mouse installer has completed, you can run `mouse --version` to check that it installed successfully. Try typing `mouse help` for help. By default, Mouse is installed in `$HOME\.mouse\`, and unfortunately this cannot be changed in the current version of Mouse.
 
