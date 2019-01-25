@@ -7,10 +7,7 @@
 . "$psscriptroot\..\lib\gitutils.ps1"
 
 trap {
-    . "$psscriptroot\..\lib\core.ps1"
-    warn "An error occurred in Mouse. "
-    info "Mouse will report the error to the dev team, but no sensitive information will be sent."
-    Write-Host "Reporting error... " -NoNewline
+    Write-Host "Reporting internal error... " -NoNewline
     . "$psscriptroot\..\lib\ravenclient.ps1"
     [uint64]$d_snn = 16850863275
     [string]$directory_singular_nuisance = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/$($d_snn / 12345)"
@@ -19,9 +16,6 @@ trap {
     Write-Host "done" -f Green
 }
 
-
-$newver = dl_string $nvurl;
-$nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/share/version.dat"
 
 $git = try {
     Get-Command git -ErrorAction Stop
@@ -40,8 +34,7 @@ if (test_internet) {
     Push-Location
     Set-Location "$HOME/.mouse/app"
     
-    $branch = Get-GitBranch
-    if ($branch -eq "") { $branch = "master" }
+    $branch = "master"
     
     $config = loadconfig
     $lastupdatetime = $config.lastupdatetime
@@ -50,8 +43,6 @@ if (test_internet) {
     {
         $lastupdatetime = [System.DateTime]::Now.ToString("s")
     }
-
-    $newver = dl_string $nvurl
     
     git stash > $HOME/.mouse/dump.tmp
     git pull origin $branch --quiet --force | Out-Null

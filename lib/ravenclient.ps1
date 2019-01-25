@@ -16,6 +16,21 @@ function CurrentUnixTimestamp () {
     return [int64](([datetime]::UtcNow)-(get-date "1/1/1970")).TotalSeconds
 }
 
+function get-opsys {
+    if (($PSVersionTable.PSEdition) -eq "Desktop") { 
+        return ("win32")
+    } elseif (($PSVersionTable.PSEdition) -eq "Core") {
+        if (($PSVersionTable.Platform) -eq "Win32NT") {
+            return ("win32")
+        } elseif (($PSVersionTable.Platform) -eq "Unix") {
+            if ($IsLinux) { return ("linux") }
+            elseif ($IsMacOS) { return ("darwin") }
+            else { return ("other") }
+        }
+        else { return ("indeterminate") }
+    }
+}
+
 function get-psinfo {
     return "$($PSVersionTable.PSVersion.ToString())","$($PSVersionTable.PSEdition)"
 }
