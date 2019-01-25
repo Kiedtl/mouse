@@ -18,7 +18,7 @@ set-strictmode -off
 . (relpath '..\lib\commands')
 
 [string]$dsn = "https://c80867d30cd048ca9375d3e7f99e28a8:f426d337a9434aa7b7da0ec16166ca98@sentry.io/1364995"
-[string]$nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/share/version.dat"
+[string]$nvurl = "https://raw.githubusercontent.com/lptstr/mouse/master/lib/core.ps1"
 
 [string]$SAY = "$psscriptroot\..\lib\say.ps1"
 [string]$PSGENACT = "$psscriptroot\..\lib\psgenact.ps1"
@@ -42,16 +42,16 @@ if ($cmd -is [int]) {
 # Load commands
 $commands = commands
 if ('--version' -contains $cmd -or (!$cmd -and '-v' -contains $args)) {
-    # Load current version from a file
+    # Load current version 
     Write-Host "Current Mouse Version: " -NoNewLine
     $currver = getmouseversion
     Write-Host -f Green ("$currver")
     # Only write remote version if there
     # is an internet connection
     if (test_internet) {
-        $newver = (New-Object Net.WebClient).DownloadString($nvurl)
+        . "$nvurl"
         Write-Host "Latest Mouse Version: " -NoNewline
-        Write-Host ("$newver") -f Blue
+        Write-Host ("v$(getmouserawversion)") -f Blue
     }
 }
 elseif ('--yay' -contains $cmd -or (!$cmd -and '-y' -contains $args)) {
