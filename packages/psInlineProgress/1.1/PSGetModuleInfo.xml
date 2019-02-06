@@ -1,0 +1,121 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">psInlineProgress</S>
+      <S N="Version">1.1</S>
+      <S N="Type">Module</S>
+      <S N="Description">Inline Progress Bar for PowerShell</S>
+      <S N="Author">Øyvind Kallstad</S>
+      <S N="CompanyName">okallstad</S>
+      <S N="Copyright">(c) 2016 �yvind Kallstad. All rights reserved.</S>
+      <DT N="PublishedDate">2016-04-30T08:59:33-04:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://raw.githubusercontent.com/gravejester/psInlineProgress/master/LICENSE</URI>
+      <URI N="ProjectUri">https://github.com/gravejester/psInlineProgress</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Write-Progress</S>
+          <S>Progress</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Write-InlineProgress</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Write-InlineProgress</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">Fixed some bugs.</S>
+      <Obj N="Dependencies" RefId="6">
+        <TNRef RefId="1" />
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="7">
+        <TN RefId="3">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) 2016 �yvind Kallstad. All rights reserved.</S>
+          <S N="description">Inline Progress Bar for PowerShell</S>
+          <S N="requireLicenseAcceptance">True</S>
+          <S N="releaseNotes">Fixed some bugs.</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">772</S>
+          <S N="downloadCount">780</S>
+          <S N="packageSize">9118</S>
+          <S N="published">4/30/2016 8:59:33 AM -04:00</S>
+          <S N="created">4/30/2016 8:59:33 AM -04:00</S>
+          <S N="lastUpdated">2/5/2019 7:50:24 PM -05:00</S>
+          <S N="tags">Write-Progress Progress PSModule PSFunction_Write-InlineProgress PSCommand_Write-InlineProgress PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2019-02-05T19:50:24Z</S>
+          <S N="NormalizedVersion">1.1.0</S>
+          <S N="Authors">Øyvind Kallstad</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">psInlineProgress.nuspec|LICENSE|psInlineProgress.psd1|psInlineProgress.psm1|README.md</S>
+          <S N="GUID">50f87d3f-1b5d-4b2f-b03e-279591b406a4</S>
+          <S N="CompanyName">Communary</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">E:\Apps\Repos\lptstr\mouse\packages\psInlineProgress\1.1</S>
+    </MS>
+  </Obj>
+</Objs>
