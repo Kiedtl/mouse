@@ -12,8 +12,10 @@
 #    }
 #    
 
-function CurrentUnixTimestamp () {
-    return [int64](([datetime]::UtcNow)-(get-date "1/1/1970")).TotalSeconds
+[System.Management.Automation.ErrorRecord]$global:error = $null
+function get-einfo {
+	return ($global:error.InvocationInfo.ScriptLineNumber,$global:error.InvocationInfo.OffsetInLine)
+
 }
 
 function get-opsys {
@@ -29,6 +31,11 @@ function get-opsys {
         }
         else { return ("indeterminate") }
     }
+}
+
+
+function CurrentUnixTimestamp () {
+    return [int64](([datetime]::UtcNow)-(get-date "1/1/1970")).TotalSeconds
 }
 
 function get-psinfo {
@@ -152,7 +159,7 @@ Class RavenClient {
             $frame['lineno'] = $stackframe.ScriptLineNumber
             $frame['colno'] = $stackframe.Position.StartColumnNumber
             $frame['function'] = $stackframe.FunctionName
-            
+                        
             $script_lines_arr = $stackframe.Position.StartScriptPosition.GetFullScript() -split '\r?\n'
             $script_line_index = $stackframe.ScriptLineNumber - 1
             $script_lines_count = $script_lines_arr.Count
@@ -167,10 +174,11 @@ Class RavenClient {
             $frame['pre_context'] = $pre_context
             $frame['post_context'] = $post_context
 
-            $frame['vars'] = $frameVariables[$i]
+            # $frame['vars'] = $frameVariables[$i]
 
             $frame['vars'] = @{
                                  HOME = "$env:UserProfile";
+                                 Operating_System = "$(get-opsys)";
                                  PSEdition = "$((get-psinfo)[1])";
                                  PSVersion = "$((get-psinfo)[0])";
                                  PSHost = "$(gethost | convertto-json -compress)";
@@ -208,7 +216,7 @@ Class RavenClient {
     [void]CaptureException([System.Management.Automation.ErrorRecord]$errorRecord, [int]$skipFrames) {
 
         # skip ourselves
-        $callstackSkip = 1 + $skipFrames
+        $callstackSkip = 2 + $skipFrames
         $frameVariables = @()
         $callstackFrames = Get-PSCallStack | Select-Object -Skip $callstackSkip
 
