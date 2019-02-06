@@ -1,0 +1,12 @@
+{
+  "packages": [
+    {
+      "package": "burnttoast",
+      "version": "0.6.3"
+    },
+    {
+      "package": "psInlineProgress",
+      "version": "1.1"
+    }
+  ]
+}
